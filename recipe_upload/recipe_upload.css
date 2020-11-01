@@ -1,0 +1,20 @@
+#recipes {
+    
+    max-width: 50%;
+    box-shadow: 0 0 20px #777777;
+    padding: 50px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 5px;
+    padding: 5px;
+    background-color: #eee;
+}
+
+li:hover {
+    background-color: #ddd;
+}
