@@ -1,0 +1,51 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+}
+
+.recipeCard {
+    border: 1px solid grey;
+    width: 500px;
+    display: inline-block;
+    padding: 0 30px;
+    border-radius: 10px;
+}
+
+.recipeCard .header {
+    text-align:center;
+}
+
+.authorDiv h2{
+    display:inline;
+}
+
+
+.recipeCard .mainBody {
+}
+
+.listDiv {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 100%;
+}
+.listElement {
+    grid-column: 1/1;
+    grid-row: 1/1;
+}
+.removeButton {
+    grid-column: 2/2;
+    grid-row: 1/1;
+}
+.listHeader{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 100%;
+}
+.listTitle{
+    grid-column: 1/1;
+    grid-row: 1/1;
+}
+.addButton{
+    grid-column: 2/2;
+    grid-row: 1/1;
+}
