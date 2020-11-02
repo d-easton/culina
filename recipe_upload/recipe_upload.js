@@ -17,6 +17,8 @@ window.onload = function() {
     displayRecipes();
 }
 function displayRecipes() {
+    //query database for current recipe files in database
+    //loop through those filenames 
     for(i=0; i<sampleRecipes.length; i++) {
         var recipe = document.createElement("li");
         var t = document.createTextNode(sampleRecipes[i]);
@@ -26,7 +28,7 @@ function displayRecipes() {
 }
 
 /**
- * Will make a file to add new recipe file to database
+ * Add new recipe file to database
  */
 function addToDB() {
     
@@ -44,4 +46,6 @@ function newRecipe() {
     var t = document.createTextNode(fileName);
     newRecipe.appendChild(t);
     recipeList.appendChild(newRecipe);
+
+    //call add to DB
 }
