@@ -19,14 +19,17 @@ async function process() {
     const client = new vision.ImageAnnotatorClient();
 
     const bucketName = 'input_recipe-img-upload';
-    const fileName = 'maple-pecan_galette.PNG';
+    const fileName = 'granola.png';
 
     // Performs text detection on the gcs file
     const [result] = await client.textDetection(`gs://${bucketName}/${fileName}`);
     const detections = result.textAnnotations;
+
+    if (detections.length == 0)
+        console.log("     bad image")
+
     console.log('Text:');
-    console.log(detections.length)
-    detections.forEach(text => console.log(text));  
+    // detections.forEach(text => console.log(text));  
 }
 
 module.exports.run_ocr = process();
