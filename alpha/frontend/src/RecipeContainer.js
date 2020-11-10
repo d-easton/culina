@@ -24,15 +24,18 @@ class RecipeContainer extends React.Component {
         
         this.closeModal = this.closeModal.bind(this);
         this.displayModal = this.displayModal.bind(this);
-        this.addNewCard = this.addNewCard.bind(this);
+        this.displayBlankCard = this.displayBlankCard.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.setData = this.setData.bind(this);
+        this.addNewCardLocally = this.addNewCardLocally.bind(this);
+        this.deleteCardLocally = this.deleteCardLocally.bind(this);
+        this.updateCardLocally = this.updateCardLocally.bind(this);
 
         this.fetchData();
     }
 
     componentDidMount() {
-        //this.fetchData();
+        console.log("Mounted RecipeContainer") 
     }
 
     fetchData() {
@@ -40,14 +43,16 @@ class RecipeContainer extends React.Component {
             "Email": "test2@gmail.com",
         },
         ).then(res => {
+            console.log("Fetched data")
             console.log(res)
             this.setData(res);
-            console.log(this.props.email)
-            console.log(this.state.email)
+            //console.log(this.props.email)
+            //console.log(this.state.email)
         });
     }
 
     setData(res) {
+        console.log("Setting data")
         if (res.data == null) {
             this.setState({ recipes: [] });
         } else {
@@ -62,12 +67,53 @@ class RecipeContainer extends React.Component {
         this.setState({ modalRecipe: recipeJSON, showModal: true , isNewCard: isNewCard});
     }
 
-    addNewCard() {
-        //Firebase-Save new default recipe 
+    displayBlankCard() {
         this.displayModal(this.state.defaultRecipe, true);
     }
+
+    addNewCardLocally(recipeJSON) {
+        //console.log("New Local Card data:");
+        //console.log(recipeJSON)
+        var tempCards = this.state.recipes
+        tempCards.push(recipeJSON)
+        this.setState({ recipes: tempCards })
+
+        this.closeModal()
+    }
+
+    deleteCardLocally(recipeJSON) {
+        var tempCards = this.state.recipes;
+        var didUpdate = false;
+        tempCards.forEach((recipe, index) => {
+            const current_id = recipe.id;
+            if (current_id == recipeJSON.id) {
+                tempCards.splice(index, 1)
+                didUpdate = true;
+            }
+        }) 
+        console.log(didUpdate ? "Recipe deleted" : "No recipe deleted");
+        this.setState({recipes: tempCards})
+        this.closeModal()
+    }
+
+    updateCardLocally(recipeJSON) {
+        var tempCards = this.state.recipes;
+        var didUpdate = false;
+        tempCards.forEach((recipe, index) => {
+            const current_id = recipe.id;
+            if (current_id == recipeJSON.id) {
+                tempCards[index] = recipeJSON;
+                didUpdate = true;
+            }
+        }) 
+        //console.log(didUpdate ? "Recipe updated" : "No recipe updated");
+        this.setState({recipes: tempCards})
+    }
+
+
     render() {
         let recipes = [];
+        console.log("Current state:")
         console.log(this.state);
         this.state.recipes.forEach((recipe, index) => {
             recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModal} />);
@@ -76,15 +122,17 @@ class RecipeContainer extends React.Component {
         if (this.state.showModal) {
             return (
                 <div className="recipeContainer">
-                    <button onClick={this.addNewCard}>New Card</button>
+                    <button onClick={this.displayBlankCard}>New Card</button>
                     {recipes}
-                    <RecipeModal key="recipeModal" email={this.props.email} onClose={this.closeModal} isNewCard={this.state.isNewCard} fetchData={this.fetchData} show={this.state.showModal} recipe={this.state.modalRecipe} />
+                    <RecipeModal key="recipeModal" email={this.props.email} onClose={this.closeModal} isNewCard={this.state.isNewCard}
+                        fetchData={this.fetchData} show={this.state.showModal} recipe={this.state.modalRecipe} addLocalCard={this.addNewCardLocally} updateLocalCard={this.updateCardLocally}
+                        deleteLocalCard={this.deleteCardLocally} />
                 </div>
             );
         } else {
             return (
                 <div className="recipeContainer">
-                    <button onClick={this.addNewCard}>New Card</button>
+                    <button onClick={this.displayBlankCard}>New Card</button>
                     {recipes}
                 </div>
             );

@@ -4,6 +4,8 @@ import Login from './Login';
 import MainPage from './MainPage';
 import './App.css';
 
+const UserEmail = React.createContext('not set')
+
 const App = () => {
   const [user,setUser] = useState("");
   const [email,setEmail] = useState("");
@@ -85,15 +87,21 @@ const App = () => {
   // console.log(user.email)
 
   const handleEmail = () => {
+      console.log("handleEmail = ");
         console.log(user.email);
         return user.email; 
   };
-    console.log(handleEmail());
+    //console.log(handleEmail());
+
+    //Creating context for user email
+
 
     return (
     <div className="App">
-          {user ? (
-              <MainPage handleSignout={handleSignout} person={handleEmail}/> ) :
+            {user ? (
+                //<UserEmail.Consumer email={user.email}>
+                  <MainPage handleSignout={handleSignout} person={email}/> ) :
+               // </UserEmail.Consumer>) :
       (
       <Login 
                       email={email}

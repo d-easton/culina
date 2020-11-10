@@ -28,6 +28,7 @@ class RecipeModal extends React.Component {
         this.addRecipe = this.addRecipe.bind(this);
         this.updateRecipe = this.updateRecipe.bind(this);       
         this.deleteRecipe = this.deleteRecipe.bind(this);
+        this.refreshPage = this.refreshPage.bind(this)
     }
     //Callback function passed to each sub-editable element
     //Updates the html of the element
@@ -43,12 +44,14 @@ class RecipeModal extends React.Component {
     //Exports the data that was edited in the card
     exportData() {
         //Converts state info back into Firebase JSON object for recipe cards
+        console.log("title = " + this.state.title)
         const savedRecipe = {
-            "Email": "test@gmail.com",
-            "Author": this.state.author,
-            "Title": this.state.title,
-            "Ingredients": this.state.ingredients,
-            "Steps": this.state.steps
+            "id": this.props.recipe.id,
+            "email": "test2@gmail.com",
+            "author": this.state.author,
+            "title": this.state.title,
+            "ingredients": this.state.ingredients,
+            "steps": this.state.steps
         }
         this.setState({ isDisabled: true });
         return savedRecipe;
@@ -63,51 +66,38 @@ class RecipeModal extends React.Component {
         const data = this.exportData();
         console.log("saving recipe");
         console.log(data);
-        console.log(this.props.email);
+        //console.log(this.props.email);
             //for creating a recipe for a user
-        axios.post(addRecipeURL, {
-                    "Email": "test2@gmail.com",
-                    "Author": this.state.author,
-                    "Title": this.state.title,
-                    "Ingredients": this.state.ingredients,
-                    "Steps": this.state.steps
-                },
-        ).then(response => {
+
+
+        axios.post(addRecipeURL, data)
+            .then(response => {
             console.log(response)
             console.log("done")
+            this.props.addLocalCard(data)
         })
         .catch(err => console.log('err', err));
 
     }
 
     updateRecipe() {
-        console.log(this.props.recipe)
         const data = this.exportData();
-        axios.put(updateRecipeURL, {
-                "ID": this.props.recipe.id,
-                "Email": "test2@gmail.com",
-                "Author": this.state.author,
-                "Title": this.state.title,
-                "Ingredients": this.state.ingredients,
-                "Steps": this.state.steps
-            }) 
-            .then(response => this.props.fetchData)
+        axios.put(updateRecipeURL, data) 
+            .then(response => this.props.updateLocalCard(data))
             .catch(err => console.log('err', err));
     }
     
     deleteRecipe() {
         const data = this.exportData();
-        axios.put(deleteRecipeURL, {
-                "ID": this.props.recipe.id,
-                "Email": "test2@gmail.com",
-                "Author": this.state.author,
-                "Title": this.state.title,
-                "Ingredients": this.state.ingredients,
-                "Steps": this.state.steps
-            })
-            .then(response => this.props.fetchData)
+        axios.put(deleteRecipeURL, data)
+            .then(response => this.props.deleteLocalCard(data))
             .catch(err => console.log('err', err));
     }
+
+    refreshPage() {
+        window.location.reload(true)
+    }
+
     render() {
         if (!this.props.show) {
             return null;

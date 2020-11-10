@@ -10,6 +10,7 @@ class EditableField extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.endEditing = this.endEditing.bind(this);
+        this.stripHtml = this.stripHtml.bind(this);
 
         this.contentEditable = React.createRef();
 
@@ -24,9 +25,13 @@ class EditableField extends React.Component {
 
 
         //New HTML
-        const text = event.target.value;
+        const text = this.stripHtml(event.target.value);
         //Updates local state
         this.setState({ html: text })
+    }
+
+    stripHtml(html) {
+        return html.replace(/<[^>]+>/g, '')
     }
 
     endEditing() {

@@ -88,9 +88,15 @@ const MainPage = ({ handleSignout }, { person }) => {
     }
     */
     // var email = "test@gmail.com";
-    console.log(handleSignout)
+    console.log("handleSignout =");
+    console.log(handleSignout);
     console.log("email = ");
+    console.log(person)
     // console.log(this.props)
+
+    //let contextType = UserEmail;
+
+    //console.log(contextType)
 
     return (
 
