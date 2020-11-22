@@ -1,5 +1,5 @@
 import sys, os, string
-import pandas as pnd
+# import pandas as pnd
 from google.cloud import vision
 from google.cloud import storage
 from google.cloud import firestore
@@ -55,7 +55,7 @@ def detect_text_from_uri(uri):
     if len(output["text_blocks"]) != 0:
         return output
     else:
-        return []
+        return 1
 
 # def write_content_to_bucket(bucket_name, payload):
 #     bucket = storage_client.bucket(bucket_name)
@@ -64,9 +64,7 @@ def write_content_to_firestore(payload, context):
     path_parts = context.resource.split('/documents/')[1].split('/')
     collection_path = path_parts[0]
     document_path = '/'.join(path_parts[1:])
-    print("EXAMINE PATH: "+)
-
-    document_path = '/'.join(path_parts[1:])
+    print("EXAMINE PATH: "+document_path)
 
     ocr_cache = client.collection(collection_path).document(document_path)
     # db.collection(u''+user_id).document(u''+ocr_destination).set(payload)
