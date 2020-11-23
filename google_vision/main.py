@@ -1,15 +1,18 @@
 import sys, os, string
 # import pandas as pnd
+# 1. cloud packages
 from google.cloud import vision
 from google.cloud import storage
 from google.cloud import firestore
 
+# 2. -- authorization and output path setup
 # set up the auth credentials so we can access the OCR endpoints
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'culina-key.json'
 
 # firestore document where OCR output will be tempoararily written
 ocr_destination = "OCR_CACHE"
 
+#3. Client setup
 # start up clients
 image_client = vision.ImageAnnotatorClient()
 storage_client = storage.Client()
@@ -29,27 +32,31 @@ def detect_text_from_uri(uri):
 
     # data_frame = pnd.DataFrame(columns = ['locale', 'description'])
 
+    # 4. Output structure
     output = {
         "text_blocks": []
     }
+    confidenceBreaks = {}
 
+    # iterate down to symbol level
     pages = response.full_text_annotation.pages
     for page in pages:
         for block in page.blocks:
             # print('block confidence: ', block.confidence)
             for paragraph in block.paragraphs:
-                # print('paragraph confidence: ', paragraph.confidence)
-                # paragraph_contents = null_string.join([word.symbols for word in paragraph.words])
-              
                 contents = ""
                 for word in paragraph.words:
                     word_text = ''.join([
                         symbol.text for symbol in word.symbols
                     ])
+                    
+                    if word.confidence < 0.9:
+                        confidenceBreaks[word_text] = word.confidence
+
                     if word_text not in string.punctuation:
                         contents +=" "
                     contents += word_text
-                    
+
                 output["text_blocks"].append(contents)
     
     if len(output["text_blocks"]) != 0:
@@ -61,12 +68,15 @@ def detect_text_from_uri(uri):
 #     bucket = storage_client.bucket(bucket_name)
 
 def write_content_to_firestore(payload, context):
-    path_parts = context.resource.split('/documents/')[1].split('/')
-    collection_path = path_parts[0]
-    document_path = '/'.join(path_parts[1:])
+    # path_parts = context.resource.split('/documents/')[1].split('/')
+    print("CONTEXT CHECK IN FIRESTORE WRITE:")
+    print(context.resource)
+    collection_path = "culina-go-testing-upload"
+    # document_path = '/'.join(path_parts[1:])
+    document_path = "test-write"
     print("EXAMINE PATH: "+document_path)
 
-    ocr_cache = client.collection(collection_path).document(document_path)
+    ocr_cache = firestore_client.collection(collection_path).document(document_path)
     # db.collection(u''+user_id).document(u''+ocr_destination).set(payload)
 
     if payload:
@@ -77,9 +87,9 @@ def write_content_to_firestore(payload, context):
     # send confirmation back to client
     
 def parse_image(event, context):
-    print("PARSE ACTIVE!")
+    print("RUN MAIN")
     output = detect_text_from_uri("null")
-    print(write_content_to_firestore(output, context))
+    write_content_to_firestore(output, context)
     
 
 
