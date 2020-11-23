@@ -1,5 +1,6 @@
 import React from 'react';
 import EditableList from '../Modal/EditableList';
+import '../css/GroceryList.css';
 const axios = require('axios');
 const addGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addItemToList";
 const updateGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";

@@ -1,0 +1,68 @@
+.listContainer {
+    min-height: 1000px;
+    background-image: url(./imgs/food-image.jpg);
+    background-size: 100% auto;
+    background-attachment: fixed;
+}
+
+.listContainer button {
+    width: 25%;
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    background-color: #333399;
+}
+
+.groceryList input {
+    width: 100px;
+    color: white;
+    margin: auto;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    background-color: #333399;
+}
+.groceryModal ul {
+    list-style-type: none;
+  }
+  
+  .groceryModal li {
+    margin: 1px;
+    padding: 5px;
+  }
+  
+  .groceryModal li:hover {
+    background-color: rgba(255,255,255,1);
+  }
+  
+  .groceryModal {
+    margin: auto;
+    padding: 5%;
+    width: 50%;
+    height: 50%;
+    color: black;
+    position: block;
+    top: 10vmin;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 1fr;
+  }
+
+  .groceryList {
+    padding: 3%;
+    border-radius: 3px;
+    background: rgba(255,255,255,.8);
+  }
+
+  #Add {
+      width: 10%;
+      height: 10%;
+      background: none;
+      margin-left: 50%;
+  }
+
+  #Remove {
+      width: 45%;
+      height: 90%;
+      background: none;
+  }

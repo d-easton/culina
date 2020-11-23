@@ -1,6 +1,8 @@
 import React from 'react';
 import EditableField from './EditableField.js';
 import ImageButton from './ImageButton.js';
+import add from '../css/imgs/add.png';
+import rm from '../css/imgs/remove.png';
 
 
 class EditableList extends React.Component {
@@ -67,7 +69,7 @@ class EditableList extends React.Component {
                         html={element}
                         disabled={this.props.isDisabled}
                     />
-                    <ImageButton className="removeButton" key={"remove" + index} alt={"Remove"} imagePath={"./imgs/close_icon.png"} onPress={this.handleRemove} id={index} isHidden={this.props.isDisabled} />
+                    <ImageButton className="removeButton" key={"remove" + index} alt={"Remove"} imagePath={rm} onPress={this.handleRemove} id={index} isHidden={this.props.isDisabled} />
                 </div>
             );
         });
@@ -75,7 +77,7 @@ class EditableList extends React.Component {
         if (this.props.isOrdered) {
             return (
                 <div>
-                    <h3 className="listTitle">{this.props.listTitle}<ImageButton className="addButton" alt={"Add"} imagePath={"./imgs/add_icon.png"} onPress={this.handleAdd} isHidden={this.props.isDisabled} /></h3>
+                    <h3 className="listTitle">{this.props.listTitle}<ImageButton className="addButton" alt={"Add"} imagePath={add} onPress={this.handleAdd} isHidden={this.props.isDisabled} /></h3>
                     <ol>
                         {elementFields}
                     </ol>
@@ -85,7 +87,7 @@ class EditableList extends React.Component {
         } else {
             return (
                 <div>
-                    <h3 className="listTitle">{this.props.listTitle}<ImageButton className="addButton" alt={"Add"} imagePath={"imgs/add_icon.png"} onPress={this.handleAdd} isHidden={this.props.isDisabled} /></h3>
+                    <h3 className="listTitle">{this.props.listTitle}<ImageButton className="addButton" alt={"Add"} imagePath={add} onPress={this.handleAdd} isHidden={this.props.isDisabled} /></h3>
                     <ul>
                         {elementFields}
                     </ul>
