@@ -9,7 +9,7 @@ class RecipeContainer extends React.Component {
         super(props);
 
         this.state = {
-            showModal: false,
+            showModalRC: false,
             modalRecipe: null,
             isNewCard: false,
             defaultRecipe: {
@@ -18,12 +18,13 @@ class RecipeContainer extends React.Component {
                 ingredients: [],
                 steps: []
             },
-            recipes: []
+            recipes: [],
+            email: props.email
         }
 
         
         this.closeModal = this.closeModal.bind(this);
-        this.displayModal = this.displayModal.bind(this);
+        this.displayModalRC = this.displayModalRC.bind(this);
         this.displayBlankCard = this.displayBlankCard.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.setData = this.setData.bind(this);
@@ -34,25 +35,20 @@ class RecipeContainer extends React.Component {
         this.fetchData();
     }
 
-    componentDidMount() {
-        console.log("Mounted RecipeContainer") 
-    }
+    // componentDidMount() {
+    //     console.log("Mounted RecipeContainer") 
+    // }
 
     fetchData() {
         axios.post(loadRecipeURL, {
-            "Email": "test2@gmail.com",
+            "Email": this.props.email,
         },
         ).then(res => {
-            console.log("Fetched data")
-            console.log(res)
             this.setData(res);
-            //console.log(this.props.email)
-            //console.log(this.state.email)
         });
     }
 
     setData(res) {
-        console.log("Setting data")
         if (res.data == null) {
             this.setState({ recipes: [] });
         } else {
@@ -60,20 +56,21 @@ class RecipeContainer extends React.Component {
         }
     }
     closeModal() {
-        this.setState({ showModal: false })
+        this.setState({ showModalRC: false })
     }
 
-    displayModal(recipeJSON, isNewCard) {
-        this.setState({ modalRecipe: recipeJSON, showModal: true , isNewCard: isNewCard});
+    displayModalRC(recipeJSON, isNewCard) {
+        this.setState({ modalRecipe: recipeJSON, showModalRC: true , isNewCard: isNewCard});
+        this.setState({ modalRecipe: recipeJSON, showModalRC: true , isNewCard: isNewCard}, () =>
+        console.log(this.state)
+        );
     }
 
     displayBlankCard() {
-        this.displayModal(this.state.defaultRecipe, true);
+        this.displayModalRC(this.state.defaultRecipe, true);
     }
 
     addNewCardLocally(recipeJSON) {
-        //console.log("New Local Card data:");
-        //console.log(recipeJSON)
         var tempCards = this.state.recipes
         tempCards.push(recipeJSON)
         this.setState({ recipes: tempCards })
@@ -106,26 +103,24 @@ class RecipeContainer extends React.Component {
                 didUpdate = true;
             }
         }) 
-        //console.log(didUpdate ? "Recipe updated" : "No recipe updated");
         this.setState({recipes: tempCards})
     }
 
 
     render() {
         let recipes = [];
-        console.log("Current state:")
-        console.log(this.state);
         this.state.recipes.forEach((recipe, index) => {
-            recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModal} />);
+            recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModalRC} />);
         });
 
-        if (this.state.showModal) {
+        if (this.state.showModalRC) {
+            console.log("in")
             return (
                 <div className="recipeContainer">
                     <button onClick={this.displayBlankCard}>New Card</button>
                     {recipes}
                     <RecipeModal key="recipeModal" email={this.props.email} onClose={this.closeModal} isNewCard={this.state.isNewCard}
-                        fetchData={this.fetchData} show={this.state.showModal} recipe={this.state.modalRecipe} addLocalCard={this.addNewCardLocally} updateLocalCard={this.updateCardLocally}
+                        fetchData={this.fetchData} show={this.state.showModalRC} recipe={this.state.modalRecipe} addLocalCard={this.addNewCardLocally} updateLocalCard={this.updateCardLocally}
                         deleteLocalCard={this.deleteCardLocally} />
                 </div>
             );

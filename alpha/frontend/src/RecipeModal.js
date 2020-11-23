@@ -18,6 +18,7 @@ class RecipeModal extends React.Component {
                 ingredients: this.props.recipe.ingredients,
                 steps: this.props.recipe.steps,
                 isDisabled: true,
+                email: props.email,
             }
         }
         //Function binding
@@ -44,10 +45,9 @@ class RecipeModal extends React.Component {
     //Exports the data that was edited in the card
     exportData() {
         //Converts state info back into Firebase JSON object for recipe cards
-        console.log("title = " + this.state.title)
         const savedRecipe = {
             "id": this.props.recipe.id,
-            "email": "test2@gmail.com",
+            "email": this.props.email,
             "author": this.state.author,
             "title": this.state.title,
             "ingredients": this.state.ingredients,
@@ -64,16 +64,8 @@ class RecipeModal extends React.Component {
 
     addRecipe() {
         const data = this.exportData();
-        console.log("saving recipe");
-        console.log(data);
-        //console.log(this.props.email);
-            //for creating a recipe for a user
-
-
         axios.post(addRecipeURL, data)
             .then(response => {
-            console.log(response)
-            console.log("done")
             this.props.addLocalCard(data)
         })
         .catch(err => console.log('err', err));
@@ -99,6 +91,7 @@ class RecipeModal extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         if (!this.props.show) {
             return null;
         }
@@ -161,8 +154,9 @@ class RecipeModal extends React.Component {
             listTitle={"Steps: "}
             elementName={"Step"}
         />;
-
-        
+        console.log(this.state)
+        console.log(this.props)
+        console.log("about to render")
         return (
             <div className="modal" >
                 <div className="editRecipeCard">

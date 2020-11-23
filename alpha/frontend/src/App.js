@@ -1,15 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import fire from './fire';
+import fire from './fire/fire';
 import Login from './Login';
-import MainPage from './MainPage';
-import './App.css';
+import FrontPage from './FrontPage';
+import './css/App.css';
 
 const UserEmail = React.createContext('not set')
 
 const App = () => {
   const [user,setUser] = useState("");
   const [email,setEmail] = useState("");
+  //hash password
   const [password,setPassword] = useState("");
+  // let password = "";
+  // const setPassword = (pwd) => {
+  //   console.log(pwd)
+  //   password = useState(pwd)
+  // }
 
   const [emailError,setEmailError] = useState("");
   const [passwordError,setPasswordError] = useState("");
@@ -26,11 +32,12 @@ const App = () => {
     setPasswordError("");
   };
   
-  const handleLogin = () => {
+  const handleLogin = (  ) => {
+    // console.log(em)
     clearErrors();
     fire
       .auth()
-      .signInWithEmailAndPassword(email,password)
+      .signInWithEmailAndPassword(email,password)   // hash
       .catch( (err) => {
         switch (err.code) {
           case "auth/invalid-email":
@@ -100,7 +107,7 @@ const App = () => {
     <div className="App">
             {user ? (
                 //<UserEmail.Consumer email={user.email}>
-                  <MainPage handleSignout={handleSignout} person={email}/> ) :
+                  <FrontPage handleSignout={handleSignout} user={user}/> ) :
                // </UserEmail.Consumer>) :
       (
       <Login 

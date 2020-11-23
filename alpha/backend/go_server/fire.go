@@ -30,6 +30,10 @@ func main() {
 	router.HandleFunc("/addRecipeForUser", handler.AddRecipeForUser).Methods("POST")
 	router.HandleFunc("/getRecipeForUser", handler.GetRecipesForUser).Methods("POST")
 
+	router.HandleFunc("/addItemToList", handler.AddItemToList).Methods("POST")
+	router.HandleFunc("/updateGroceryList", handler.UpdateGroceryList).Methods("PUT")
+	router.HandleFunc("/getGroceryList", handler.GetGroceryList).Methods("POST")
+
 	router.HandleFunc("/getAllRecipe", handler.GetRecipes).Methods("GET")
 	router.HandleFunc("/addRecipe", handler.AddRecipe).Methods("POST")
 	log.Println("Server listening on port", firePort)

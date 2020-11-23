@@ -9,8 +9,9 @@ class GroceryList extends React.Component {
         this.state = {
             items: list.items,                 
             isDisabled: true,
+            show: false,
+            email: props.email
         }
-
         this.handleFieldChange = this.handleFieldChange.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.beginEdit = this.beginEdit.bind(this);
@@ -21,10 +22,13 @@ class GroceryList extends React.Component {
     }
 
     beginEdit() {
+        //edit from db
         this.setState({isDisabled: false}); 
     }
 
     saveChanges() {
+        //write to db
+        console.log(this.props)
         const savedList = {
             list: this.state.items,
         }
@@ -33,7 +37,6 @@ class GroceryList extends React.Component {
     }
 
     render() {
-
         const list = <EditableList
             elements={this.state.items}
             id={getKeyByValue(this.state, this.state.items)}
@@ -44,10 +47,12 @@ class GroceryList extends React.Component {
         />;
 
         return (
+            <div className="groceryModal">
            <div className="groceryList">
                {list}
                <input type="submit" onClick={this.saveChanges} value="Save" hidden={this.state.isDisabled}/>
                 <input type="submit" onClick={this.beginEdit} value="Edit" hidden={!this.state.isDisabled}/>
+            </div>
             </div>
         )
     }
