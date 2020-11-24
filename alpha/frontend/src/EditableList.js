@@ -6,21 +6,33 @@ import ImageButton from './ImageButton.js';
 class EditableList extends React.Component {
     constructor(props) {
         super(props)
-        let tempElements = [];
+        let tempElements = [];      //List elements to be loaded from props
+        let elementPositions = [];  //Local tracking of the list order
+
+        //Load elements and their starting positions into local arrays
         this.props.elements.forEach((element, index) => {
             tempElements[index] = element;
+            elementPositions[index] = index;
         });
+
+        //Update state
         this.state = {
-            elements: tempElements,    //Array that holds the info for all li elements
-            id: this.props.id,         //String with name of the state key in the "global" state that holds the copy of all elements (ex: "ingredients", "steps")          
-            isDisabled: true,
-            isOrdered: this.props.isOrdered
+            elements: tempElements,                 //Array that holds the info for all li elements
+            elementPositions: elementPositions,     //Array that stores the positions of all li elmenets 
+            id: this.props.id,                      //String with name of the state key in the "global" state that holds the copy of all elements (ex: "ingredients", "steps")          
+            isOrdered: this.props.isOrdered         //Boolean that determines if the list is ordered or not 
         }
-        this.handleElementChange = this.handleElementChange.bind(this);
-        this.handleRemove = this.handleRemove.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
+        this.handleElementChange = this.handleElementChange.bind(this);     //Callback function sent to each editable field, updates the list's local info and passes back info to RecipeModal
+        this.handleRemove = this.handleRemove.bind(this);                   //Function fired when the remove button is pressed, deletes the element from the list and updated RecipeModal's info
+        this.handleAdd = this.handleAdd.bind(this);                         //Function fired when the add button is pressed, adds a new element to the list and updates RecipeModal's info
+
+        this.listRef = React.createRef();       //Reference to the list element, used to make the list elements draggable with Dragula
+    }
+    
+    componentDidUpdate() {
     }
 
+   
     //Passed to sub-elements, acts as middle man for global data and local state data
     handleElementChange(fieldID, html) {
         let tempElements = this.state.elements;
@@ -37,30 +49,34 @@ class EditableList extends React.Component {
                 tempElements.push(element);
             }
         })
-        this.setState({ elements: tempElements });
+
+        let tempElementPositions = this.state.elementPositions;
+        tempElementPositions.splice(tempElementPositions.indexOf(indexToRemove), 1);
+
+        this.setState({ elements: tempElements, elementPositions: tempElementPositions });
         this.props.onChange(this.state.id, tempElements);
     }
 
     handleAdd() {
         let tempElements = this.state.elements;
+        let tempElementPositions = this.state.elementPositions;
         tempElements.push("New " + this.props.elementName);
-        this.setState({ elements: tempElements });
+        tempElementPositions.push(tempElements.length - 1);
+        this.setState({ elements: tempElements, elementPositions: tempElementPositions});
         this.props.onChange(this.state.id, tempElements);
     }
 
-    //Want a + button next to the list header when in edit mode
-    //Hitting enter creates a new li element
-    //X button at end of li element that allows the element to be deleted entirely 
     render() {
         var elementFields = [];
-        const classes = (this.props.isDisabled ? "listDiv" : "listDiv enabled");
+        const classes = (this.props.isDisabled ? "listElementContainer" : "listElementContainer enabled");
         this.state.elements.forEach((element, index) => {
             elementFields.push(
-                <div key={element} className={classes}>
+                <div key={index} id={index} className={classes}>
                     <EditableField
                         className="listElement"
                         tagName={"li"}
-                        key={index}
+                        key={"field" + index + element}
+                        
                         childKey={"li" + index}
                         id={index}
                         onChange={this.handleElementChange}
@@ -76,7 +92,7 @@ class EditableList extends React.Component {
             return (
                 <div>
                     <h3 className="listTitle">{this.props.listTitle}<ImageButton className="addButton" alt={"Add"} imagePath={"./imgs/add_icon.png"} onPress={this.handleAdd} isHidden={this.props.isDisabled} /></h3>
-                    <ol>
+                    <ol ref={this.listRef} className="editableList">
                         {elementFields}
                     </ol>
                 </div>
@@ -86,7 +102,7 @@ class EditableList extends React.Component {
             return (
                 <div>
                     <h3 className="listTitle">{this.props.listTitle}<ImageButton className="addButton" alt={"Add"} imagePath={"imgs/add_icon.png"} onPress={this.handleAdd} isHidden={this.props.isDisabled} /></h3>
-                    <ul>
+                    <ul ref={this.listRef} className="editableList">
                         {elementFields}
                     </ul>
                 </div>

@@ -3,3 +3,11 @@ build
 npm-debug.log
 .env
 .DS_Store
+/.vs
+/alpha/.vs
+/alpha/frontend/.vs/frontend/v16
+/alpha/frontend/.vs/ProjectSettings.json
+/alpha/frontend/.vs/slnx.sqlite
+/alpha/frontend/.vs
+/RecipeDisplay/test-app
+/package-lock.json
