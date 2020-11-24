@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom';
 import './css/Footer.css';
 import './css/Button.css';
 
-function Footer() {
+const Footer = (props) => {
   let history = useHistory();
+  const { email } = props;
 
   return (
     <div className='footer-container'>
@@ -14,10 +15,14 @@ function Footer() {
           Join Culina to receive the best cooking companion anyone can have
         </p>
         <div className='input-areas'>
-        <button className='btn btn--outline btn--large' href='/sign-up' onClick={() => {history.push('/sign-up')}}>SIGN UP</button>
+          {email ? (<> 
+            {/* <button className='btn btn--outline btn--large' href='/sign-up' onClick={() => {history.push('/sign-up')}}>SIGN UP</button> */}
+          </>) : (<> 
+            <button className='btn btn--outline btn--large' href='/sign-up' onClick={() => {history.push('/sign-up')}}>SIGN UP</button>
+          </>)}
         </div>
       </section>
-      <div class='footer-links'>
+      {/* <div class='footer-links'>
         <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>About Us</h2>
@@ -32,13 +37,13 @@ function Footer() {
           </div>
         </div>
         <div className='footer-link-wrapper'>
-          {/* <div class='footer-link-items'>
+          <div class='footer-link-items'>
             <h2>Videos</h2>
             <Link to='/'>Submit Video</Link>
             <Link to='/'>Ambassadors</Link>
             <Link to='/'>Agency</Link>
             <Link to='/'>Influencer</Link>
-          </div> */}
+          </div>
           <div class='footer-link-items'>
             <h2>Social Media</h2>
             <Link to='/'>Instagram</Link>
@@ -47,7 +52,7 @@ function Footer() {
             <Link to='/'>Twitter</Link>
           </div>
         </div>
-      </div>
+      </div> */}
       <section class='social-media'>
         <div class='social-media-wrap'>
           <div class='footer-logo'>
@@ -57,7 +62,7 @@ function Footer() {
             </Link>
           </div>
           <small class='website-rights'>Culina © 2020</small>
-          <div class='social-icons'>
+          {/* <div class='social-icons'>
             <Link
               class='social-icon-link facebook'
               to='/'
@@ -98,7 +103,7 @@ function Footer() {
             >
               <i class='fab fa-linkedin' />
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>
