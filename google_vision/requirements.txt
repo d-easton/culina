@@ -1,0 +1,4 @@
+google.cloud.vision
+google.cloud.storage
+google.cloud.firestore
+firebase_admin

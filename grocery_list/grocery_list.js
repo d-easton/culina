@@ -21,6 +21,7 @@ window.onload = function() {
  * 
  */
 function displayItems() {
+    //query db 
     for(i=0; i<sampleItems.length; i++) {
         var li = document.createElement("li");
         var t = document.createTextNode(sampleItems[i]);

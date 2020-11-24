@@ -20,11 +20,11 @@ type RecipeRepository interface {
 	Save(recipe *entity.Recipe) (*entity.Recipe, error)
 }
 
-type repo struct{}
+type recipeRepo struct{}
 
 //NewRecipeRepository
 func NewRecipeRepository() RecipeRepository {
-	return &repo{}
+	return &recipeRepo{}
 }
 
 const (
@@ -33,7 +33,7 @@ const (
 	collectionName   string = "recipe"
 )
 
-func (*repo) DeleteRecipeForUser(recipe *entity.Recipe) (*entity.Recipe, error) {
+func (*recipeRepo) DeleteRecipeForUser(recipe *entity.Recipe) (*entity.Recipe, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
@@ -52,7 +52,7 @@ func (*repo) DeleteRecipeForUser(recipe *entity.Recipe) (*entity.Recipe, error) 
 
 }
 
-func (*repo) UpdateRecipeForUser(recipe *entity.Recipe, user string) (*entity.Recipe, error) {
+func (*recipeRepo) UpdateRecipeForUser(recipe *entity.Recipe, user string) (*entity.Recipe, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
@@ -77,7 +77,7 @@ func (*repo) UpdateRecipeForUser(recipe *entity.Recipe, user string) (*entity.Re
 	return recipe, nil
 }
 
-func (*repo) SaveRecipeForUser(recipe *entity.Recipe, user string) (*entity.Recipe, error) {
+func (*recipeRepo) SaveRecipeForUser(recipe *entity.Recipe, user string) (*entity.Recipe, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
@@ -102,7 +102,7 @@ func (*repo) SaveRecipeForUser(recipe *entity.Recipe, user string) (*entity.Reci
 	return recipe, nil
 }
 
-func (*repo) FindForUser(user string) ([]entity.Recipe, error) {
+func (*recipeRepo) FindForUser(user string) ([]entity.Recipe, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
@@ -137,7 +137,7 @@ func (*repo) FindForUser(user string) ([]entity.Recipe, error) {
 }
 
 //Saves to whole, not being used
-func (*repo) Save(recipe *entity.Recipe) (*entity.Recipe, error) {
+func (*recipeRepo) Save(recipe *entity.Recipe) (*entity.Recipe, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {
@@ -163,7 +163,7 @@ func (*repo) Save(recipe *entity.Recipe) (*entity.Recipe, error) {
 	return recipe, nil
 }
 
-func (*repo) FindAll() ([]entity.Recipe, error) {
+func (*recipeRepo) FindAll() ([]entity.Recipe, error) {
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, projectId)
 	if err != nil {

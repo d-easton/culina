@@ -1,0 +1,79 @@
+.listContainer {
+    min-height: 1000px;
+    background: url(./imgs/food-image.jpg) no-repeat center fixed;
+    background-size: cover;
+}
+
+.listContainer button {
+    width: 25%;
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+    border: 5px solid #505050;
+    color: black;
+    background-color: rgba(255,255,255,.8);
+}
+
+.groceryList input {
+    width: 100px;
+    color: white;
+    margin: auto;
+    margin-bottom: 5px;
+    border: 5px solid #505050;
+    color: black;
+    background-color: rgba(255,255,255,.8);
+}
+.groceryModal ul {
+    list-style-type: none;
+  }
+  
+  .groceryModal li {
+    margin: 1px;
+    padding: 5px;
+  }
+  
+  .groceryModal li:hover {
+    background-color: rgba(255,255,255,1);
+  }
+  
+  .groceryModal {
+    margin: auto;
+    padding: 5%;
+    width: 50%;
+    height: 50%;
+    color: black;
+    position: block;
+    top: 10vmin;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 1fr;
+  }
+
+  .groceryList {
+    padding: 3%;
+    border-radius: 3px;
+    background: rgba(255,255,255,.8);
+  }
+
+  #Add {
+      width: 10%;
+      height: 10%;
+      background: none;
+      margin-left: 50%;
+      border: none;
+  }
+
+  #Remove {
+      margin: auto;
+      width: 45%;
+      height: 90%;
+      max-height: 25px;
+      min-width: 25px;
+      max-width: 30px;
+      background: none;
+      border: none;
+  }
+
+  .listTitle {
+      display: block;
+  }

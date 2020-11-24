@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "culina-e7a1d",
+  "private_key_id": "8e6793701a17235e6bade62926c9fdf7c0dd1d7e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyvalhCYIOByjf\nsjOIaAPJSPYryaIgSxq0Fk6bookIggyN+UcZMCIybJj+c0d6R+Rd6Wmt9xiL6S0V\nJ/+21wbTz/qu049dVivEpZt3bW4lbJpPpnmeQBHp8XZ0GpHLENd2P33/rrjc8G/I\nKhOT5gWezNp1TpgBv2GgrWD2AAcQvT131Svyl/kFY0SXMRYNg6YPzlBdOTevQ4a3\nViqIgR2+32VkDh8o8+iVGfJ9VKCAZRlXNROGm9nvdtMj4lp7AaFNl80wsUthB4YV\nV38OPZhUSrL3kUKxufc+V41M9SIVJVKq+EvmXgpxcdejsieke56RgfkusaPJNUn9\ncMx5GZkTAgMBAAECggEACYk95qvzsNzn7NtcjXwDK7OFUru8tx1arN39zqbiyb3q\nfo6coPbk9CzAEt9Con8Aa5Q+66WhvSExIw5RwccCGb3gYYBvBytIRYMSYtJHTJ7Z\nMsOufGdtrT4RNEuQmLVq0We8yK3hNgRr6lF4Xu0oQpsqUpThXkKAKmrln+pLdjST\nYihGeIheIOLbDfym6VDRtqDdgqVZo53e77BcMiRlE9FOOTl/RiY+nHBWEEe8l/AO\nnaY2Vf/YWRTWaS84sAWiE9+gkePIhbZ2oDOmTiQ+V3zBrK+3P/IawndkB8NacLZJ\nX+WYHPXSS1LDwUpPyXvgIQhiam/oR0POHAh5nhLguQKBgQD5JFa65GQYtqk9VBgE\nuSEvt+jrHdzl+d/3DBgOQKZT/sHXQp16qH4XaZZfY7pL22ot4DdmjZgubtPavgFE\nTwbzxohLk+q580yw6gLHgcJEpKjhA8O7hermhJew8Lu6sasrtmkzS8IVZ8J3rknf\nWqTsMo3n2J3xU7MZr81AvjdG2QKBgQC3qTfjeDs4/X6eLAUM8GQk5PDquDbGatqu\nDJkpwJTQZcZ/jvSBPM6lTNTFZBQGZnqti6aDVXkVRLt2LntJ/a7kVE6MqrKMx5qF\nBa19r84P8b0w6vOkQz+oGDlKNa868Q94UlB+4f/qQ7RZCSJa+TdCr78QJCgSbsQ9\nIMBPB8LjywKBgQCzOksSQ78mcDErp1VoAG45T8pFacRBxRIzPQYJKsT84+Y6nvd/\nB7s9yH2evbWFYKDvw77XDcGOlbfeQpXSuC8+K3JdPFm9z6M6Gf5J27UPgIzk4rpq\nKpqjnnsplOTYF3wWBDGF71f94hjp0/3cqe6+5FdllFV7CEVtkyTLEIvfcQKBgAga\nw4iaKaLeLNQ2BRMJGKI4KBlzf5dJ59R+YdPh169KjnPajxeU41mQBmOfgvK1WvyF\niReKkglKOyt/6ZjeRPV2cvDqJ27m7/6mvX0qYOF7PWoHNDEvdoOobf7EV7M2KASb\nPUocFvrzeeXj7Uwuay3aK4g+0DXgBXDdHR9frE35AoGAIYYrAvtUUfYsJt4BJWj9\nVMxEu7RSJwBrkDGSgIrFa36r6ccmCeuNI0AK7PTmtVqB4x1c29fqEAH9H0y4w5Qm\nq/rMFnmUaoU6PZ15FZaV5aD21hAzlyY++lcb55iomj4p9YtY7JzShBzs/E67Ly6e\npYjK49BOrVSfz4sFJFC81Ds=\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloud-function-service-account@culina-e7a1d.iam.gserviceaccount.com",
+  "client_id": "107319352217696265604",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloud-function-service-account%40culina-e7a1d.iam.gserviceaccount.com"
+}

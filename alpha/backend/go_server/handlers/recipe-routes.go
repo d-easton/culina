@@ -11,12 +11,12 @@ import (
 )
 
 var (
-	repo repository.RecipeRepository = repository.NewRecipeRepository()
+	recipeRepo repository.RecipeRepository = repository.NewRecipeRepository()
 )
 
 func GetRecipes(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
-	recipes, err := repo.FindAll()
+	recipes, err := recipeRepo.FindAll()
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte(`{"error": "Error getting the posts"}`))
@@ -39,7 +39,7 @@ func AddRecipe(response http.ResponseWriter, request *http.Request) {
 	}
 
 	recipe.ID = rand.Int63()
-	repo.Save(&recipe)
+	recipeRepo.Save(&recipe)
 
 	response.WriteHeader(http.StatusOK)
 	json.NewEncoder(response).Encode(recipe)
@@ -54,7 +54,7 @@ func GetRecipesForUser(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`{"error": "Error unmarshalling the recipe data"}`))
 	}
 
-	recipes, err := repo.FindForUser(user.Email)
+	recipes, err := recipeRepo.FindForUser(user.Email)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte(`{"error": "Error getting the posts"}`))
@@ -73,7 +73,7 @@ func AddRecipeForUser(response http.ResponseWriter, request *http.Request) {
 	}
 
 	recipe.ID = rand.Int63n(100000)
-	repo.SaveRecipeForUser(&recipe, recipe.Email)
+	recipeRepo.SaveRecipeForUser(&recipe, recipe.Email)
 
 	response.WriteHeader(http.StatusOK)
 	json.NewEncoder(response).Encode(recipe)
@@ -88,7 +88,7 @@ func UpdateRecipeForUser(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`{"error": "Error unmarshalling the recipe data"}`))
 	}
 
-	repo.UpdateRecipeForUser(&recipe, recipe.Email)
+	recipeRepo.UpdateRecipeForUser(&recipe, recipe.Email)
 
 	response.WriteHeader(http.StatusOK)
 	json.NewEncoder(response).Encode(recipe)
@@ -103,7 +103,7 @@ func DeleteRecipeForUser(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`{"error": "Error unmarshalling the recipe data"}`))
 	}
 
-	repo.DeleteRecipeForUser(&recipe)
+	recipeRepo.DeleteRecipeForUser(&recipe)
 
 	response.WriteHeader(http.StatusOK)
 	json.NewEncoder(response).Encode(recipe)

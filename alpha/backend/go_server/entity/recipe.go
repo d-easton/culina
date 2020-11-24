@@ -12,3 +12,9 @@ type Recipe struct {
 type User struct {
 	Email string `json:"email"`
 }
+
+type GroceryList struct {
+	ID          int64       `json:"id"`
+	Email       string      `json:"email"`
+	Ingredients interface{} `json:"ingredients"`
+}

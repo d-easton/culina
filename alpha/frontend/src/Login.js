@@ -1,60 +1,87 @@
 import React from 'react';
-// import grpcClient from './ice_cream_client'
-import IceCreamClient from './ice_cream_pb'
-// import IceCreamClient from './ice_cream_pb'
-const services = require('./ice_cream_grpc_web_pb');
-const messages = require('./ice_cream_pb');
-// const grpc = require('grpc');
+import fire from './fire/fire';
 
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
+
+
+
+let hashedPass = ""
 
 const Login = (props) => {
     
     const { email, setEmail, emailError, password, setPassword, passwordError, handleLogin, handleSignup, hasAccount, sethasAccount} = props;
+    // console.log(props)
 
-    console.log(props)
-    // const client = new services.IceCreamClient('http://localhost:8082');
-    // // const client = new services.IceCreamClient('http://35.193.28.175:8082');
-    // console.log(client)
-    // // console.log(IceCreamClient)
-    // // console.log(services)
+    const encryptPassword = (pass) => {
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(pass, salt, (err, hash) => {
+                // console.log(""+hash);
+                // console.log(pass)
+                // console.log(typeof(""+hash));
+                // console.log(password)
+                // console.log(email)
+                hashedPass = ""+hash
+                // return pass
+                return ""+hash 
+            });
+        });
+    }
 
-    // // fetch('http://35.193.28.175:8085/recipe').then(response => response.json()).then(recipe=> {
-    // //     console.log(recipe)
-    // // })
+    const owertwtwrt = (pass) => {
+        let ok = encryptPassword(pass)
+        hashedPass = ok
 
-    // const iceCreamRequest = new messages.IceCreamRequest();
-    // iceCreamRequest.setScoops(4);
-    // iceCreamRequest.setFlavor('Vanilla');
-    // var metadata = { 'Content-Type': 'application/grpc-web+proto',
-    //                 'Accept': '*/*'
-    //                 // 'Connection': 'keep-alive'
-    //                 // 'Accept-Encoding': 'gzip, deflate, br'
-    //                 };
+        return setPassword(pass)
+    }
 
-    // // console.log(iceCreamRequest)
-    
-    // client.orderIceCream(iceCreamRequest, metadata, (err, response) => {
-    //     if (err) {
-    //         // console.log(response)
-    //         // console.log(err)
-    //         console.log('this thing broke!', err);
-    //     } else {
-    //         // console.log(response.data)
-    //         // console.log(response.content)
-    //         // console.log(response)
-    //         console.log('response from golang:', response.getMessage());
-    //     }
-    // });
+    function check(em) {
+        console.log('hi')
+        console.log(hashedPass)
+        LogLog()
+    }
 
+    const LogLog = (  ) => {
+        // console.log(em)
+        fire
+          .auth()
+          .signInWithEmailAndPassword(email,hashedPass)   // hash
+          .catch( (err) => {
+            switch (err.code) {
+              case "auth/invalid-email":
+              case "auth/user-disabled":
+              case "auth/user-not-found":
+                break;
+              case "auth/wrong-password":
+                break;
+            }
+          }); 
+      };
+
+      const SignSign = () => {
+        fire
+          .auth()
+          .createUserWithEmailAndPassword(email,password)
+          .catch( (err) => {
+            switch (err.code) {
+              case "auth/email-already-in-use":
+              case "auth/invalid-email":
+                break;
+              case "auth/weak-password":
+                break;
+            }
+          }); 
+      };  
 
     return( 
         <section className="login">
             <div className="loginContainer">
-            <label> Username </label>
+            <label> Email </label>
             <input type="text" autoFocus required value={email} onChange={e => setEmail(e.target.value)} />
             <p className="errorMsg"> {emailError} </p>
             <label> Password </label>
-            <input type="tpassword" required value={password} onChange={e => setPassword(e.target.value)} />
+            <input type="password" required value={password} onChange={e => setPassword( e.target.value )} />    
+            {/* encryptPassword( */}
             <p className="errorMsg"> {passwordError} </p>
 
             <div className="btnContainer">
