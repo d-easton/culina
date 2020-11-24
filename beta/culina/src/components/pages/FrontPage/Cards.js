@@ -13,13 +13,13 @@ function Cards() {
               src='images/img-9.jpg'
               text='Explore your unawakened pallet as you dive into this cake'
               label='Dessert'
-              path='/services'
+              path='/'
             />
             <CardItem
               src='images/img-2.jpg'
               text='Be filled with the smoky sensation of rib eye'
               label='Luxury'
-              path='/services'
+              path='/'
             />
           </ul>
           <ul className='cards__items'>
@@ -27,19 +27,19 @@ function Cards() {
               src='images/img-3.jpg'
               text='Set Sail in the Atlantic Ocean as you dive into this luxurious salmon'
               label='Luxury'
-              path='/services'
+              path='/'
             />
             <CardItem
               src='images/img-4.jpg'
               text='CRUNCH into the most amazing breakfast sandwich you have ever had'
               label='Experience'
-              path='/products'
+              path='/'
             />
             <CardItem
               src='images/img-8.jpg'
               text='TASTE the rich pasta as it melts in your mouth'
               label='SAVORY'
-              path='/sign-up'
+              path='/'
             />
           </ul>
         </div>

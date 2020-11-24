@@ -130,6 +130,7 @@ const signout = <FrontPage handleSignout={handleSignout}/>
 
 let recipes = <RecipeContainer user={user}/>
 let groceryList = <ListContainer user={user}/>
+let frontpage = <FrontPage user={user}/>
 
   return (
     <div className="App">
@@ -138,7 +139,7 @@ let groceryList = <ListContainer user={user}/>
           <Router>
             <Navbar user={user} handleSignout={handleSignout}/> 
               <Switch>
-                <Route path='/' exact component={FrontPage} />
+                <Route path='/' exact render={(props) => frontpage } />
                 <Route path='/grocery-list' render={(props) => groceryList } />
                 <Route path='/recipe-list' render={(props) => recipes } />
                 <Route path='/services' component={Services} />

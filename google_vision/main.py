@@ -3,10 +3,21 @@ import sys, os, string
 # 1. cloud packages
 from google.cloud import vision
 from google.cloud import storage
-from google.cloud import firestore
+
+import firebase_admin
+# from firebase_admin import credentials
+from firebase_admin import firestore
+
+project_id = os.environ["GCP_PROJECT"]
+# # Use the application default credentials
+# cred = credentials.ApplicationDefault()
+# firebase_admin.initialize_app(cred, {
+#   'projectId': project_id,
+# })
 
 # 2. -- authorization and output path setup
 # set up the auth credentials so we can access the OCR endpoints
+default_app = firebase_admin.initialize_app()
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'culina-key.json'
 
 # firestore document where OCR output will be tempoararily written
@@ -15,8 +26,10 @@ ocr_destination = "OCR_CACHE"
 #3. Client setup
 # start up clients
 image_client = vision.ImageAnnotatorClient()
-storage_client = storage.Client()
-firestore_client = firestore.Client()
+storage_client = storage.Client()   #.from_service_account_json('culina-key.json')
+# firestore_client = firestore.Client()
+firestore_client = firebase_admin.firestore.client()
+
 
 
 def detect_text_from_uri(uri):
@@ -69,8 +82,8 @@ def detect_text_from_uri(uri):
 
 def write_content_to_firestore(payload, context):
     # path_parts = context.resource.split('/documents/')[1].split('/')
-    print("CONTEXT CHECK IN FIRESTORE WRITE:")
-    print(context.resource)
+    # print("PARAMETER IN FIRESTORE WRITE:")
+    print(f"payload: {payload} context: {context} ")
     collection_path = "culina-go-testing-upload"
     # document_path = '/'.join(path_parts[1:])
     document_path = "test-write"
@@ -88,7 +101,12 @@ def write_content_to_firestore(payload, context):
     
 def parse_image(event, context):
     print("RUN MAIN")
-    output = detect_text_from_uri("null")
+    print(f"print event data {event['id']}")
+    url_components = event['id'].split('/', 3)
+    url_components.pop()
+    asset_url = "gs://" + '/'.join(url_components) #culina-go-testing-upload/user12345/maple-pecan_galette.PNG"
+
+    output = detect_text_from_uri(asset_url)
     write_content_to_firestore(output, context)
     
 

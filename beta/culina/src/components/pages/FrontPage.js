@@ -4,12 +4,21 @@ import Cards from './FrontPage/Cards';
 import ViewSection from './FrontPage/ViewSection';
 import Footer from './FrontPage/Footer';
 
-function FrontPage() {
+const FrontPage = (props) => {
+  const { user } = props;
+  // console.log(user.email)
+  let email =''
+  if(user == undefined) {
+    email = undefined
+  } else {
+    email = user.email
+  }
+
   return (
     <>
-      <ViewSection />
+      <ViewSection email={email} />
       <Cards />
-      <Footer />
+      <Footer email={email} />
     </>
   );
 }

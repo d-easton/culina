@@ -56,7 +56,6 @@ class ListContainer extends React.Component {
         }
         axios.post(getGroceryListURL, getL)
             .then(response => {
-                console.log("mounted", this._mounted)
                 if(this._mounted) {
                     this.setData(response.data[0].ingredients)
                 }
@@ -69,8 +68,6 @@ class ListContainer extends React.Component {
             this.setState({ items: [] });
         } else {
             this.setState({ items: res});
-            console.log(this.state)
-            // this.render()
         }
     }
 
