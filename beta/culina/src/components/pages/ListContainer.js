@@ -60,7 +60,14 @@ class ListContainer extends React.Component {
                     this.setData(response.data[0].ingredients)
                 }
             })
-            .catch(err => console.log('err', err));
+            .catch(err => 
+                axios.put(updateGroceryListURL, getL)
+                .then(response => {
+                    if(this._mounted) {
+                        this.setData(response.data.ingredients)
+                    }
+                })
+                .catch(err => console.log('err', err)) )
     }
 
     setData(res) {

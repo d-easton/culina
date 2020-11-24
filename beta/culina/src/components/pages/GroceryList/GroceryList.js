@@ -50,7 +50,7 @@ class GroceryList extends React.Component {
 
     saveChanges() {
         const savedList = {
-            "id": 1,
+            "id": 0,
             "email": this.state.email,
             "ingredients": this.state.items
         }
@@ -73,7 +73,14 @@ class GroceryList extends React.Component {
                     this.setData(response.data[0].ingredients)
                 }
             })
-            .catch(err => console.log('err', err));
+            .catch(err => 
+                axios.put(updateGroceryListURL, getL)
+                .then(response => {
+                    if(this._mounted) {
+                        this.setData(response.data.ingredients)
+                    }
+                }))
+                // .catch(err => console.log('err', err)) )
     }
 
     setData(res) {
