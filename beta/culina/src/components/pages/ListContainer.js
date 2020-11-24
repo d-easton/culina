@@ -54,7 +54,6 @@ class ListContainer extends React.Component {
         const getL = {
             "email": this.state.email
         }
-        console.log(getL)
         axios.post(getGroceryListURL, getL)
             .then(response => {
                 if(this._mounted) {
