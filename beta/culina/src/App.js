@@ -9,13 +9,15 @@ import Services from './components/pages/Services';
 import Products from './components/pages/Products';
 import Login from './components/pages/Login';
 import fire from './fire';
-
+import {  DragDropContext  } from 'react-beautiful-dnd'
 const bcrypt = require("bcryptjs");
 
 const App = () => {
   const [user,setUser] = useState("");
-  const [email,setEmail] = useState("");
-  //hash password
+    const [email, setEmail] = useState("");
+    const  [recipeDraggableFields, setFields] = useState("");
+
+    //hash password
   const [password,setPassword] = useState("");
   // let password = "";
   // const setPassword = (pwd) => {
@@ -140,20 +142,28 @@ const signup = <Login  email={email}
 
 const signout = <FrontPage handleSignout={handleSignout}/>
 
-let recipes = <RecipeContainer user={user}/>
+const handleDragEnd = (fieldID) => {
+    let tempDraggableFields = recipeDraggableFields;
+    let fieldInfo = tempDraggableFields[fieldID];
+    
+};
+let recipes = <RecipeContainer user={user} setDraggableFields={setFields}/>
 let groceryList = <ListContainer user={user}/>
 let frontpage = <FrontPage user={user}/>
 
-  return (
-    <div className="App">
+      return (
+              <div className="App">
       {user ? (
         <>
           <Router>
             <Navbar user={user} handleSignout={handleSignout}/> 
               <Switch>
                 <Route path='/' exact render={(props) => frontpage } />
+
                 <Route path='/grocery-list' render={(props) => groceryList } />
+                              <DragDropContext onDragEnd={() => { console.log("drag ended") }}>
                 <Route path='/recipe-list' render={(props) => recipes } />
+                              </DragDropContext>
                 <Route path='/services' component={Services} />
                 <Route path='/products' component={Products} />
                 <Route path='/sign-in' render={(props) => signin} />
@@ -175,8 +185,8 @@ let frontpage = <FrontPage user={user}/>
         </Router>
       </>
     )}
-  </div>
-  )
+                          </div>
+                             )
 }
 
 export default App;
