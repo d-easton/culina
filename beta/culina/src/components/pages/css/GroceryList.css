@@ -1,6 +1,9 @@
-.listContainer {
-    min-height: 1000px;
-    background: url(./imgs/food-image.jpg) no-repeat center fixed;
+
+body {
+    background: url(./imgs/food-image.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
 }
 
