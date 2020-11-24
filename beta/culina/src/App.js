@@ -10,6 +10,7 @@ import Products from './components/pages/Products';
 import Login from './components/pages/Login';
 import fire from './fire';
 
+const bcrypt = require("bcryptjs");
 
 const App = () => {
   const [user,setUser] = useState("");
@@ -41,7 +42,7 @@ const App = () => {
     clearErrors();
     fire
       .auth()
-      .signInWithEmailAndPassword(email,password)  // hash
+      .signInWithEmailAndPassword(email, encryptPassword(password) )  // hash
       .catch( (err) => {
         switch (err.code) {
           case "auth/invalid-email":
@@ -60,7 +61,7 @@ const App = () => {
     clearErrors();
     fire
       .auth()
-      .createUserWithEmailAndPassword(email,password)
+      .createUserWithEmailAndPassword(email, encryptPassword(password) )
       .catch( (err) => {
         switch (err.code) {
           case "auth/email-already-in-use":
@@ -77,6 +78,17 @@ const App = () => {
   const handleSignout = () => {
     fire.auth().signOut();
   };
+
+  const encryptPassword = (password) => {
+
+    const saltRounds = 10;
+
+    // comment out static salt for dynamic version -- more secure, need to find a way to store private key
+    // const salt = bcrypt.genSaltSync(saltRounds);
+    const salt = "$2a$10$yYYqI93P1MjMmdW3sDPmhO";
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+  }
 
   const authListener = () => {
     fire.auth().onAuthStateChanged( (user) => {

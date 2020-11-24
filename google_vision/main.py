@@ -5,20 +5,19 @@ from google.cloud import vision
 from google.cloud import storage
 
 import firebase_admin
-# from firebase_admin import credentials
+from firebase_admin import credentials
 from firebase_admin import firestore
 
 project_id = os.environ["GCP_PROJECT"]
-# # Use the application default credentials
-# cred = credentials.ApplicationDefault()
-# firebase_admin.initialize_app(cred, {
-#   'projectId': project_id,
-# })
+cred = credentials.ApplicationDefault()
+firebase_admin.initialize_app(cred, {
+  'projectId': project_id,
+})
 
 # 2. -- authorization and output path setup
 # set up the auth credentials so we can access the OCR endpoints
-default_app = firebase_admin.initialize_app()
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'culina-key.json'
+# default_app = firebase_admin.initialize_app()
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'culina-service-key.json'
 
 # firestore document where OCR output will be tempoararily written
 ocr_destination = "OCR_CACHE"
