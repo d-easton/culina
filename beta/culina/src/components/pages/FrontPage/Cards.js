@@ -21,10 +21,7 @@ function Cards() {
               text='Be filled with the smoky sensation of rib eye'
               label='Luxury'
               path='/'
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href="https://cooking.nytimes.com/recipes/1019175-rib-eye-steak-and-potatoes-for-two";
-              }}
+              link="https://cooking.nytimes.com/recipes/1019175-rib-eye-steak-and-potatoes-for-two"
             />
           </ul>
           <ul className='cards__items'>
