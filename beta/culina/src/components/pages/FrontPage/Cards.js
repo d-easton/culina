@@ -17,20 +17,22 @@ function Cards() {
               path='/'
             />
             <CardItem
-              href="https://cooking.nytimes.com/recipes/1019175-rib-eye-steak-and-potatoes-for-two"
               src='images/img-2.jpg'
               text='Be filled with the smoky sensation of rib eye'
               label='Luxury'
               path='/'
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href="https://cooking.nytimes.com/recipes/1019175-rib-eye-steak-and-potatoes-for-two";
+              }}
             />
           </ul>
           <ul className='cards__items'>
             <CardItem
-              href="https://www.epicurious.com/recipes/food/views/miso-glazed-salmon-with-sushi-rice"
               src='images/img-3.jpg'
               text='Unpack the sushi roll; try this miso-glazed salmon atop a bed of vinegar rice'
               label='Luxury'
-              path='/'
+              path='https://www.epicurious.com/recipes/food/views/miso-glazed-salmon-with-sushi-rice'
             />
             <CardItem
               href="https://www.bonappetit.com/recipe/bas-best-breakfast-sandwich"
@@ -42,7 +44,7 @@ function Cards() {
             <CardItem
               href="https://www.bonappetit.com/story/vegan-pasta-beans"
               src='images/img-8.jpg'
-              text='Try the pasta that has redefined the limits of vegan cuisine'
+              text='Try the pasta that has redefined the limits of vegan cuisineaaa'
               label='SAVORY'
               path='/'
             />
