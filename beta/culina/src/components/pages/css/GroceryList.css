@@ -10,8 +10,9 @@
     display: block;
     margin: auto;
     margin-bottom: 5px;
-    border-radius: 10px;
-    background-color: #333399;
+    border: 5px solid #505050;
+    color: black;
+    background-color: rgba(255,255,255,.8);
 }
 
 .groceryList input {
@@ -19,8 +20,9 @@
     color: white;
     margin: auto;
     margin-bottom: 5px;
-    border-radius: 10px;
-    background-color: #333399;
+    border: 5px solid #505050;
+    color: black;
+    background-color: rgba(255,255,255,.8);
 }
 .groceryModal ul {
     list-style-type: none;
@@ -59,10 +61,20 @@
       height: 10%;
       background: none;
       margin-left: 50%;
+      border: none;
   }
 
   #Remove {
+      margin: auto;
       width: 45%;
       height: 90%;
+      max-height: 25px;
+      min-width: 25px;
+      max-width: 30px;
       background: none;
+      border: none;
+  }
+
+  .listTitle {
+      display: block;
   }
