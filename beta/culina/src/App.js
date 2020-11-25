@@ -198,7 +198,7 @@ let frontpage = <FrontPage user={user}/>
                 <Route path='/' exact render={(props) => frontpage } />
 
                 <Route path='/grocery-list' render={(props) => groceryList } />
-                              <DragDropContext onDragEnd={() => { }}>
+                              <DragDropContext onDragEnd={handleDragEnd}>
                 <Route path='/recipe-list' render={(props) => recipes } />
                               </DragDropContext>
                 <Route path='/services' component={Services} />
