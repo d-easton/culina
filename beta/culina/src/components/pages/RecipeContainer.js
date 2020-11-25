@@ -11,6 +11,8 @@ class RecipeContainer extends React.Component {
 
         this.state = {
             showModalRC: false,
+            showNewCardOption: false,
+
             modalRecipe: null,
             isNewCard: false,
             defaultRecipe: {
@@ -20,6 +22,7 @@ class RecipeContainer extends React.Component {
                 steps: []
             },
             recipes: [],
+            ocrOutput: null,
             email: props.user.email
         }
         
@@ -31,24 +34,14 @@ class RecipeContainer extends React.Component {
         this.addNewCardLocally = this.addNewCardLocally.bind(this);
         this.deleteCardLocally = this.deleteCardLocally.bind(this);
         this.updateCardLocally = this.updateCardLocally.bind(this);
+        this.displayNewCardPrompt = this.displayNewCardPrompt.bind(this);
+        this.displayOCRUploadField = this.displayOCRUploadField.bind(this);
+        this.uploadRecipeImage = this.uploadRecipeImage.bind(this);
 
+        this.uploadField = React.createRef();
+
+        //UNDO AFTER SERVER FIXED
         this.fetchData();
-    }
-
-  
-    componentDidMount() {
-        /* eslint-disable no-unused-expressions */
-        // return<Navbar/>
-        // console.log(this.state.email)
-        // console.log(this.state.email == undefined)
-        // // if(this.state.email == undefined){
-        // //     this.forceUpdate();
-        // // }
-        // console.log(" ")
-        // console.log("Mounted RecipeContainer") 
-        // this.forceUpdate();
-        // this.fetchData();
-
     }
 
     fetchData() {
@@ -56,6 +49,19 @@ class RecipeContainer extends React.Component {
             "Email": this.state.email,
         },
         ).then(res => {
+            //TESTING
+            //Mimick ocrOutput being included in backend
+            /*
+            const testOCROutput = {
+                id: "ocrOutput",
+                output: ["Ham and cheese", "Ham", "Cheese",
+                    "Assemble Sandwich"]
+            }
+            res.data.push(testOCROutput);
+            console.log(res.data);
+            //DELETE AFTER OCR SET IN FIRESTORE
+            */
+
             this.setData(res);
         });
     }
@@ -64,11 +70,19 @@ class RecipeContainer extends React.Component {
         if (res.data == null) {
             this.setState({ recipes: [] });
         } else {
-            this.setState({ recipes: res.data });
+            let ocr = null;
+            res.data.forEach((element, index) => {
+                if (element.id == "ocrOutput") {
+                    ocr = element.output;
+                    res.data.splice(index, 1);
+                    this.setState({ modalRecipe: this.state.defaultRecipe, isNewCard: true });
+                }
+            });
+            this.setState({ recipes: res.data, ocrOutput: ocr });
         }
     }
     closeModal() {
-        this.setState({ showModalRC: false })
+        this.setState({ showModalRC: false, ocrOutput: null });
     }
 
     displayModalRC(recipeJSON, isNewCard) {
@@ -76,7 +90,30 @@ class RecipeContainer extends React.Component {
     }
 
     displayBlankCard() {
+        this.setState({ showNewCardOption: false });
         this.displayModalRC(this.state.defaultRecipe, true);
+    }
+
+    displayNewCardPrompt() {
+        this.setState({ showNewCardOption: true, showModal:false });
+    }
+
+    displayOCRUploadField() {
+        this.setState({showUploadOption: true, showNewCardOption: false})
+
+    }
+
+    uploadRecipeImage() {
+        //Server post of uploaded photo
+        //Display buffer until get a response
+        const node = this.uploadField.current;
+        if (node.value == "") {
+            alert("Please Upload an Image");
+        } else {
+            alert("Uploading image");
+            this.setState({ showUploadOption: false, showBuffering: true });
+
+        }
     }
 
     addNewCardLocally(recipeJSON) {
@@ -111,34 +148,75 @@ class RecipeContainer extends React.Component {
                 didUpdate = true;
             }
         }) 
-        this.setState({recipes: tempCards})
+        this.setState({ recipes: tempCards });
     }
 
 
     render() {
+        const renderModal = this.state.showModal || this.state.ocrOutput;
+
         let recipes = [];
         this.state.recipes.forEach((recipe, index) => {
-            recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModalRC} />);
+            recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModalRC} modalEnabled={renderModal} />);
         });
 
-        if (this.state.showModalRC) {
-            return (
-                <div className="recipeContainer">
-                    <button onClick={this.displayBlankCard}>New Card</button>
-                    {recipes}
-                    <RecipeModal key="recipeModal" email={this.state.email} onClose={this.closeModal} isNewCard={this.state.isNewCard}
-                        fetchData={this.fetchData} show={this.state.showModalRC} recipe={this.state.modalRecipe} addLocalCard={this.addNewCardLocally} updateLocalCard={this.updateCardLocally}
-                        deleteLocalCard={this.deleteCardLocally} />
+        let modal = null;
+        let bodyOverflow = "scroll";
+        bodyOverflow = "hidden";
+        if (this.state.ocrOutput != null || this.state.showModalRC == true) {
+            modal = <RecipeModal key="recipeModal" email={this.state.email}
+                onClose={this.closeModal} isNewCard={this.state.isNewCard}
+                fetchData={this.fetchData} show={this.state.showModalRC}
+                recipe={this.state.modalRecipe} addLocalCard={this.addNewCardLocally}
+                updateLocalCard={this.updateCardLocally} deleteLocalCard={this.deleteCardLocally}
+                ocrResults={this.state.ocrOutput} setDraggableFields={this.props.setDraggableFields} />
+        } else if (this.state.showNewCardOption) {
+            modal = (
+                <div className="grayedBackground">
+                    <div className="modal">
+                        <div className="newCardOptionsDiv">
+                            <h1>How would you like to upload a new card?</h1>
+                            <div className="manualOption">
+                                <h2>Manual</h2>
+                                <p>Manually type and upload a card</p>
+                                <button onClick={this.displayBlankCard}>Start Manual Card</button>
+                            </div>
+                            <div className="automaticOption">
+                                <h2>Automatic</h2>
+                                <p>Upload a photo of a recipe and have Culina take care of the typing!</p>
+                                <button onClick={this.displayOCRUploadField}>Upload Photo</button>
+                            </div>
+                            <button onClick={this.closeModal}>Cancel</button>
+                        </div>
+                    </div>
                 </div>
             );
-        } else {
-            return (
-                <div className="recipeContainer">
-                    <button onClick={this.displayBlankCard}>New Card</button>
-                    {recipes}
+        } else if (this.state.showUploadOption) {
+            modal = (
+                <div className="grayedBackground">
+                    <div className="modal">
+                        <div className="uploadImageDiv">
+                            <h1>Upload Image</h1>
+                            <p>Upload a PNG or JPG</p>
+                            <input type="file" accept=".jpg, .png" ref={this.uploadField}/>
+                            <button onClick={this.uploadRecipeImage}>Upload</button>
+                        </div>
+                    </div>
                 </div>
-            );
+                );
         }
+        
+
+        document.body.style.overflow = modal == null ? "scroll" : "hidden";
+
+
+        return (
+            <div className="recipeContainer">
+                <button onClick={this.displayBlankCard}>New Card</button>
+                {recipes}
+                {modal}
+            </div>
+        );
     }
 }
 

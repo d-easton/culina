@@ -142,9 +142,46 @@ const signup = <Login  email={email}
 
 const signout = <FrontPage handleSignout={handleSignout}/>
 
-const handleDragEnd = (fieldID) => {
+const handleDragEnd = (result) => {
+    const { source, destination } = result;
+    // dropped outside the list
+    if (!destination) {
+        console.log("element not dropped in any droppables, returning to original position");
+        return;
+    }
+
     let tempDraggableFields = recipeDraggableFields;
-    let fieldInfo = tempDraggableFields[fieldID];
+
+    //Dropped into the same list
+    if (source.droppableId === destination.droppableId) {
+        //Item dropped back into same list, reorder list
+        let fieldList = tempDraggableFields[destination.droppableId];
+        const movedItem = fieldList.elements.splice(source.index, 1)[0]
+
+        fieldList.elements.splice(destination.index, 0, movedItem);
+
+        tempDraggableFields[destination.droppableId] = fieldList;
+
+
+    } else {
+        //Field dragging into is full
+        if (tempDraggableFields[destination.droppableId].elementLimit <= tempDraggableFields[destination.droppableId].elements.length) {
+            alert("This field is full");
+            return;
+        }
+        //Element dropped into new list, remove from source and add to destination
+        let destinationFieldList = tempDraggableFields[destination.droppableId];
+        let sourceFieldList = tempDraggableFields[source.droppableId];
+
+        const movedItem = sourceFieldList.elements.splice(source.index, 1)[0];
+
+        destinationFieldList.elements.splice(destination.index, 0, movedItem);
+
+        tempDraggableFields[destination.droppableId] = destinationFieldList;
+        tempDraggableFields[source.droppableId] = sourceFieldList;
+
+        setFields(tempDraggableFields);
+    }
     
 };
 let recipes = <RecipeContainer user={user} setDraggableFields={setFields}/>
@@ -161,7 +198,7 @@ let frontpage = <FrontPage user={user}/>
                 <Route path='/' exact render={(props) => frontpage } />
 
                 <Route path='/grocery-list' render={(props) => groceryList } />
-                              <DragDropContext onDragEnd={() => { console.log("drag ended") }}>
+                              <DragDropContext onDragEnd={() => { }}>
                 <Route path='/recipe-list' render={(props) => recipes } />
                               </DragDropContext>
                 <Route path='/services' component={Services} />
