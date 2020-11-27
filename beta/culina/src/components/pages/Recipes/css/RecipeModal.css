@@ -34,16 +34,16 @@
     width: 90vmax;
     height: 85vmin;
     color: black;
-    position: fixed;
     top: 10vmin;
     display: grid;
     transition: all .4s ease;
 }
 
-    .modal.recipeModal {
-        grid-template-columns: 4fr 0.5fr 0.5fr 4fr;
-        grid-template-rows: 1fr;
-    }
+.modal.recipeModal {
+    grid-template-columns: 4fr 0.5fr 0.5fr 4fr;
+    grid-template-rows: 1fr;
+    left: unset;
+}
 
 .mainRecipeDiv {
     /*Main Card that holds the displayed recipe*/
@@ -64,10 +64,10 @@
     justify-content: center;
 }
 
-    .mainRecipeDiv.ocrActive {
-        /*Shifts main card left and makes room for OCR output*/
-        grid-column: 1/1;
-    }
+.mainRecipeDiv.ocrActive {
+    /*Shifts main card left and makes room for OCR output*/
+    grid-column: 1/1;
+}
 
 .recipeCard {
     /*Recipe card for main container*/
@@ -126,6 +126,7 @@
 .modal .authorDiv {
     grid-row: 2/2;
     grid-column: 2/2;
+
 }
 
 
@@ -159,7 +160,8 @@
     grid-column: 2/2;
 }
 
-.authorDiv {
+.authorDiv h2 {
+    display: inline;
     /*Parent div of author field*/
 }
 
@@ -181,6 +183,7 @@
     .recipeBody h3 {
         color: #292b2e;
     }
+
 
 .recipeInnerBody {
     grid-column: 2/2;
@@ -298,6 +301,8 @@
 .removeButton, .addButton, .dragIcon {
     /*CSS Common for all icons*/
     height: 20px;
+
+    width: 20px;
     margin: auto;
     position: absolute;
 }
@@ -348,6 +353,12 @@
     .modal .recipeCard {
         flex: 3 1 66%;
     }
+    .modal {
+        width: 90vmin;
+        height: 70vmax;
+        top: 15vmax;
+    }
+
 }
 
 @media screen and (max-width: 600px) {
@@ -377,7 +388,8 @@
 @media screen and (orientation: portrait) {
     .modal {
         width: 90vmin;
-        height: 90vmax;
+        height: 75vmax;
+        top: 20vmax;
     }
 
     .actions {

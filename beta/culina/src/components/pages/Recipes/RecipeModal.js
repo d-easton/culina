@@ -3,7 +3,7 @@ import EditableList from '../Modal/EditableList';
 import EditableRecipeField from '../Modal/EditableRecipeField';
 import DroppableField from '../Modal/DroppableField.js';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './css/RecipeModal.css';
+//import './css/RecipeModal.css';
 const axios = require('axios');
 const addRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addRecipeForUser";
 const updateRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateRecipe";

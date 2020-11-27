@@ -2,6 +2,7 @@ import React from 'react';
 import RecipeCard from './Recipes/RecipeCard.js';
 import RecipeModal from './Recipes/RecipeModal.js';
 import Navbar from './Navbar';
+import './Recipes/css/RecipeModal.css';
 const axios = require('axios');
 const loadRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
 

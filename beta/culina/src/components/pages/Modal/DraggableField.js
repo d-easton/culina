@@ -57,7 +57,7 @@ class DraggableField extends React.Component {
                             html={this.props.html}
                             disabled={this.props.isDisabled}
                         />
-                    <ImageButton childClass="removeButton" key={"remove" + this.props.id} alt={"Remove"} imagePath={removeImage} onPress={this.handleRemove} isHidden={this.props.isDisabled} />
+                    <ImageButton childClass="removeButton" key={"remove" + this.props.id} alt={"remove"} imagePath={removeImage} onPress={this.handleRemove} isHidden={this.props.isDisabled} />
                 </div>
                 )}
             </Draggable>

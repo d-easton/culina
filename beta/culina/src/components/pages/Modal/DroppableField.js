@@ -80,7 +80,7 @@ class DroppableField extends React.Component {
                         {draggables}
                         
                         {provided.placeholder}
-                        <ImageButton childClass="addButton" key={"add" + this.props.droppableId} alt={"Add"} imagePath={addImage} onPress={this.handleAdd} id={"add-" + this.props.droppableId}
+                        <ImageButton childClass="addButton" key={"add" + this.props.droppableId} alt={"Insert"} imagePath={addImage} onPress={this.handleAdd} id={"add-" + this.props.droppableId}
                             isHidden={this.props.isDisabled} />
                     </div>
                 )}
