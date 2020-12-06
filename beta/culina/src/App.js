@@ -5,8 +5,7 @@ import FrontPage from './components/pages/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ListContainer from './components/pages/ListContainer';
 import RecipeContainer from './components/pages/RecipeContainer';
-import Services from './components/pages/Services';
-import Products from './components/pages/Products';
+import Calendar from './components/pages/Calendar';
 import Login from './components/pages/Login';
 import fire from './fire';
 import {  DragDropContext  } from 'react-beautiful-dnd'
@@ -187,6 +186,7 @@ const handleDragEnd = (result) => {
 let recipes = <RecipeContainer user={user} setDraggableFields={setFields}/>
 let groceryList = <ListContainer user={user}/>
 let frontpage = <FrontPage user={user}/>
+let calendar = <Calendar user={user}/>
 
       return (
               <div className="App">
@@ -201,8 +201,7 @@ let frontpage = <FrontPage user={user}/>
                               <DragDropContext onDragEnd={handleDragEnd}>
                 <Route path='/recipe-list' render={(props) => recipes } />
                               </DragDropContext>
-                <Route path='/services' component={Services} />
-                <Route path='/products' component={Products} />
+                <Route path='/calendar' render={(props) => calendar} />
                 <Route path='/sign-in' render={(props) => signin} />
                 <Route path='/sign-up' render={(props) => signup} />
                 <Route path='/sign-out' render={(props) => signout} />
