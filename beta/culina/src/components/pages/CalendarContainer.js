@@ -61,7 +61,7 @@ class CalendarContainer extends React.Component {
         console.log("RUN_RENDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return (
             <div id="calendar-wrapper" className="grey">
-                <div id="calendar-div" classNameName="blue-dark"></div>
+                <div id="calendar-div" className="blue-dark"></div>
                 <div id="calendar-wrapper">
                     <div id="calendar-day-sun" className="calendar-day"></div>
                     <div id="calendar-day-mon" className="calendar-day"></div>
