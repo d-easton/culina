@@ -17,6 +17,14 @@
     background-color: #F4E3D7;
 }
 
+.calendar-day {
+    background-color: white;
+    width: 250px;
+    height: 30vh;
+    border-radius: 15%;
+    box-shadow: 0px 10px 13px -7px #000000, 3px 3px 50px 5px rgba(121,121,121,0.25);
+}
+
 #calendar-div{
     height: 60%;
 }
