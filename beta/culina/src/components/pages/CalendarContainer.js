@@ -58,7 +58,9 @@ class CalendarContainer extends React.Component {
     }
 
     render() {
-        console.log("RUN_RENDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        if(5!=9){
+            console.log("hi")
+        }
         return (
             <div id="calendar-wrapper" className="grey">
                 <div id="calendar-div" className="blue-dark"></div>
@@ -99,7 +101,6 @@ class CalendarContainer extends React.Component {
                         <div className="card-recipes"></div>
                     </div>
                 </div>
-                {/* <div id="recipes-div" className="sand-dark"></div> */}
             </div>
         );
     }

@@ -200,10 +200,10 @@ let calendar = <CalendarContainer user={user}/>
                 <Route path='/' exact render={(props) => frontpage } />
 
                 <Route path='/grocery-list' render={(props) => groceryList } />
+                <Route path='/calendar' render={(props) => calendar} />
                               <DragDropContext onDragEnd={handleDragEnd}>
                 <Route path='/recipe-list' render={(props) => recipes } />
                               </DragDropContext>
-                <Route path='/calendar' render={(props) => calendar} />
                 <Route path='/sign-in' render={(props) => signin} />
                 <Route path='/sign-up' render={(props) => signup} />
                 <Route path='/sign-out' render={(props) => signout} />
