@@ -24,3 +24,13 @@
 #recipe-div{
     height: 40%;
 }
+
+#calendar-wrapper {
+    width: 80%;
+    margin-left: 10%;
+    background-color: pink;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

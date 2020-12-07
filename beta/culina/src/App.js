@@ -98,6 +98,7 @@ const App = () => {
          setUser(user);
          recipes = <RecipeContainer user={user}/>
          groceryList = <ListContainer user={user}/>
+         calendar = <CalendarContainer user={user}/>
        }
        else {
          setUser("");
