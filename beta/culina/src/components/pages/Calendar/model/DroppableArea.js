@@ -2,7 +2,7 @@ import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import DraggableButton from './DraggableButton.js';
 
-class DroppableButton extends React.Component {
+class DroppableArea extends React.Component {
     constructor(props) {
         super(props);
         // this.passChangeOn = this.passChangeOn.bind(this);
@@ -46,12 +46,12 @@ class DroppableButton extends React.Component {
             <Droppable droppableId={this.props.droppableId}>
                 {provided => (
                     <div
-                    //     className={this.props.isDisabled ? "droppableButton" : "droppableButton enabled"}
+                    //     className={this.props.isDisabled ? "DroppableArea" : "DroppableArea enabled"}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >
-                
                         {draggables}
+                        {provided.placeholder}
                     </div>
                 )}
             </Droppable>
@@ -59,4 +59,4 @@ class DroppableButton extends React.Component {
     }
 }
 
-export default DroppableButton;
+export default DroppableArea;

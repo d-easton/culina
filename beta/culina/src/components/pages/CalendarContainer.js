@@ -2,7 +2,7 @@ import React from 'react';
 import '../../App.css';
 import './Calendar/css/Calendar.css';
 import constants from './Calendar/constants.js';
-import DroppableButton from './Calendar/model/DroppableButton.js';
+import DroppableArea from './Calendar/model/DroppableArea.js';
 import EditableField from './Modal/EditableField';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -271,105 +271,106 @@ class CalendarContainer extends React.Component {
                                 <h4 className="card-title">Sunday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="sunday-field"
+                                    <DroppableArea droppableId="sunday-field"
                                                 elements={this.state.draggableFields.sundayField.elements}
                                                 isDisabled={false}  //this.state.isDisabled
-                                                updateGlobalListState={this.handleFieldChange}
-                                                removeElement={this.handleRemoveElement}
-                                                addElement={this.handleAddElement}
-                                                listType="ul"
+                                                // updateGlobalListState={this.handleFieldChange}
+                                                // removeElement={this.handleRemoveElement}
+                                                // addElement={this.handleAddElement}
+                                                // listType="ul"
                                                 tagType={"p"}
-                                            /> */}
+                                            />
                                 </div>
                             </div>
                             <div id="calendar-day-mon" className="calendar-day">
                                 <h4 className="card-title">Monday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="monday-field"
-                                                        elements={this.state.draggableFields.mondayField.elements}
-                                                        isDisabled={false}  //this.state.isDisabled
-                                                        updateGlobalListState={this.handleFieldChange}
-                                                        removeElement={this.handleRemoveElement}
-                                                        addElement={this.handleAddElement}
-                                                        listType="ul"
-                                                        tagType={"p"}
-                                                    /> */}
+                                    <DroppableArea 
+                                        droppableId="monday-field"
+                                        elements={this.state.draggableFields.mondayField.elements}
+                                        isDisabled={false}  //this.state.isDisabled
+                                                        // updateGlobalListState={this.handleFieldChange}
+                                                        // removeElement={this.handleRemoveElement}
+                                                        // addElement={this.handleAddElement}
+                                                        // listType="ul"
+                                        tagType={"p"}
+                                    />
                                 </div>
                             </div>
                             <div id="calendar-day-tue" className="calendar-day">
                                 <h4 className="card-title">Tuesday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="tuesday-field"
+                                    <DroppableArea droppableId="tuesday-field"
                                                         elements={this.state.draggableFields.tuesdayField.elements}
                                                         isDisabled={false}  //this.state.isDisabled
-                                                        updateGlobalListState={this.handleFieldChange}
-                                                        removeElement={this.handleRemoveElement}
-                                                        addElement={this.handleAddElement}
-                                                        listType="ul"
+                                                        // updateGlobalListState={this.handleFieldChange}
+                                                        // removeElement={this.handleRemoveElement}
+                                                        // addElement={this.handleAddElement}
+                                                        // listType="ul"
                                                         tagType={"p"}
-                                                    /> */}
+                                                    />
                                 </div>
                             </div>
                             <div id="calendar-day-wed" className="calendar-day">
                                 <h4 className="card-title">Wednesday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="wednesday-field"
+                                    <DroppableArea droppableId="wednesday-field"
                                                     elements={this.state.draggableFields.wednesdayField.elements}
                                                     isDisabled={false}  //this.state.isDisabled
-                                                    updateGlobalListState={this.handleFieldChange}
-                                                    removeElement={this.handleRemoveElement}
-                                                    addElement={this.handleAddElement}
-                                                    listType="ul"
+                                                    // updateGlobalListState={this.handleFieldChange}
+                                                    // removeElement={this.handleRemoveElement}
+                                                    // addElement={this.handleAddElement}
+                                                    // listType="ul"
                                                     tagType={"p"}
-                                                /> */}
+                                                />
                                 </div>
                             </div>
                             <div id="calendar-day-thu" className="calendar-day">
                                 <h4 className="card-title">Thursday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="thursday-field"
+                                    <DroppableArea droppableId="thursday-field"
                                                     elements={this.state.draggableFields.thursdayField.elements}
                                                     isDisabled={false}  //this.state.isDisabled
-                                                    updateGlobalListState={this.handleFieldChange}
-                                                    removeElement={this.handleRemoveElement}
-                                                    addElement={this.handleAddElement}
-                                                    listType="ul"
+                                                    // updateGlobalListState={this.handleFieldChange}
+                                                    // removeElement={this.handleRemoveElement}
+                                                    // addElement={this.handleAddElement}
+                                                    // listType="ul"
                                                     tagType={"p"}
-                                                /> */}
+                                                />
                                 </div>
                             </div>
                             <div id="calendar-day-fri" className="calendar-day">
                                 <h4 className="card-title">Friday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="friday-field"
+                                    <DroppableArea droppableId="friday-field"
                                                         elements={this.state.draggableFields.fridayField.elements}
                                                         isDisabled={false}  //this.state.isDisabled
-                                                        updateGlobalListState={this.handleFieldChange}
-                                                        removeElement={this.handleRemoveElement}
-                                                        addElement={this.handleAddElement}
-                                                        listType="ul"
+                                                        // updateGlobalListState={this.handleFieldChange}
+                                                        // removeElement={this.handleRemoveElement}
+                                                        // addElement={this.handleAddElement}
+                                                        // listType="ul"
                                                         tagType={"p"}
-                                                    /> */}
+                                                    />
                                 </div>
                             </div>
                             <div id="calendar-day-sat" className="calendar-day">
                                 <h4 className="card-title">Saturday</h4>
                                 <div className="bar sand-dark"></div>
                                 <div className="card-recipes">
-                                    {/* <DroppableButton droppableId="saturday-field"
+                                    <DroppableArea droppableId="saturday-field"
                                         elements={this.state.draggableFields.saturdayField.elements}
                                         isDisabled={false}  //this.state.isDisabled
-                                        updateGlobalListState={this.handleFieldChange}
-                                        removeElement={this.handleRemoveElement}
-                                        addElement={this.handleAddElement}
-                                        listType="ul"
+                                        // updateGlobalListState={this.handleFieldChange}
+                                        // removeElement={this.handleRemoveElement}
+                                        // addElement={this.handleAddElement}
+                                        // listType="ul"
                                         tagType={"p"}
-                                    /> */}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -384,7 +385,7 @@ class CalendarContainer extends React.Component {
                             <h2>Recipes</h2>
                         </div>
                         <div id="recipe-box">
-                            <DroppableButton droppableId="drop-area"
+                            <DroppableArea droppableId="drop-area"
                                 elements={recipeElements}
                                 isDisabled={false}  //this.state.isDisabled
                                 // updateGlobalListState={this.handleFieldChange}
