@@ -9,7 +9,7 @@ const getRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8
 
 const recipe1 = {
     "header": {
-            "recipe-title": "4-Hour Chili",
+            "title": "4-Hour Chili",
             "author": "ethan",
             "display_img": "/path/to/img/bucket",
             "id": 0,
@@ -29,7 +29,7 @@ const recipe1 = {
 };
 const recipe2 = {
     "header": {
-            "recipe-title": "Beef Wellington",
+            "title": "Beef Wellington",
             "author": "david",
             "display_img": "/path/to/img/bucket",
             "id": 1,
@@ -47,7 +47,7 @@ const recipe2 = {
 };
 const recipe3 = {
     "header": {
-            "recipe-title": "Sushi",
+            "title": "Sushi",
             "author": "emily",
             "display_img": "/path/to/img/bucket",
             "id": 2,
