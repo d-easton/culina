@@ -12,7 +12,7 @@ const recipe1 = {
             "title": "4-Hour Chili",
             "author": "ethan",
             "display_img": "/path/to/img/bucket",
-            "id": 0,
+            "id": 'recipe1',
     },
     "ingredients": [
         "4 tablespoons unsalted butter",
@@ -30,9 +30,9 @@ const recipe1 = {
 const recipe2 = {
     "header": {
             "title": "Beef Wellington",
-            "author": "david",
+            "author": "jeremie",
             "display_img": "/path/to/img/bucket",
-            "id": 1,
+            "id": "recipe2",
     },
     "ingredients": [
         "beef",
@@ -50,7 +50,7 @@ const recipe3 = {
             "title": "Sushi",
             "author": "emily",
             "display_img": "/path/to/img/bucket",
-            "id": 2,
+            "id": "recipe3",
     },
     "ingredients": [
         "fish",
@@ -65,11 +65,58 @@ const recipe3 = {
     ],
     "day-code": ""
 };
-const staticTestData = [
-    recipe1,
-    recipe2,
-    recipe3
-]
+const staticTestData = {
+    recipes : {
+        'recipe1': recipe1,
+        'recipe2': recipe2,
+        'recipe3':  recipe3
+    },
+    calendarFrames : {
+        'calSun' : {
+            'id': 'calSun',
+            'title': 'Sunday',
+            'recipeIDs': []
+        },
+        'calMon' : {
+            'id': 'calMon',
+            'title': 'Monday',
+            'recipeIDs': []
+        },
+        'calTue' : {
+            'id': 'calTue',
+            'title': 'Tuesday',
+            'recipeIDs': []
+        },
+        'calWed' : {
+            'id': 'calWed',
+            'title': 'Wednesday',
+            'recipeIDs': []
+        },
+        'calThu' : {
+            'id': 'calThu',
+            'title': 'Thursday',
+            'recipeIDs': []
+        },
+        'calFri' : {
+            'id': 'calFri',
+            'title': 'Friday',
+            'recipeIDs': []
+        },
+        'calSat' : {
+            'id': 'calSat',
+            'title': 'Saturday',
+            'recipeIDs': []
+        }
+    },
+    recipeBox: {
+        // "recipeBox":{
+            'id': 'calRecipeBox',
+            'title': 'Recipes',
+            'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
+        // }
+    },
+    calendarOrder : ['calSun', 'calMon', 'calTue', 'calWed', 'calThu', 'calFri', 'calSat']
+}
 
 const constants = {
     'data': staticTestData,

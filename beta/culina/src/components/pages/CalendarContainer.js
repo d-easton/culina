@@ -2,8 +2,11 @@ import React from 'react';
 import '../../App.css';
 import './Calendar/css/Calendar.css';
 import constants from './Calendar/constants.js';
-import DroppableArea from './Calendar/model/DroppableArea.js';
+// import DroppableArea from './Calendar/model/DroppableArea.js';
 import EditableField from './Modal/EditableField';
+
+import Frame from './Calendar/model/Frame.jsx';
+import RecipeBox from './Calendar/model/RecipeBox.jsx';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -17,36 +20,42 @@ class CalendarContainer extends React.Component {
     constructor(props) {
         super(props);
 
-        const draggableInitial = {
-            "sundayField" : {
-                "elements" : []
-            }, 
-            "mondayField" : {
-                "elements" : []
-            }, 
-            "tuesdayField" : {
-                "elements" : []
-            }, 
-            "wednesdayField" : {
-                "elements" : []
-            }, 
-            "thursdayField" : {
-                "elements" : []
-            }, 
-            "fridayField" : {
-                "elements" : []
-            }, 
-            "saturdayField" : {
-                "elements" : []
-            }, 
-        };
+        // const draggableInitial = {
+        //     "sundayField" : {
+        //         "elements" : []
+        //     }, 
+        //     "mondayField" : {
+        //         "elements" : []
+        //     }, 
+        //     "tuesdayField" : {
+        //         "elements" : []
+        //     }, 
+        //     "wednesdayField" : {
+        //         "elements" : []
+        //     }, 
+        //     "thursdayField" : {
+        //         "elements" : []
+        //     }, 
+        //     "fridayField" : {
+        //         "elements" : []
+        //     }, 
+        //     "saturdayField" : {
+        //         "elements" : []
+        //     }, 
+        // };
 
         this.state = {
-            calenderID: 0,
-            calendar: "",
-            data: {},
+            // calenderID: 0,
+            // calendar: "",
+            // data: {},
             email: props.user.email,
-            draggableFields: draggableInitial,
+            // draggableFields: draggableInitial,
+            // isDisabled: false,
+
+            recipes: constants.data.recipes,
+            calendarOrder: constants.data.calendarOrder,
+            recipeBoxData: constants.data.recipeBox,
+            frameData: constants.data.calendarFrames
         }
 
         // this.config = this.config.bind(this);
@@ -132,8 +141,6 @@ class CalendarContainer extends React.Component {
         const CALENDAR = constants.calendarCode;
         const RECIPE = constants.recipeCode;
         const staticTestData = constants.data;
-        console.log(staticTestData);
-        console.log(mode);
         if (mode == CALENDAR) {
             if (res == null) {
                 this.setState({ calendarData: [] });
@@ -143,7 +150,7 @@ class CalendarContainer extends React.Component {
         }
         else if (mode == RECIPE) {
             if (res == null) {
-                this.setState({ recipeData: staticTestData });    //[]
+                // this.setState({ recipeData: staticTestData });    //[]
             } else {
                 this.setState({ recipeData: res});
             }
@@ -174,53 +181,105 @@ class CalendarContainer extends React.Component {
     /** DND FUNCTIONS */
 
     //Passed to DragDropContext to handle drag ends
-    handleDragEnd(result) {
-        const { source, destination } = result;
-
-        // dropped outside the list
+    handleDragEnd = result => {
+        const { destination, source, draggableId } = result;
+        // no valid dest (dropped outside droppable)
         if (!destination) {
-            console.log("element not dropped in any droppables, returning to original position");
+            return;
+        }
+        // no change
+        if (destination.droppableId === source.droppableId && destination.index === source.index) {
             return;
         }
 
-        let tempDraggableFields = this.state.draggableFields;
-
-        //Dropped into the same list
-        if (source.droppableId === destination.droppableId) {
-            //Item dropped back into same list, reorder list
-            let fieldList = tempDraggableFields[destination.droppableId];
-            const movedItem = fieldList.elements.splice(source.index, 1)[0]
-
-            fieldList.elements.splice(destination.index, 0, movedItem);
-
-            tempDraggableFields[destination.droppableId] = fieldList;
-
-            this.setState({ draggableFields: tempDraggableFields });
-
-        } 
+        // let mode;
+        let start;
+        let finish;
+        console.log(source);
+        console.log(destination.droppableId);
+        if (source.droppableId == "recipeBox") {
+            start = this.state.recipeBoxData.recipeIDs[source.index];
+        }
         else {
-            //Field dragging into is full
-            if (tempDraggableFields[destination.droppableId].elementLimit <= tempDraggableFields[destination.droppableId].elements.length) {
-                alert("This field is full");
-                return;
+            start = this.state.frameData.recipeIDs[source.index];
+        }
+        if (destination.droppableId = "recipeBox") {
+            finish = this.state.recipeBoxData.recipeIDs[destination.index];
+        }
+        else {
+            finish = this.state.frameData.recipeIDs[destination.index];
+        }
+        // console.log(start)
+        // console.log(finish)
+        console.log(draggableId);
+        
+
+        // Recipebox internal reorder
+        if (source.droppableId == "recipeBox" && destination.droppableId == "recipeBox") {
+            const recipeBox = this.state.recipeBoxData;
+            const updatedRecipeIDs = Array.from(recipeBox.recipeIDs);
+            updatedRecipeIDs.splice(source.index, 1);
+            updatedRecipeIDs.splice(destination.index, 0, draggableId);
+
+            const updateRecipeBox = {
+                ...recipeBox,
+                recipeIDs: updatedRecipeIDs,
+            };
+            const updateState = {
+                ...this.state,
+                recipeBoxData: updateRecipeBox
             }
-            //Element dropped into new list, remove from source and add to destination
-            let destinationFieldList = tempDraggableFields[destination.droppableId];
-            let sourceFieldList = tempDraggableFields[source.droppableId];
-
-            const movedItem = sourceFieldList.elements.splice(source.index, 1)[0];
-
-            destinationFieldList.elements.splice(destination.index, 0, movedItem);
-
-            tempDraggableFields[destination.droppableId] = destinationFieldList;
-            tempDraggableFields[source.droppableId] = sourceFieldList;
-
-            this.setState({ draggableFields: tempDraggableFields });
+            console.log(updateState);
+            console.log(source.index);
+            console.log(destination.index);
+            this.setState(updateState);
         }
     }
 
+    // handleDragEnd(result) {
+    //     const { source, destination } = result;
 
+    //     // dropped outside the list
+    //     if (!destination) {
+    //         console.log("element not dropped in any droppables, returning to original position");
+    //         return;
+    //     }
 
+    //     let tempDraggableFields = this.state.draggableFields;
+
+    //     //Dropped into the same list
+    //     if (source.droppableId === destination.droppableId) {
+    //         //Item dropped back into same list, reorder list
+    //         let fieldList = tempDraggableFields[destination.droppableId];
+    //         const movedItem = fieldList.elements.splice(source.index, 1)[0]
+
+    //         fieldList.elements.splice(destination.index, 0, movedItem);
+
+    //         tempDraggableFields[destination.droppableId] = fieldList;
+
+    //         this.setState({ draggableFields: tempDraggableFields });
+
+    //     } 
+    //     else {
+    //         //Field dragging into is full
+    //         if (tempDraggableFields[destination.droppableId].elementLimit <= tempDraggableFields[destination.droppableId].elements.length) {
+    //             alert("This field is full");
+    //             return;
+    //         }
+    //         //Element dropped into new list, remove from source and add to destination
+    //         let destinationFieldList = tempDraggableFields[destination.droppableId];
+    //         let sourceFieldList = tempDraggableFields[source.droppableId];
+
+    //         const movedItem = sourceFieldList.elements.splice(source.index, 1)[0];
+
+    //         destinationFieldList.elements.splice(destination.index, 0, movedItem);
+
+    //         tempDraggableFields[destination.droppableId] = destinationFieldList;
+    //         tempDraggableFields[source.droppableId] = sourceFieldList;
+
+    //         this.setState({ draggableFields: tempDraggableFields });
+    //     }
+    // }
 
     render() {
         if(5!=9){
@@ -242,6 +301,7 @@ class CalendarContainer extends React.Component {
 
         let recipeElements = constants.data;
 
+        //onDragEnd={this.handleDragEnd}
         return (
             <DragDropContext onDragEnd={this.handleDragEnd}>
                 <div id="calendar-wrapper" className="grey">
@@ -267,112 +327,11 @@ class CalendarContainer extends React.Component {
                             </div>
                         </div>
                         <div id="calendar-track">
-                            <div id="calendar-day-sun" className="calendar-day">
-                                <h4 className="card-title">Sunday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea droppableId="sunday-field"
-                                                elements={this.state.draggableFields.sundayField.elements}
-                                                isDisabled={false}  //this.state.isDisabled
-                                                // updateGlobalListState={this.handleFieldChange}
-                                                // removeElement={this.handleRemoveElement}
-                                                // addElement={this.handleAddElement}
-                                                // listType="ul"
-                                                tagType={"p"}
-                                            />
-                                </div>
-                            </div>
-                            <div id="calendar-day-mon" className="calendar-day">
-                                <h4 className="card-title">Monday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea 
-                                        droppableId="monday-field"
-                                        elements={this.state.draggableFields.mondayField.elements}
-                                        isDisabled={false}  //this.state.isDisabled
-                                                        // updateGlobalListState={this.handleFieldChange}
-                                                        // removeElement={this.handleRemoveElement}
-                                                        // addElement={this.handleAddElement}
-                                                        // listType="ul"
-                                        tagType={"p"}
-                                    />
-                                </div>
-                            </div>
-                            <div id="calendar-day-tue" className="calendar-day">
-                                <h4 className="card-title">Tuesday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea droppableId="tuesday-field"
-                                                        elements={this.state.draggableFields.tuesdayField.elements}
-                                                        isDisabled={false}  //this.state.isDisabled
-                                                        // updateGlobalListState={this.handleFieldChange}
-                                                        // removeElement={this.handleRemoveElement}
-                                                        // addElement={this.handleAddElement}
-                                                        // listType="ul"
-                                                        tagType={"p"}
-                                                    />
-                                </div>
-                            </div>
-                            <div id="calendar-day-wed" className="calendar-day">
-                                <h4 className="card-title">Wednesday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea droppableId="wednesday-field"
-                                                    elements={this.state.draggableFields.wednesdayField.elements}
-                                                    isDisabled={false}  //this.state.isDisabled
-                                                    // updateGlobalListState={this.handleFieldChange}
-                                                    // removeElement={this.handleRemoveElement}
-                                                    // addElement={this.handleAddElement}
-                                                    // listType="ul"
-                                                    tagType={"p"}
-                                                />
-                                </div>
-                            </div>
-                            <div id="calendar-day-thu" className="calendar-day">
-                                <h4 className="card-title">Thursday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea droppableId="thursday-field"
-                                                    elements={this.state.draggableFields.thursdayField.elements}
-                                                    isDisabled={false}  //this.state.isDisabled
-                                                    // updateGlobalListState={this.handleFieldChange}
-                                                    // removeElement={this.handleRemoveElement}
-                                                    // addElement={this.handleAddElement}
-                                                    // listType="ul"
-                                                    tagType={"p"}
-                                                />
-                                </div>
-                            </div>
-                            <div id="calendar-day-fri" className="calendar-day">
-                                <h4 className="card-title">Friday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea droppableId="friday-field"
-                                                        elements={this.state.draggableFields.fridayField.elements}
-                                                        isDisabled={false}  //this.state.isDisabled
-                                                        // updateGlobalListState={this.handleFieldChange}
-                                                        // removeElement={this.handleRemoveElement}
-                                                        // addElement={this.handleAddElement}
-                                                        // listType="ul"
-                                                        tagType={"p"}
-                                                    />
-                                </div>
-                            </div>
-                            <div id="calendar-day-sat" className="calendar-day">
-                                <h4 className="card-title">Saturday</h4>
-                                <div className="bar sand-dark"></div>
-                                <div className="card-recipes">
-                                    <DroppableArea droppableId="saturday-field"
-                                        elements={this.state.draggableFields.saturdayField.elements}
-                                        isDisabled={false}  //this.state.isDisabled
-                                        // updateGlobalListState={this.handleFieldChange}
-                                        // removeElement={this.handleRemoveElement}
-                                        // addElement={this.handleAddElement}
-                                        // listType="ul"
-                                        tagType={"p"}
-                                    />
-                                </div>
-                            </div>
+                            {this.state.calendarOrder.map(frameID => {
+                                const frame = this.state.frameData[frameID];
+                                const recipes = frame.recipeIDs.map( recipeID => this.state.recipes[recipeID] );
+                                return <Frame key={frame.id} frame={frame} recipes={recipes}></Frame>
+                            })}
                         </div>
                     </div>
                     <div id="recipes-div" className="sand-dark">
@@ -384,16 +343,11 @@ class CalendarContainer extends React.Component {
                         <div id="recipes-header"> 
                             <h2>Recipes</h2>
                         </div>
-                        <div id="recipe-box">
-                            <DroppableArea droppableId="drop-area"
-                                elements={recipeElements}
-                                isDisabled={false}  //this.state.isDisabled
-                                // updateGlobalListState={this.handleFieldChange}
-                                // removeElement={this.handleRemoveElement}
-                                // addElement={this.handleAddElement}
-                                tagType={"p"}
-                            />                        
-                        </div>
+                        <RecipeBox
+                            key="recipeBox"
+                            recipes={this.state.recipeBoxData.recipeIDs.map( recipeID => this.state.recipes[recipeID] )}
+                            isDisabled={this.isDisbaled}
+                        ></RecipeBox>
                     </div>
                 </div>
             </DragDropContext>

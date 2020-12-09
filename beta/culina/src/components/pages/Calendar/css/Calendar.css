@@ -43,13 +43,13 @@
     background-color: #487A90;
 }
 
-.card-recipes {
+.frame-recipes {
     display:flex;
     flex-direction:column;
     justify-content: space-evenly;
 }
 
-.card-title {
+.frame-title {
     margin-top: .5rem;
     margin-bottom: 0.15rem;
     color: #142843;
