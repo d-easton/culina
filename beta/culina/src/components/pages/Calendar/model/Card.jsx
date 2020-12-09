@@ -4,9 +4,13 @@ import styled from 'styled-components';
 
 const CardDiv = styled.div`    
     width: 150px;
+    height: 50px;
     border-radius: 15px; 
+    text-align: center;
+    padding-top: 12.5px;
 
     background-color: #487A90;
+    color: whitesmoke;
 `;
 
 export default class Card extends React.Component {
