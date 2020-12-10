@@ -194,34 +194,32 @@ class CalendarContainer extends React.Component {
 
             // Remove from recipe box
             let updateRecipeBoxData = this.state.recipeBoxData;
-            updateRecipeBoxData.recipeIDs.splice(source.droppableId, 1);
+            updateRecipeBoxData.recipeIDs.splice(source.index, 1);
             this.setState({recipeBoxData: updateRecipeBoxData});
 
             // Add to frame
             let updateFrameData = this.state.frameData;
             // if (updateFrameData[destination["droppableId"]].recipeIDs.length == 0) {
-                updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
+            updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
             // }
             //TODO: not empty
             this.setState({frameData: updateFrameData});
-
-            console.log(this.state);
         }
 
         // move from a frame to recipebox
         else if ( sourceDropId.includes("cal") && destDropId == "recipeBox" ) {
-            console.log("frame to box");
+            // console.log("frame to box");
 
             const draggedRecipe = this.state.recipes[this.state.frameData[source.droppableId].recipeIDs[source.index]];
 
              // remove from frame
             let updateFrameData = this.state.frameData;
-            updateFrameData[source["droppableId"]].recipeIDs.splice(draggedRecipe.id, 1);
+            updateFrameData[source["droppableId"]].recipeIDs.splice(source.index, 1);
             this.setState({frameData: updateFrameData});
 
              // add to recipe box
             let updateRecipeBoxData = this.state.recipeBoxData;
-            let updateRecipeIds = updateRecipeBoxData.recipeIDs.slice(0, destination.index+1);
+            updateRecipeBoxData.recipeIDs.slice(0, destination.index+1);
             updateRecipeBoxData.recipeIDs.push(draggedRecipe.id);
 
             // Maybe use this for dynamic order in calendar
@@ -238,11 +236,8 @@ class CalendarContainer extends React.Component {
 
             // remove from current frame
             let updateFrameData = this.state.frameData;
-            updateFrameData[source["droppableId"]].recipeIDs.splice(draggedRecipe.id, 1);
-            // if (updateFrameData[destination["droppableId"]].recipeIDs.length == 0) {
+            updateFrameData[source["droppableId"]].recipeIDs.splice(source.index, 1);
             updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
-            // }
-
             this.setState({frameData: updateFrameData});
         }
     }
