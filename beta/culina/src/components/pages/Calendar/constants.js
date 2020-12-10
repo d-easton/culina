@@ -8,12 +8,10 @@ const getRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8
 
 
 const recipe1 = {
-    "header": {
-            "title": "4-Hour Chili",
-            "author": "ethan",
-            "display_img": "/path/to/img/bucket",
-            "id": 'recipe1',
-    },
+    "title": "4-Hour Chili",
+    "author": "ethan",
+    "display_img": "/path/to/img/bucket",
+    "id": 'recipe1',
     "ingredients": [
         "4 tablespoons unsalted butter",
         "3 large yellow onions, cut in 1/4-inch half-moons (about 4 cups)",
@@ -27,12 +25,10 @@ const recipe1 = {
     ],
 };
 const recipe2 = {
-    "header": {
-            "title": "Beef Wellington",
-            "author": "jeremie",
-            "display_img": "/path/to/img/bucket",
-            "id": "recipe2",
-    },
+    "title": "Beef Wellington",
+    "author": "jeremie",
+    "display_img": "/path/to/img/bucket",
+    "id": "recipe2",
     "ingredients": [
         "beef",
         "puff pastry",
@@ -44,12 +40,10 @@ const recipe2 = {
     ],
 };
 const recipe3 = {
-    "header": {
-            "title": "Sushi",
-            "author": "emily",
-            "display_img": "/path/to/img/bucket",
-            "id": "recipe3",
-    },
+    "title": "Sushi",
+    "author": "emily",
+    "display_img": "/path/to/img/bucket",
+    "id": "recipe3",
     "ingredients": [
         "fish",
         "vinegar",
@@ -63,11 +57,18 @@ const recipe3 = {
     ],
 };
 const staticTestData = {
+    /*
     recipes : {
         'recipe1': recipe1,
         'recipe2': recipe2,
         'recipe3':  recipe3
     },
+    */
+    recipes : [
+        recipe1,
+        recipe2,
+        recipe3
+    ],
     calendarFrames : {
         'calSun' : {
             'id': 'calSun',

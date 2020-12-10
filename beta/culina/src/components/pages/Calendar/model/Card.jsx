@@ -18,15 +18,15 @@ export default class Card extends React.Component {
         //isDragDisabled={this.props.isDisabled}
         // console.log(this.props.recipe.header.id);
         return (
-            <Draggable draggableId={this.props.recipe.header.id} index={this.props.index} >  
+            <Draggable draggableId={this.props.recipe.id} index={this.props.index} >  
                 { provided => (
                     <CardDiv
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
-                        key={"carddiv"+this.props.key}
+                        key={"carddiv"+this.props.recipe.id}
                     >
-                        {this.props.recipe.header.title}
+                        {this.props.recipe.title}
                     </CardDiv>
                 )}
             </Draggable>

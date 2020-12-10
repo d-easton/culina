@@ -23,6 +23,9 @@ const RecipeBoxList = styled.div`
 
 export default class RecipeBox extends React.Component {
     render() {
+
+        console.log("recipes in RecipeBox = ")
+        console.log(this.props.recipes);
         const dropAreaID = "recipeBox";
         return (
             <Droppable droppableId={dropAreaID}>
