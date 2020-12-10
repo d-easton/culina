@@ -201,63 +201,43 @@ class CalendarContainer extends React.Component {
         // console.log(draggableId);
         
 
-        console.log(source);
-        console.log(destination);
+        // console.log(source);
+        // console.log(destination);
 
 
         const sourceDropId = source["droppableId"];
         const destDropId = destination["droppableId"];
 
-        console.log(sourceDropId);
-        console.log(destDropId);
+        // console.log(sourceDropId);
+        // console.log(destDropId);
 
         // Recipebox internal reorder
         if (sourceDropId == "recipeBox" && destDropId == "recipeBox") {
-            /*
-            const recipeBox = this.state.recipeBoxData;
-            const updatedRecipeIDs = Array.from(recipeBox.recipeIDs);
-            updatedRecipeIDs.splice(source.index, 1);
-            updatedRecipeIDs.splice(destination.index, 0, draggableId);
-
-            const updateRecipeBox = {
-                ...recipeBox,
-                recipeIDs: updatedRecipeIDs,
-            };
-            const updateState = {
-                ...this.state,
-                recipeBoxData: updateRecipeBox
-            }
-            */
-            // console.log(updateState);
-            // console.log(source.index);
-            // console.log(destination.index);
-            //console.log("updatedState = ")
-            //console.log(updateState)
-
-            //this.setState(updateState);
-            let tempRecipes = this.state.recipes;
+            let tempRecipes = Object.values(this.state.recipes);
             const draggedRecipe = tempRecipes.splice(source.index, 1)[0]
             tempRecipes.splice(destination.index, 0, draggedRecipe);
-            this.setState({recipes: tempRecipes});
-            
+            this.setState({recipes: tempRecipes}); 
         }
+        
         // move from recipebox to a frame
         else if ( sourceDropId == "recipeBox" && destDropId.includes("cal") ) {
             console.log("box to frame");
-
-            let tempRecipes = this.state.recipes;
-            const draggedRecipe = tempRecipes.splice(source.index, 1)[0];
-            // const recipeBoxData = this.state.recipeBoxData.recipeIDs;
-            this.setState({recipes: tempRecipes});
-
             
+            let tempRecipes = Object.values(this.state.recipes);
+            const draggedRecipe = tempRecipes[source.index];
+
+            // Remove from recipe box
+            let updateRecipeBoxData = this.state.recipeBoxData;
+            updateRecipeBoxData.recipeIDs.splice(source.droppableId, 1);
+            this.setState({recipeBoxData: updateRecipeBoxData});
+
+            // Add to frame
             let updateFrameData = this.state.frameData;
-            // console.log (updateFrameData[destination["droppableId"]].recipeIDs);
             if (updateFrameData[destination["droppableId"]].recipeIDs.length == 0) {
                 updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
             }
-
             this.setState({frameData: updateFrameData});
+
             console.log(this.state);
         }
         // move from a frame to recipebox
@@ -267,69 +247,11 @@ class CalendarContainer extends React.Component {
         // frame internal
     }
 
-    // handleDragEnd(result) {
-    //     const { source, destination } = result;
-
-    //     // dropped outside the list
-    //     if (!destination) {
-    //         console.log("element not dropped in any droppables, returning to original position");
-    //         return;
-    //     }
-
-    //     let tempDraggableFields = this.state.draggableFields;
-
-    //     //Dropped into the same list
-    //     if (source.droppableId === destination.droppableId) {
-    //         //Item dropped back into same list, reorder list
-    //         let fieldList = tempDraggableFields[destination.droppableId];
-    //         const movedItem = fieldList.elements.splice(source.index, 1)[0]
-
-    //         fieldList.elements.splice(destination.index, 0, movedItem);
-
-    //         tempDraggableFields[destination.droppableId] = fieldList;
-
-    //         this.setState({ draggableFields: tempDraggableFields });
-
-    //     } 
-    //     else {
-    //         //Field dragging into is full
-    //         if (tempDraggableFields[destination.droppableId].elementLimit <= tempDraggableFields[destination.droppableId].elements.length) {
-    //             alert("This field is full");
-    //             return;
-    //         }
-    //         //Element dropped into new list, remove from source and add to destination
-    //         let destinationFieldList = tempDraggableFields[destination.droppableId];
-    //         let sourceFieldList = tempDraggableFields[source.droppableId];
-
-    //         const movedItem = sourceFieldList.elements.splice(source.index, 1)[0];
-
-    //         destinationFieldList.elements.splice(destination.index, 0, movedItem);
-
-    //         tempDraggableFields[destination.droppableId] = destinationFieldList;
-    //         tempDraggableFields[source.droppableId] = sourceFieldList;
-
-    //         this.setState({ draggableFields: tempDraggableFields });
-    //     }
-    // }
-
     render() {
 
-        // let recipeElements = [];
-        // const recipeCardClass = "recipe-cards";
-        // if (this.state.recipeData != null) {
-        //     this.state.recipeData.forEach((element, index) => {
-        //         console.log(element.header["title"]);
-        //         recipeElements.push(
-        //             // <div key={element.header.id} className={recipeCardClass}>
-        //                 <button class="btn btn-info recipe-card">{element.header["title"]}</button>
-        //             // </div>
-        //         );
-        //     });
-        // }
 
         let recipeElements = constants.data;
 
-        //onDragEnd={this.handleDragEnd}
         return (
             <DragDropContext onDragEnd={this.handleDragEnd}>
                 <div id="calendar-wrapper" className="grey">
@@ -358,6 +280,8 @@ class CalendarContainer extends React.Component {
                             {this.state.calendarOrder.map(frameID => {
                                 const frame = this.state.frameData[frameID];
                                 console.log(frame);
+                                console.log(frame.recipeIDs);
+                                console.log(this.state.recipes);
                                 const recipes = frame.recipeIDs.map( recipeID => this.state.recipes[recipeID] );
                                 console.log(recipes);
                                 return <Frame key={frame.id} frame={frame} recipes={recipes}></Frame>
@@ -375,7 +299,7 @@ class CalendarContainer extends React.Component {
                         </div>
                         <RecipeBox
                             key="recipeBox"
-                            recipes={this.state.recipes}
+                            recipes= {this.state.recipeBoxData.recipeIDs.map( recipeID => this.state.recipes[recipeID])}  //{Object.values(this.state.recipes)}
                             isDisabled={this.isDisbaled}
                         ></RecipeBox>
                     </div>

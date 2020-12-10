@@ -64,11 +64,11 @@ const staticTestData = {
         'recipe3':  recipe3
     },
     */
-    recipes : [
-        recipe1,
-        recipe2,
-        recipe3
-    ],
+    recipes : {
+        "recipe1": recipe1,
+        "recipe2": recipe2,
+        "recipe3": recipe3
+    },
     calendarFrames : {
         'calSun' : {
             'id': 'calSun',
