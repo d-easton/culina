@@ -44,6 +44,8 @@ class CalendarContainer extends React.Component {
         //     }, 
         // };
 
+        console.log("recipes = ")
+        console.log(constants.data.recipes);
         this.state = {
             // calenderID: 0,
             // calendar: "",
@@ -182,7 +184,10 @@ class CalendarContainer extends React.Component {
 
     //Passed to DragDropContext to handle drag ends
     handleDragEnd = result => {
+        console.log(result);
         const { destination, source, draggableId } = result;
+        //console.log("draggableID = ") 
+        //console.log(draggableId)
 
         console.log(destination);
         // no valid dest (dropped outside droppable)
@@ -225,6 +230,7 @@ class CalendarContainer extends React.Component {
         console.log(destination);
         // Recipebox internal reorder
         if (source.droppableId == "recipeBox" && destination.droppableId == "recipeBox") {
+            /*
             const recipeBox = this.state.recipeBoxData;
             const updatedRecipeIDs = Array.from(recipeBox.recipeIDs);
             updatedRecipeIDs.splice(source.index, 1);
@@ -238,10 +244,22 @@ class CalendarContainer extends React.Component {
                 ...this.state,
                 recipeBoxData: updateRecipeBox
             }
+            */
             // console.log(updateState);
             // console.log(source.index);
             // console.log(destination.index);
-            this.setState(updateState);
+            //console.log("updatedState = ")
+            //console.log(updateState)
+
+            //this.setState(updateState);
+            let tempRecipes = this.state.recipes;
+            console.log("tempRecipes before swap")
+            console.log(tempRecipes)
+            const draggedRecipe = tempRecipes.splice(source.index, 1)[0]
+            tempRecipes.splice(destination.index, 0, draggedRecipe);
+            console.log("tempRecipes after swap")
+            console.log(tempRecipes);
+
         }
         else if (source.droppableId == "recipeBox" && (destination.droppableId.toLowercase()).includes("cal")) {
             console.log("kkkk");
@@ -331,8 +349,8 @@ class CalendarContainer extends React.Component {
                                 />
                             </div>
                             <div>
-                                <button class="btn btn-light btn-header">Save</button>
-                                <button class="btn btn-light btn-header">Load</button>
+                                <button className="btn btn-light btn-header">Save</button>
+                                <button className="btn btn-light btn-header">Load</button>
                             </div>
                         </div>
                         <div id="calendar-track">
@@ -354,7 +372,7 @@ class CalendarContainer extends React.Component {
                         </div>
                         <RecipeBox
                             key="recipeBox"
-                            recipes={this.state.recipeBoxData.recipeIDs.map( recipeID => this.state.recipes[recipeID] )}
+                            recipes={this.state.recipes}
                             isDisabled={this.isDisbaled}
                         ></RecipeBox>
                     </div>
