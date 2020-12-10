@@ -25,7 +25,6 @@ const recipe1 = {
         "In a small saucepan, add the honey, butter and salt.",
         "Bring to a foaming boil"
     ],
-    "day-code": ""
 };
 const recipe2 = {
     "header": {
@@ -43,7 +42,6 @@ const recipe2 = {
         "make it",
         "eat it"
     ],
-    "day-code": ""
 };
 const recipe3 = {
     "header": {
@@ -63,7 +61,6 @@ const recipe3 = {
         "put the rice on the nori",
         "put the fish on the rice and wrap it all up"
     ],
-    "day-code": ""
 };
 const staticTestData = {
     recipes : {

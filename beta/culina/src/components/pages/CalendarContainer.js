@@ -183,37 +183,46 @@ class CalendarContainer extends React.Component {
     //Passed to DragDropContext to handle drag ends
     handleDragEnd = result => {
         const { destination, source, draggableId } = result;
+
+        console.log(destination);
         // no valid dest (dropped outside droppable)
         if (!destination) {
+            console.log("return on invalid")
             return;
         }
         // no change
         if (destination.droppableId === source.droppableId && destination.index === source.index) {
+            console.log("return on mismatch")
             return;
         }
 
+        console.log(destination);
         // let mode;
         let start;
         let finish;
-        console.log(source);
-        console.log(destination.droppableId);
+        // console.log(source);
+        // console.log(destination.droppableId);
         if (source.droppableId == "recipeBox") {
             start = this.state.recipeBoxData.recipeIDs[source.index];
         }
         else {
             start = this.state.frameData.recipeIDs[source.index];
         }
-        if (destination.droppableId = "recipeBox") {
+        console.log(destination);
+        if (destination.droppableId == "recipeBox") {
             finish = this.state.recipeBoxData.recipeIDs[destination.index];
         }
         else {
             finish = this.state.frameData.recipeIDs[destination.index];
+            
         }
         // console.log(start)
         // console.log(finish)
-        console.log(draggableId);
+        // console.log(draggableId);
         
 
+        // Recipebox to a calendar frame
+        console.log(destination);
         // Recipebox internal reorder
         if (source.droppableId == "recipeBox" && destination.droppableId == "recipeBox") {
             const recipeBox = this.state.recipeBoxData;
@@ -229,10 +238,13 @@ class CalendarContainer extends React.Component {
                 ...this.state,
                 recipeBoxData: updateRecipeBox
             }
-            console.log(updateState);
-            console.log(source.index);
-            console.log(destination.index);
+            // console.log(updateState);
+            // console.log(source.index);
+            // console.log(destination.index);
             this.setState(updateState);
+        }
+        else if (source.droppableId == "recipeBox" && (destination.droppableId.toLowercase()).includes("cal")) {
+            console.log("kkkk");
         }
     }
 
@@ -282,9 +294,6 @@ class CalendarContainer extends React.Component {
     // }
 
     render() {
-        if(5!=9){
-            console.log("hi")
-        }
 
         // let recipeElements = [];
         // const recipeCardClass = "recipe-cards";
