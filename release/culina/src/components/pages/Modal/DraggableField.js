@@ -76,7 +76,8 @@ class DraggableField extends React.Component {
 
         let comments = [];
         let commentDiv = null;
-        let buttons = [<ImageButton childClass="removeButton" key={"remove" + this.props.id} alt={"remove"} imagePath={removeImage} onPress={this.handleRemove} isHidden={this.props.isDisabled} />]
+        console.log("isDragDisabled? " + this.props.isDragDisabled)
+        let buttons = [<ImageButton childClass="removeButton" key={"remove" + this.props.id} alt={"remove"} imagePath={removeImage} onPress={this.handleRemove} isHidden={this.props.isDisabled || this.props.isDragDisabled} />]
         if (this.props.comments) {
             if (this.state.showComments) {
                 comments = this.props.comments.map((comment, index) =>
@@ -102,6 +103,7 @@ class DraggableField extends React.Component {
                 }
                 commentDiv = (
                     <div className="commentsDiv" isHidden={!this.state.showComments}>
+                        <h4>Comments:</h4>
                         <ImageButton childClass={"addButton"} isHidden={this.props.isDisabled} key={"add-comment" + this.props.id} alt={"add comment"} imagePath={addIcon} onPress={this.addComment} />
                         {comments}
                     </div>
@@ -118,24 +120,23 @@ class DraggableField extends React.Component {
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                     >
-                        <img className="dragIcon" src={dragIcon} alt="Move" hidden={this.props.isDisabled} {...provided.dragHandleProps}/>
-                        <EditableRecipeField
-                            className="listElement"
-                            tagName={this.props.tagType}
-                            key={"editableField"+this.props.id}
-                            childKey={"contentEditable" + this.props.id}
-                            id={this.props.id}
-                            onChange={this.passOnChange}
-                            html={this.props.html}
-                            disabled={this.props.isDisabled}
-                        />
-                        {buttons}
-                        {commentDiv}
+                            <img className="dragIcon" src={dragIcon} alt="Move" hidden={this.props.isDisabled || this.props.isDragDisabled} {...provided.dragHandleProps}/>
+                            <EditableRecipeField
+                                className="editableField"
+                                tagName={this.props.tagType}
+                                key={"editableField"+this.props.id}
+                                childKey={"contentEditable" + this.props.id}
+                                id={this.props.id}
+                                onChange={this.passOnChange}
+                                html={this.props.html}
+                                disabled={this.props.isDisabled}
+                            />
+                            {buttons}
+                            {commentDiv}
                     </div>
                 )}
             </Draggable>
             );
-        //C: \Users\eth12\source\repos\culina\alpha\frontend\src\imgs\close_icon.png
     }
 
     componentWillUnmount() {

@@ -373,13 +373,14 @@ class RecipeModal extends React.Component {
                             <div className="recipeCard">
                                 <div className="recipeHeader">
                                     <DragDropContext onDragEnd={this.handleDragEnd}>
-                                        <DroppableField  droppableId="titleField"
-                                            elements={this.state.draggableFields.titleField.elements}
-                                            isDisabled={this.state.isDisabled}
-                                            updateGlobalListState={this.handleFieldChange}
-                                            removeElement={this.handleRemoveElement}
-                                            addElement={this.handleAddElement}
-                                            tagType={"h1"}
+                                    <DroppableField droppableId="titleField"
+                                        elements={this.state.draggableFields.titleField.elements}
+                                        isDisabled={this.state.isDisabled}
+                                        updateGlobalListState={this.handleFieldChange}
+                                        removeElement={this.handleRemoveElement}
+                                        addElement={this.handleAddElement}
+                                        tagType={"h1"}
+                                        isDragDisabled={true}
                                         />
                                     </DragDropContext>
                                     {authorField}
