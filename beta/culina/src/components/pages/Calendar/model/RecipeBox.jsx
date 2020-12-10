@@ -1,8 +1,6 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-// import DroppableArea from './DroppableArea.js';
-// import RecipeCardList from './RecipeCardList.jsx';
 import Card from './Card.jsx';
 
 const RecipeBoxList = styled.div`
@@ -23,15 +21,10 @@ const RecipeBoxList = styled.div`
 
 export default class RecipeBox extends React.Component {
     render() {
-
-        // console.log("recipes in RecipeBox = ")
-        // console.log(this.props.recipes);
         const dropAreaID = "recipeBox";
         return (
             <Droppable droppableId={dropAreaID}>
                  {provided => (
-                        // id="recipe-box"
-                        // key="recipeBox"
                      <RecipeBoxList ref = {provided.innerRef}  {...provided.droppableProps} >
                          {this.props.recipes.map( (recipe, index) => (
                             <Card key={recipe.id} recipe={recipe} index={index} />

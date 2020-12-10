@@ -57,13 +57,6 @@ const recipe3 = {
     ],
 };
 const staticTestData = {
-    /*
-    recipes : {
-        'recipe1': recipe1,
-        'recipe2': recipe2,
-        'recipe3':  recipe3
-    },
-    */
     recipes : {
         "recipe1": recipe1,
         "recipe2": recipe2,
@@ -107,11 +100,9 @@ const staticTestData = {
         }
     },
     recipeBox: {
-        // "recipeBox":{
-            'id': 'recipeBox',
-            'title': 'Recipes',
-            'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
-        // }
+        'id': 'recipeBox',
+        'title': 'Recipes',
+        'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
     },
     calendarOrder : ['calSun', 'calMon', 'calTue', 'calWed', 'calThu', 'calFri', 'calSat']
 }

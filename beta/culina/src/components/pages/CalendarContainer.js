@@ -164,12 +164,10 @@ class CalendarContainer extends React.Component {
   
         // no valid dest (dropped outside droppable)
         if (!destination) {
-            console.log("return on invalid")
             return;
         }
         // no change
         if (destination.droppableId === source.droppableId && destination.index === source.index) {
-            console.log("return on mismatch")
             return;
         }
 
@@ -182,14 +180,12 @@ class CalendarContainer extends React.Component {
 
             let updateRecipeBoxData = this.state.recipeBoxData;
             updateRecipeBoxData.recipeIDs.splice(destination.index, 0, updateRecipeBoxData.recipeIDs.splice(source.index, 1)[0]);
-            console.log(updateRecipeBoxData.recipeIDs);
             this.setState({recipeBoxData: updateRecipeBoxData}); 
         }
 
         // move from recipebox to a frame
         else if ( sourceDropId == "recipeBox" && destDropId.includes("cal") ) {
-            console.log("box to frame");
-     
+
             const draggedRecipe = this.state.recipes[this.state.recipeBoxData.recipeIDs[source.index]];
 
             // Remove from recipe box
@@ -199,10 +195,8 @@ class CalendarContainer extends React.Component {
 
             // Add to frame
             let updateFrameData = this.state.frameData;
-            // if (updateFrameData[destination["droppableId"]].recipeIDs.length == 0) {
             updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
-            // }
-            //TODO: not empty
+
             this.setState({frameData: updateFrameData});
         }
 
@@ -221,10 +215,6 @@ class CalendarContainer extends React.Component {
             let updateRecipeBoxData = this.state.recipeBoxData;
             updateRecipeBoxData.recipeIDs.slice(0, destination.index+1);
             updateRecipeBoxData.recipeIDs.push(draggedRecipe.id);
-
-            // Maybe use this for dynamic order in calendar
-            // updateRecipeIds.concat(updateRecipeBoxData.recipeIDs.slice(destination.index, updateRecipeBoxData.recipeIDs));
-            // updateRecipeBoxData.recipeIDs = updateRecipeIds;
 
             this.setState({recipeBoxData: updateRecipeBoxData});
         }
@@ -274,11 +264,7 @@ class CalendarContainer extends React.Component {
                         <div id="calendar-track">
                             {this.state.calendarOrder.map(frameID => {
                                 const frame = this.state.frameData[frameID];
-                                // console.log(frame);
-                                // console.log(frame.recipeIDs);
-                                // console.log(this.state.recipes);
                                 const recipes = frame.recipeIDs.map( recipeID => this.state.recipes[recipeID] );
-                                // console.log(recipes);
                                 return <Frame key={frame.id} frame={frame} recipes={recipes}></Frame>
                             })}
                         </div>
