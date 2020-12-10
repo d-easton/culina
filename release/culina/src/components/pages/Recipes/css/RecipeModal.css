@@ -190,8 +190,8 @@
     background: white;
     border-radius: 7px;
     padding: 10px;
-    box-shadow: 10px 10px rgba(0,0,0,.15);
 }
+
 
 .recipeList {
     /*Lists in main container recipe card*/
@@ -289,16 +289,34 @@
 .draggableField {
     /*Draggable Elements in recipe modal*/
     background: inherit;
+    padding-right: 20px;
     position: relative;
 }
 
 .draggableField.enabled {
     padding-left: 30px;
+    padding-right: 50px;
     border: 1px solid gray;
     border-radius: 5px;
 }
 
-.removeButton, .addButton, .dragIcon {
+.commentsDiv{
+    background: gray;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    transition: all .4s ease;
+    position: relative;
+    min-height: 25px;
+}
+
+.comment{
+    position: relative;
+    border-radius: 5px;
+    background: white;
+}
+
+.removeButton, .addButton, .dragIcon, .commentButton {
     /*CSS Common for all icons*/
     height: 20px;
 
@@ -318,6 +336,26 @@
     top: 0;
     right: 0;
     bottom: 0;
+}
+
+.commentButton {
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.commentButton.editing{
+    right: 30px;
+    border: 2px solid green;
+}
+
+.contentEditable{
+    overflow-wrap:anywhere;
+}
+h1.contentEditable{
+    white-space: unset;
+    overflow: unset;
+    text-overflow: unset;
 }
 
 .dragIcon {

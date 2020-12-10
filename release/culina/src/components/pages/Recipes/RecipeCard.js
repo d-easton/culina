@@ -14,11 +14,11 @@ class RecipeCard extends React.Component {
     render() {
         const ingredientElements = [];
         this.props.recipe.ingredients.forEach((ing, index) => {
-            ingredientElements.push(<li className="listElement" key={index}>{ing}</li>);
+            ingredientElements.push(<li className="listElement" key={index}>{ing.text}</li>);
         });
         const stepElements = [];
         this.props.recipe.steps.forEach((step, index) => {
-            stepElements.push(<li className="listElement" key={index}>{step}</li>);
+            stepElements.push(<li className="listElement" key={index}>{step.text}</li>);
         });
         return (
 

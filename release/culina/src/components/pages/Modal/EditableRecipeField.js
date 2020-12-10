@@ -34,7 +34,10 @@ class EditableRecipeField extends React.Component {
         */
         //Updates local state
         this.setState({ html: html, text: text })
-        this.props.onChange(text);
+
+        const commentIndex = this.props.commentIndex != null ? this.props.commentIndex : -1;
+        console.log("commentIndex = " + commentIndex)
+        this.props.onChange(text, commentIndex);
     }
 
     //Strips inputted text of any html tags
@@ -57,6 +60,7 @@ class EditableRecipeField extends React.Component {
             onChange={this.handleChange}        //Function that is fired when the field is changed
             tagName={tag}        //The type of html element to render
             key={this.props.childKey}           //Key used for React rerendering
+            className="contentEditable"
         />
         );
     }

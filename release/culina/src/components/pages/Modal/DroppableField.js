@@ -28,6 +28,8 @@ class DroppableField extends React.Component {
     render() {
 
         let draggables = null;
+
+        //console.log(this.props.elements)
         if (this.props.listType) {
             draggables = this.props.elements.map((elementJSON, index) =>
                 <li key={"li"+ elementJSON.id}>
@@ -39,7 +41,8 @@ class DroppableField extends React.Component {
                         tagType={this.props.tagType}
                         passChangeOn={this.passChangeOn}
                         handleRemove={this.passRemoveOn}
-                        html={elementJSON.content}
+                        html={elementJSON.content.text}
+                        comments={elementJSON.content.comments}
                     />
                 </li>
             );

@@ -40,6 +40,8 @@ class RecipeModal extends React.Component {
         }
         let maxElementLimit = 50;
 
+        console.log("ingredientElements = ")
+        console.log(ingElements)
         if (this.props.recipe != null) {
             this.state = {
                 title: this.props.recipe.title,
@@ -72,6 +74,7 @@ class RecipeModal extends React.Component {
                     nextElementID: elementCount           //Used for adding new elements
                 }
             }
+
         }
 
         //Function binding
@@ -88,6 +91,7 @@ class RecipeModal extends React.Component {
         this.handleRemoveElement = this.handleRemoveElement.bind(this);
         this.handleAddElement = this.handleAddElement.bind(this);
         this.handleAuthorChange = this.handleAuthorChange.bind(this);
+        this.handleCommentsChange = this.handleCommentsChange.bind(this);
 
 
         this.titleDivRef = React.createRef();
@@ -123,7 +127,11 @@ class RecipeModal extends React.Component {
         let fieldInfo = tempDraggableFields[fieldID];
         fieldInfo.elements.forEach((element, index) => {
             if (element.id == elementID) {
-                fieldInfo.elements[index].content = value;
+                if (fieldID == "titleField") {
+                    fieldInfo.elements[index].content = value;
+                } else {
+                    fieldInfo.elements[index].content = value;
+                }
             }
         });
         tempDraggableFields[fieldID] = fieldInfo;
@@ -131,7 +139,16 @@ class RecipeModal extends React.Component {
     }
 
     handleAuthorChange(value) {
-        this.setState({ author: value });
+        this.setState({author : value });
+    }
+    handleCommentsChange(commentIndex, value) {
+        let tempArray = this.state.comments;
+        tempArray.forEach((element, index) => {
+            if (element.list == commentIndex.list && element.element == commentIndex.element) {
+                tempArray[index].comment = value;
+            }
+        })
+        this.setState({comments: tempArray})
     }
 
     //Enables editing of a card
@@ -157,6 +174,7 @@ class RecipeModal extends React.Component {
             steps.push(element.content);
         })
         
+
         const savedRecipe = {
             "id": this.props.recipe.id,
             "email": this.state.email,
@@ -166,6 +184,8 @@ class RecipeModal extends React.Component {
             "steps": steps 
         }
 
+        console.log("exported: ")
+        console.log(savedRecipe)
         this.setState({ isDisabled: true });
         return savedRecipe;
     }
@@ -327,6 +347,9 @@ class RecipeModal extends React.Component {
                     disabled={this.state.isDisabled}
                 />
              </div>;
+
+        const commentDivs = []
+      
         let ocrField = this.props.ocrResults ? (
             <div className="ocrDiv">
                 <div className="ocrHeader">
@@ -344,46 +367,53 @@ class RecipeModal extends React.Component {
             </div>) : null;
 
         return (
-            <DragDropContext onDragEnd={this.handleDragEnd}>
                 <div className="grayedBackground">
                     <div className="modal recipeModal">
                         <div className={this.props.ocrResults ? "mainRecipeDiv ocrActive" : "mainRecipeDiv"}>
                             <div className="recipeCard">
                                 <div className="recipeHeader">
-                                    <DroppableField  droppableId="titleField"
-                                        elements={this.state.draggableFields.titleField.elements}
-                                        isDisabled={this.state.isDisabled}
-                                        updateGlobalListState={this.handleFieldChange}
-                                        removeElement={this.handleRemoveElement}
-                                        addElement={this.handleAddElement}
-                                        tagType={"h1"}
-                                    />
+                                    <DragDropContext onDragEnd={this.handleDragEnd}>
+                                        <DroppableField  droppableId="titleField"
+                                            elements={this.state.draggableFields.titleField.elements}
+                                            isDisabled={this.state.isDisabled}
+                                            updateGlobalListState={this.handleFieldChange}
+                                            removeElement={this.handleRemoveElement}
+                                            addElement={this.handleAddElement}
+                                            tagType={"h1"}
+                                        />
+                                    </DragDropContext>
                                     {authorField}
                                     <hr/>
                                 </div>
                                 <div className="recipeBody">
                                     <div className="recipeInnerBody">
                                         <h3>Ingredients:</h3>
-                                        <DroppableField droppableId="ingredientsField"
-                                            elements={this.state.draggableFields.ingredientsField.elements}
-                                            isDisabled={this.state.isDisabled}
-                                            updateGlobalListState={this.handleFieldChange}
-                                            removeElement={this.handleRemoveElement}
-                                            addElement={this.handleAddElement}
-                                            listType="ul"
-                                            tagType={"p"}
-                                        />
+                                        <DragDropContext onDragEnd={this.handleDragEnd}>
+                                            <DroppableField droppableId="ingredientsField"
+                                                elements={this.state.draggableFields.ingredientsField.elements}
+                                                isDisabled={this.state.isDisabled}
+                                                updateGlobalListState={this.handleFieldChange}
+                                                removeElement={this.handleRemoveElement}
+                                                addElement={this.handleAddElement}
+                                                listType="ul"
+                                                tagType={"p"}
+                                            />
+                                        </DragDropContext>
 
                                         <h3>Steps:</h3>
-                                        <DroppableField droppableId="stepsField"
-                                            elements={this.state.draggableFields.stepsField.elements}
-                                            isDisabled={this.state.isDisabled}
-                                            updateGlobalListState={this.handleFieldChange}
-                                            removeElement={this.handleRemoveElement}
-                                            addElement={this.handleAddElement}
-                                            listType="ol"
-                                            tagType={"p"}
-                                        />
+                                        <DragDropContext onDragEnd={this.handleDragEnd}>
+                                            <DroppableField droppableId="stepsField"
+                                                elements={this.state.draggableFields.stepsField.elements}
+                                                isDisabled={this.state.isDisabled}
+                                                updateGlobalListState={this.handleFieldChange}
+                                                removeElement={this.handleRemoveElement}
+                                                addElement={this.handleAddElement}
+                                                listType="ol"
+                                                tagType={"p"}
+                                            />
+                                        </DragDropContext>
+                                    </div>
+                                    <div className="commentSection">
                                     </div>
                                 </div>
                             </div>
@@ -393,7 +423,6 @@ class RecipeModal extends React.Component {
                   
                     </div>
                 </div>
-            </DragDropContext>
             );
     }
 }

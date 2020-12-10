@@ -10,6 +10,41 @@ class RecipeContainer extends React.Component {
     constructor(props) {
         super(props);
 
+        //FOR TESTING COMMENTS
+        const testCommentRecipe = {
+            author: "Austin Evans",
+            email: "test2@gmail.com",
+            id: 12345,
+            ingredients: [
+                {
+                    text: "Chicken",
+                    comments: ["go for breasts next time"]
+                },
+                {
+                    text: "Salt",
+                    comments: []
+                },
+                {
+                    text: "Pepper",
+                    comments: []
+                }
+            ],
+            steps: [
+                {
+                    text: "Season chicken with salt and pepper",
+                    comments: ["add more salt next time"]
+                },
+                {
+                    text: "Bake in oven at 375 for 40 minutes",
+                    comments: []
+                }
+            ],
+            title: "Baked Chicken",
+        }
+
+        const testData = [testCommentRecipe]
+
+        console.log(testData)
         this.state = {
             showModalRC: false,
             showNewCardOption: false,
@@ -22,7 +57,7 @@ class RecipeContainer extends React.Component {
                 ingredients: [],
                 steps: []
             },
-            recipes: [],
+            recipes: testData,
             ocrOutput: null,
             email: props.user.email
         }
@@ -42,7 +77,8 @@ class RecipeContainer extends React.Component {
         this.uploadField = React.createRef();
 
         //UNDO AFTER SERVER FIXED
-        this.fetchData();
+       
+        //this.fetchData();
     }
 
     fetchData() {
@@ -62,24 +98,26 @@ class RecipeContainer extends React.Component {
             console.log(res.data);
             //DELETE AFTER OCR SET IN FIRESTORE
             */
+           
 
-            this.setData(res);
+            this.setData(res.data);
         });
     }
 
-    setData(res) {
-        if (res.data == null) {
+    setData(data) {
+        if (data == null) {
             this.setState({ recipes: [] });
         } else {
             let ocr = null;
-            res.data.forEach((element, index) => {
+            data.forEach((element, index) => {
                 if (element.id == "ocrOutput") {
                     ocr = element.output;
-                    res.data.splice(index, 1);
+                    data.splice(index, 1);
                     this.setState({ modalRecipe: this.state.defaultRecipe, isNewCard: true });
                 }
             });
-            this.setState({ recipes: res.data, ocrOutput: ocr });
+            console.log(data);
+            this.setState({ recipes: data, ocrOutput: ocr});
         }
     }
     closeModal() {
@@ -160,6 +198,7 @@ class RecipeContainer extends React.Component {
         this.state.recipes.forEach((recipe, index) => {
             recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModalRC} modalEnabled={renderModal} />);
         });
+
 
         let modal = null;
         let bodyOverflow = "scroll";
