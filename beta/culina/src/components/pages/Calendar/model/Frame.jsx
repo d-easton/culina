@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const CardList = styled.div`
     margin: 3px;
-    min-height: 100px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -16,8 +16,8 @@ const CardList = styled.div`
 
 export default class Frame extends React.Component {
     render() {
-        console.log("recipes in frame "+this.props.frame.id+" = ");
-        console.log(this.props.recipes);
+        // console.log("recipes in frame "+this.props.frame.id+" = ");
+        // console.log(this.props.recipes);
         return (
             <div id={this.props.frame.id} className="calendar-day">
                 <h4 className="frame-title">{this.props.frame.title}</h4>
