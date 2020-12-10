@@ -108,7 +108,7 @@ const staticTestData = {
     },
     recipeBox: {
         // "recipeBox":{
-            'id': 'calRecipeBox',
+            'id': 'recipeBox',
             'title': 'Recipes',
             'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
         // }
