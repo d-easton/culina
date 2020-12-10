@@ -8,6 +8,8 @@ const CardDiv = styled.div`
     border-radius: 15px; 
     text-align: center;
     padding-top: 12.5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 
     background-color: #487A90;
     color: whitesmoke;
