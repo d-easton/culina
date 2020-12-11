@@ -40,6 +40,8 @@ class CalendarContainer extends React.Component {
 
         this.getData = this.getData.bind(this);
         this.setData = this.setData.bind(this);
+        this.exportData = this.exportData.bind(this);
+
         this.onChange = this.onChange.bind(this);
         this.buildCalendarObj = this.buildCalendarObj.bind(this);
     
@@ -127,8 +129,6 @@ class CalendarContainer extends React.Component {
     }
     
     setData(res, mode) {
-        console.log(mode);
-        console.log(res);
         const CALENDAR = constants.calendarCode;
         const RECIPE = constants.recipeCode;
         const staticTestData = constants.data;
@@ -157,7 +157,6 @@ class CalendarContainer extends React.Component {
 
                 this.setState({ recipes: recipeDict });
                 this.setState({ recipeBoxData: updateRecipeBoxData });
-                console.log(this.state);
             }
         }
         else {
@@ -165,6 +164,22 @@ class CalendarContainer extends React.Component {
             console.log('err', err);
         }
         // console.log(this.state.recipeData);
+    }
+
+    exportData () {
+        let payload = [];
+
+        this.state.calendarOrder.map(frameID => {
+            this.state.frameData[frameID].recipeIDs.map( recipeID => {
+                payload.push( this.state.recipes[recipeID] );
+            });
+        });
+
+        // TODO: export data to grocery list
+            // at this point, payload is an array of JSON objects representing all those recipes currently in the calendar cards
+            // Recipes in the payload are not associated with days. I can add this information back in in the form of another array, or
+            // be restructuring payload to be a day name: recipe info dictionary. Lmk if you want me to do that
+        console.log(payload);
     }
 
     onChange(id, newTitle) {
@@ -220,7 +235,6 @@ class CalendarContainer extends React.Component {
             updateRecipeBoxData.recipeIDs.splice(source.index, 1);
             this.setState({recipeBoxData: updateRecipeBoxData});
 
-            console.log(draggedRecipe.id);
             // Add to frame
             let updateFrameData = this.state.frameData;
             updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
@@ -261,7 +275,6 @@ class CalendarContainer extends React.Component {
 
     render() {
 
-
         let recipeElements = constants.data;
 
         return (
@@ -284,6 +297,7 @@ class CalendarContainer extends React.Component {
                                 />
                             </div>
                             <div>
+                                <button className="btn btn-light btn-header" onClick={this.exportData}>Export</button>
                                 <button className="btn btn-light btn-header">Save</button>
                                 <button className="btn btn-light btn-header">Load</button>
                             </div>
