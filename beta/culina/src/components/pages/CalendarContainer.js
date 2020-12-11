@@ -49,12 +49,23 @@ class CalendarContainer extends React.Component {
     componentDidMount() {
         this._mounted = true;
         // this.getData(constants.calendarCode);
-        this.getData(constants.recipeCode);
+        // this.getData(constants.recipeCode);
+        this.fetchData()
     }
 
     componentWillUnmount() {
         this._mounted = false;
     }
+
+    fetchData() {
+        axios.post(constants.getRecipeURL, {
+            "Email": this.state.email,
+        },
+        ).then(res => {
+            this.setData(res.data, constants.recipeCode );
+        });
+    }
+
 
     getData(mode) {
         let header = {
@@ -116,6 +127,8 @@ class CalendarContainer extends React.Component {
     }
     
     setData(res, mode) {
+        console.log(mode);
+        console.log(res);
         const CALENDAR = constants.calendarCode;
         const RECIPE = constants.recipeCode;
         const staticTestData = constants.data;
@@ -128,9 +141,23 @@ class CalendarContainer extends React.Component {
         }
         else if (mode == RECIPE) {
             if (res == null) {
-                // this.setState({ recipeData: staticTestData });    //[]
+                this.setState({ recipeData: staticTestData });    //[]
             } else {
-                this.setState({ recipeData: res});
+
+                let recipeDict = {};
+                let titles = [];
+                res.forEach((element)=>{
+                    recipeDict[element.id] = element;
+                    titles.push(element.id);
+                })
+                
+                // console.log(this.state);
+                const updateRecipeBoxData = this.state.recipeBoxData;
+                updateRecipeBoxData.recipeIDs = titles;
+
+                this.setState({ recipes: recipeDict });
+                this.setState({ recipeBoxData: updateRecipeBoxData });
+                console.log(this.state);
             }
         }
         else {
@@ -193,10 +220,10 @@ class CalendarContainer extends React.Component {
             updateRecipeBoxData.recipeIDs.splice(source.index, 1);
             this.setState({recipeBoxData: updateRecipeBoxData});
 
+            console.log(draggedRecipe.id);
             // Add to frame
             let updateFrameData = this.state.frameData;
             updateFrameData[destination["droppableId"]].recipeIDs.push(draggedRecipe.id);
-
             this.setState({frameData: updateFrameData});
         }
 

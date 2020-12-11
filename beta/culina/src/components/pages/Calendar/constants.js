@@ -4,7 +4,7 @@ const RECIPE = 1;
 
 // axios URLs
 const getCalendarURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
-const getRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
+const getRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
 
 
 const recipe1 = {

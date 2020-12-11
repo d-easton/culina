@@ -18,7 +18,7 @@ const CardDiv = styled.div`
 export default class Card extends React.Component {
     render() {
         return (
-            <Draggable draggableId={this.props.recipe.id} index={this.props.index} >  
+            <Draggable draggableId={""+this.props.recipe.id} index={this.props.index} >  
                 { provided => (
                     <CardDiv
                         {...provided.draggableProps}
