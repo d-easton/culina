@@ -12,6 +12,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const axios = require('axios');
 // this is an incorrect url, just there to test ^
+const updateGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
+const addGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addItemToList";
+const getGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
+
 
 class CalendarContainer extends React.Component {
     // config
@@ -168,18 +172,46 @@ class CalendarContainer extends React.Component {
 
     exportData () {
         let payload = [];
+        let ingredients = [];
 
+        //gets all the ingredients from calendar and pushes onto payload array
         this.state.calendarOrder.map(frameID => {
             this.state.frameData[frameID].recipeIDs.map( recipeID => {
                 payload.push( this.state.recipes[recipeID] );
             });
         });
 
-        // TODO: export data to grocery list
-            // at this point, payload is an array of JSON objects representing all those recipes currently in the calendar cards
-            // Recipes in the payload are not associated with days. I can add this information back in in the form of another array, or
-            // be restructuring payload to be a day name: recipe info dictionary. Lmk if you want me to do that
-        console.log(payload);
+        //gets all the current items on the list through user's email
+        //pushes onto ingredients array
+        const getL = {
+            "email": this.state.email
+        }
+        axios.post(getGroceryListURL, getL)
+            .then(response => {
+                console.log(response.data[0].ingredients);
+                if(this._mounted) {
+                    this.setData(response.data[0].ingredients.forEach(element => {
+                        ingredients.push(element);
+                    }))
+                    //Once current list is mounted, push new ingredients from calendar
+                    //onto ingredients array
+                    payload.forEach(element =>  {
+                        console.log(element.ingredients);
+                        element.ingredients.forEach(element => {
+                            ingredients.push(element);
+                        })
+                    });
+                    //update grocery list with new ingredients array
+                    const savedList = {
+                        "id": 0,
+                        "email": this.state.email,
+                        "ingredients": ingredients
+                    }
+                    this.setState({ isDisabled: true });
+                    axios.put(updateGroceryListURL, savedList)
+                    .catch(err => console.log('err', err));
+                }
+            })
     }
 
     onChange(id, newTitle) {
