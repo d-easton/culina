@@ -1,6 +1,5 @@
 /*Recipe Container*/
 .recipeContainer {
-    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -11,9 +10,10 @@
     background-size: cover;
 }
 
-    .recipeContainer button {
-        background: #212529;
-    }
+
+.recipeContainer button {
+    background: #212529;
+}
 
 /*Recipe Modal*/
 .grayedBackground {
@@ -107,6 +107,7 @@
     padding: 15px 0 0 0;
     /*color: #1b1b1c;*/
     color: white;
+
     grid-column: 1/1;
     grid-row: 1/1;
     display: grid;
@@ -136,7 +137,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 2em;
+    font-size: 30px;
     text-align: left;
 }
 
@@ -146,7 +147,7 @@
     text-overflow: ellipsis;
     grid-row: 2/2;
     grid-column: 2/2;
-    font-size: 1.5em;
+    font-size: 25px;
     text-align: left;
 }
 
@@ -190,8 +191,8 @@
     background: white;
     border-radius: 7px;
     padding: 10px;
-    box-shadow: 10px 10px rgba(0,0,0,.15);
 }
+
 
 .recipeList {
     /*Lists in main container recipe card*/
@@ -269,7 +270,7 @@
 }
 
     .droppableField.enabled {
-        border: 2px dashed black;
+        //border: 2px dashed black;
     }
 
     .droppableField ul, ol {
@@ -281,24 +282,58 @@
     margin: 5px 0;
 }
 
-.recipeHeader .droppableField {
+.recipeHeader .draggableField {
     padding-right: 30px;
+    background: #212529;
 }
 
-
+.recipeInnerBody .draggableFieldInnerDiv {
+    padding: 5px;
+    
+}
 .draggableField {
     /*Draggable Elements in recipe modal*/
-    background: inherit;
+    background: white;
+    padding: 10px 20px 10px 10px;
     position: relative;
+    border: 1px solid gray;
+    border-radius: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    //color: white;
+    //background: #212529;
 }
 
 .draggableField.enabled {
     padding-left: 30px;
-    border: 1px solid gray;
-    border-radius: 5px;
+    padding-right: 60px;
 }
 
-.removeButton, .addButton, .dragIcon {
+.recipeHeader .draggableField{
+}
+.commentsDiv{
+    background-color: rgba(100, 100, 100, 0.5);
+    margin: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    transition: all .4s ease;
+    position: relative;
+    min-height: 25px;
+}
+
+.commentsDiv h4{
+    font-size: 1em;
+}
+
+.comment{
+    position: relative;
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 10px 30px 10px 15px;
+    margin: 10px;
+}
+
+.removeButton, .addButton, .dragIcon, .commentButton {
     /*CSS Common for all icons*/
     height: 20px;
 
@@ -310,19 +345,41 @@
 .addButton {
     /*CSS for add button*/
     top: 0;
-    right: 0;
+    right: 5px;
 }
 
 .removeButton {
     /*CSS for remove button*/
     top: 0;
-    right: 0;
+    right: 5px;
     bottom: 0;
+}
+
+.commentButton {
+    top: 0;
+    bottom: 0;
+    right: 5px;
+}
+
+.commentButton.editing{
+    right: 35px;
+}
+
+.contentEditable{
+    overflow-wrap:anywhere;
+    margin: 0;
+    //border: 1px solid red;
+}
+
+h1.contentEditable{
+    white-space: unset;
+    overflow: unset;
+    text-overflow: unset;
 }
 
 .dragIcon {
     /*CSS for drag icon*/
-    left: 0;
+    left: 5px;
     top: 0;
     bottom: 0;
 }
