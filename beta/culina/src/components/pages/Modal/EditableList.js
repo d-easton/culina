@@ -54,7 +54,7 @@ class EditableList extends React.Component {
     //Hitting enter creates a new li element
     //X button at end of li element that allows the element to be deleted entirely 
     render() {
-        let elementFields = [];
+        var elementFields = [];
         const classes = (this.props.isDisabled ? "listDiv" : "listDiv enabled");
         this.state.elements.forEach((element, index) => {
             elementFields.push(

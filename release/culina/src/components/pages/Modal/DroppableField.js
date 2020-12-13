@@ -28,6 +28,7 @@ class DroppableField extends React.Component {
     render() {
 
         let draggables = null;
+
         if (this.props.listType) {
             draggables = this.props.elements.map((elementJSON, index) =>
                 <li key={"li"+ elementJSON.id}>
@@ -39,7 +40,8 @@ class DroppableField extends React.Component {
                         tagType={this.props.tagType}
                         passChangeOn={this.passChangeOn}
                         handleRemove={this.passRemoveOn}
-                        html={elementJSON.content}
+                        html={elementJSON.content.text}
+                        comments={elementJSON.content.comments}
                     />
                 </li>
             );
@@ -54,6 +56,7 @@ class DroppableField extends React.Component {
                     passChangeOn={this.passChangeOn}
                     handleRemove={this.passRemoveOn}
                     html={elementJSON.content}
+                    isDragDisabled={this.props.isDragDisabled}
                 />
             );
         }
@@ -73,7 +76,7 @@ class DroppableField extends React.Component {
             <Droppable droppableId={this.props.droppableId}>
                 {provided => (
                     <div
-                        className={this.props.isDisabled ? "droppableField" : "droppableField enabled"}
+                        className={this.props.isDisabled || this.props.isDragDisabled ? "droppableField" : "droppableField enabled"}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >
@@ -81,7 +84,7 @@ class DroppableField extends React.Component {
                         
                         {provided.placeholder}
                         <ImageButton childClass="addButton" key={"add" + this.props.droppableId} alt={"Insert"} imagePath={addImage} onPress={this.handleAdd} id={"add-" + this.props.droppableId}
-                            isHidden={this.props.isDisabled} />
+                            isHidden={this.props.isDisabled || this.props.isDragDisabled} />
                     </div>
                 )}
             </Droppable>

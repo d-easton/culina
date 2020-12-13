@@ -34,12 +34,26 @@ class EditableRecipeField extends React.Component {
         */
         //Updates local state
         this.setState({ html: html, text: text })
-        this.props.onChange(text);
+
+        const commentIndex = this.props.commentIndex != null ? this.props.commentIndex : -1;
+        this.props.onChange(text, commentIndex);
     }
 
     //Strips inputted text of any html tags
     stripHtml(html) {
-        return html.replace(/<br\/*>/g, ' ');
+        //let textToReturn = html.replace(/<br\/*>/g, ' '); 
+        //if (textToReturn.charAT(textToReturn.length - 1) == ' ') {
+            //textToReturn = textToReturn.splice()
+        //}
+        //console.log("pre-stripped = ")
+        //console.log(html)
+        let stripped_text = html.replace(/<br\/*>/g, ' ');
+        //console.log("mid-stripped = ")
+        //console.log(stripped_text)
+        stripped_text = stripped_text.replace(/&nbsp;/g, ' ');
+        //console.log("mid-stripped = ")
+        //console.log(stripped_text)
+        return (stripped_text)
     }
 
     //Renders an editable field
@@ -57,6 +71,7 @@ class EditableRecipeField extends React.Component {
             onChange={this.handleChange}        //Function that is fired when the field is changed
             tagName={tag}        //The type of html element to render
             key={this.props.childKey}           //Key used for React rerendering
+            className="contentEditable"
         />
         );
     }
