@@ -42,7 +42,6 @@ class DraggableField extends React.Component {
             }
             this.props.passChangeOn(this.props.id, content);
         } else {
-            console.log("changing value")
             this.props.passChangeOn(this.props.id, value);
         }
     }
@@ -76,12 +75,11 @@ class DraggableField extends React.Component {
 
         let comments = [];
         let commentDiv = null;
-        console.log("isDragDisabled? " + this.props.isDragDisabled)
         let buttons = [<ImageButton childClass="removeButton" key={"remove" + this.props.id} alt={"remove"} imagePath={removeImage} onPress={this.handleRemove} isHidden={this.props.isDisabled || this.props.isDragDisabled} />]
         if (this.props.comments) {
             if (this.state.showComments) {
                 comments = this.props.comments.map((comment, index) =>
-                    <div className="comment">
+                    <div className="comment" key={"comment-div-" + this.props.id + "-" + index}>
                         <EditableRecipeField
                             className="comment"
                             tagName={"p"}

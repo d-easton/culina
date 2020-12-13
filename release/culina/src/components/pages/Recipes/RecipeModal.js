@@ -40,8 +40,6 @@ class RecipeModal extends React.Component {
         }
         let maxElementLimit = 50;
 
-        console.log("ingredientElements = ")
-        console.log(ingElements)
         if (this.props.recipe != null) {
             this.state = {
                 title: this.props.recipe.title,
@@ -123,6 +121,7 @@ class RecipeModal extends React.Component {
             return;
         }
 
+
         let tempDraggableFields = this.state.draggableFields;
         let fieldInfo = tempDraggableFields[fieldID];
         fieldInfo.elements.forEach((element, index) => {
@@ -173,19 +172,27 @@ class RecipeModal extends React.Component {
         draggableFields.stepsField.elements.forEach(element => {
             steps.push(element.content);
         })
-        
+
 
         const savedRecipe = {
-            "id": this.props.recipe.id,
-            "email": this.state.email,
-            "author": this.state.author,
-            "title": title,
-            "ingredients": ingredients,
-            "steps": steps 
-        }
-
-        console.log("exported: ")
-        console.log(savedRecipe)
+            id: this.props.recipe.id,
+            email: this.state.email,
+            author: this.state.author,
+            image: "url",
+            title: title,
+            // should be false and button fro turning off and on
+            public: true,
+            likes: 0,
+            dislikes: 0,
+            description: "debug",
+            // should be dropdown to select what type of category
+            category: "Lunch",
+            liked: [],
+            disliked: [],
+            // waiting for correct version from ethan
+            ingredients: ingredients,
+            steps: steps
+        } 
         this.setState({ isDisabled: true });
         return savedRecipe;
     }
@@ -248,7 +255,13 @@ class RecipeModal extends React.Component {
             return;
         }
 
-        fieldInfo.elements.push({ content: "New Element", id: tempDraggableFields.nextElementID });
+        fieldInfo.elements.push({
+            content: {
+                text: "New Element",
+                comments: []
+            },
+            id: tempDraggableFields.nextElementID
+            });
 
         tempDraggableFields[fieldID] = fieldInfo;
         tempDraggableFields.nextElementID = tempDraggableFields.nextElementID + 1;

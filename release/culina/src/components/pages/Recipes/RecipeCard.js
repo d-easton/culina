@@ -4,12 +4,24 @@ class RecipeCard extends React.Component {
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
+        this.sendToGroceryList = this.sendToGroceryList.bind(this);
     }
 
+    //EMILY: FUNCTION TO ADD TO GROCERY LIST
+    sendToGroceryList(e) {
+        e.stopPropagation();
+        let ingredients = []
+        this.props.recipe.ingredients.forEach((element) => {
+            ingredients.push(element.text);
+        })
+        console.log(ingredients);
+    }
     handleClick() {
-        console.log(this.props.recipe);
+        console.log("handling click")
         this.props.onClick(this.props.recipe);
     }
+
+ 
 
     render() {
         const ingredientElements = [];
@@ -40,6 +52,7 @@ class RecipeCard extends React.Component {
                         </ol>
                     </div>
                 </div>
+                <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
             </div>
         );
     }

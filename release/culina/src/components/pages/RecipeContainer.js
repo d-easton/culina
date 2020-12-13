@@ -11,6 +11,7 @@ class RecipeContainer extends React.Component {
         super(props);
 
         //FOR TESTING COMMENTS
+        /*
         const testCommentRecipe = {
             author: "Austin Evans",
             email: "test2@gmail.com",
@@ -41,10 +42,10 @@ class RecipeContainer extends React.Component {
             ],
             title: "Baked Chicken",
         }
+*/
+        //const testData = [testCommentRecipe]
 
-        const testData = [testCommentRecipe]
-
-        console.log(testData)
+        //console.log(testData)
         this.state = {
             showModalRC: false,
             showNewCardOption: false,
@@ -57,7 +58,8 @@ class RecipeContainer extends React.Component {
                 ingredients: [],
                 steps: []
             },
-            recipes: testData,
+            //recipes: testData,
+            recipes: [],
             ocrOutput: null,
             email: props.user.email
         }
@@ -77,8 +79,8 @@ class RecipeContainer extends React.Component {
         this.uploadField = React.createRef();
 
         //UNDO AFTER SERVER FIXED
-       
-        //this.fetchData();
+
+        this.fetchData();
     }
 
     fetchData() {
@@ -116,7 +118,6 @@ class RecipeContainer extends React.Component {
                     this.setState({ modalRecipe: this.state.defaultRecipe, isNewCard: true });
                 }
             });
-            console.log(data);
             this.setState({ recipes: data, ocrOutput: ocr});
         }
     }
