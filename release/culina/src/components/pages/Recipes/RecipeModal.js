@@ -193,6 +193,8 @@ class RecipeModal extends React.Component {
             ingredients: ingredients,
             steps: steps
         } 
+        console.log("exported: ")
+        console.log(savedRecipe)
         this.setState({ isDisabled: true });
         return savedRecipe;
     }
