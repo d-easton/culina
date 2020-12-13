@@ -48,7 +48,6 @@ class EditableField extends React.Component {
             tagName={this.props.tagName}
             key={this.props.childKey}
             onBlur={this.endEditing}
-            style={this.props.style}
         />
         );
     }
