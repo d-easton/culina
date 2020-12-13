@@ -4,7 +4,7 @@ const RECIPE = 1;
 
 // axios URLs
 const getCalendarURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
-const getRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
+const getRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
 
 
 const recipe1 = {
@@ -57,18 +57,11 @@ const recipe3 = {
     ],
 };
 const staticTestData = {
-    /*
     recipes : {
-        'recipe1': recipe1,
-        'recipe2': recipe2,
-        'recipe3':  recipe3
+        "recipe1": recipe1,
+        "recipe2": recipe2,
+        "recipe3": recipe3
     },
-    */
-    recipes : [
-        recipe1,
-        recipe2,
-        recipe3
-    ],
     calendarFrames : {
         'calSun' : {
             'id': 'calSun',
@@ -107,11 +100,9 @@ const staticTestData = {
         }
     },
     recipeBox: {
-        // "recipeBox":{
-            'id': 'calRecipeBox',
-            'title': 'Recipes',
-            'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
-        // }
+        'id': 'recipeBox',
+        'title': 'Recipes',
+        'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
     },
     calendarOrder : ['calSun', 'calMon', 'calTue', 'calWed', 'calThu', 'calFri', 'calSat']
 }
