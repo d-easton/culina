@@ -176,14 +176,24 @@ class RecipeModal extends React.Component {
         
 
         const savedRecipe = {
-            "id": this.props.recipe.id,
-            "email": this.state.email,
-            "author": this.state.author,
-            "title": title,
-            "ingredients": ingredients,
-            "steps": steps 
-        }
-
+            id: this.props.recipe.id,
+            email: this.state.email,
+            author: this.state.author,
+            image: "url",
+            title: title,
+            // should be false and button fro turning off and on
+            public: true,
+            likes: 0,
+            dislikes: 0,
+            description: "debug",
+            // should be dropdown to select what type of category
+            category: "Lunch",
+            liked: [],
+            disliked: [],
+            // waiting for correct version from ethan
+            ingredients: ingredients,
+            steps: steps
+        } 
         console.log("exported: ")
         console.log(savedRecipe)
         this.setState({ isDisabled: true });

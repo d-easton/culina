@@ -42,7 +42,19 @@ class EditableRecipeField extends React.Component {
 
     //Strips inputted text of any html tags
     stripHtml(html) {
-        return html.replace(/<br\/*>/g, ' ');
+        //let textToReturn = html.replace(/<br\/*>/g, ' '); 
+        //if (textToReturn.charAT(textToReturn.length - 1) == ' ') {
+            //textToReturn = textToReturn.splice()
+        //}
+        console.log("pre-stripped = ")
+        console.log(html)
+        let stripped_text = html.replace(/<br\/*>/g, ' ');
+        console.log("mid-stripped = ")
+        console.log(stripped_text)
+        stripped_text = stripped_text.replace(/&nbsp;/g, ' ');
+        console.log("mid-stripped = ")
+        console.log(stripped_text)
+        return (stripped_text)
     }
 
     //Renders an editable field
