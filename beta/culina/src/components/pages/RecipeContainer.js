@@ -194,10 +194,10 @@ class RecipeContainer extends React.Component {
 
     render() {
         const renderModal = this.state.showModal || this.state.ocrOutput;
-
+        let _email = this.state.email;
         let recipes = [];
         this.state.recipes.forEach((recipe, index) => {
-            recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModalRC} modalEnabled={renderModal} />);
+            recipes.push(<RecipeCard recipe={recipe} key={index} email={_email} onClick={this.displayModalRC} modalEnabled={renderModal} />);
         });
 
 

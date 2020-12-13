@@ -13,7 +13,6 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 const axios = require('axios');
 // this is an incorrect url, just there to test ^
 const updateGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
-const addGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addItemToList";
 const getGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
 
 
@@ -198,7 +197,7 @@ class CalendarContainer extends React.Component {
                     payload.forEach(element =>  {
                         console.log(element.ingredients);
                         element.ingredients.forEach(element => {
-                            ingredients.push(element);
+                            ingredients.push(element.text);
                         })
                     });
                     //update grocery list with new ingredients array

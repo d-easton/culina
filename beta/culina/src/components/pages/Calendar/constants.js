@@ -102,7 +102,7 @@ const staticTestData = {
     recipeBox: {
         'id': 'recipeBox',
         'title': 'Recipes',
-        'recipeIDs': ['recipe1', 'recipe2', 'recipe3']
+        'recipeIDs': [] //'recipe1', 'recipe2', 'recipe3'
     },
     calendarOrder : ['calSun', 'calMon', 'calTue', 'calWed', 'calThu', 'calFri', 'calSat']
 }

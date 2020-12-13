@@ -1,21 +1,58 @@
 import React from 'react';
+
+const axios = require('axios');
+const updateGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
+const getGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
+
 class RecipeCard extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            email: props.email
+        }
 
         this.handleClick = this.handleClick.bind(this);
         this.sendToGroceryList = this.sendToGroceryList.bind(this);
     }
 
-    //EMILY: FUNCTION TO ADD TO GROCERY LIST
+    //FUNCTION TO ADD TO GROCERY LIST
     sendToGroceryList(e) {
         e.stopPropagation();
+        let payload = []
         let ingredients = []
-        this.props.recipe.ingredients.forEach((element) => {
-            ingredients.push(element.text);
+        //pushes ingredients from specified recipe card to payload array
+        this.props.recipe.ingredients.forEach(element => {
+            payload.push(element.text);
         })
-        console.log(ingredients);
+        //Gets current grocery list from db, pushes onto ingredients array
+        const getL = {
+            "email": this.state.email
+        }
+        axios.post(getGroceryListURL, getL)
+            .then(response => {
+                response.data[0].ingredients.forEach(element => {
+                    ingredients.push(element);
+                })
+                //Once current list is received, push new ingredients from recipe card
+                //onto ingredients array
+                payload.forEach(element =>  {
+                    ingredients.push(element);
+                });
+               
+                //update grocery list with new ingredients array
+                const savedList = {
+                    "id": 0,
+                    "email": this.state.email,
+                    "ingredients": ingredients
+                }
+                this.setState({ isDisabled: true });
+                axios.put(updateGroceryListURL, savedList)
+                .catch(err => console.log('err', err));
+            })
+
     }
+
     handleClick() {
         console.log("handling click")
         this.props.onClick(this.props.recipe);
