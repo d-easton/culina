@@ -25,6 +25,7 @@ const Navbar = (props) => {
                             <RBS.Nav.Link href="/grocery-list">Grocery List</RBS.Nav.Link>
                             <RBS.Nav.Link href="/recipe-list">Recipes</RBS.Nav.Link>
                             <RBS.Nav.Link href="/calendar">Calendar</RBS.Nav.Link>
+                            <RBS.Nav.Link href="/top">Top</RBS.Nav.Link>
                             {/* <RBS.Nav.Link href="/services">Services</RBS.Nav.Link>
                             <RBS.Nav.Link href="/products">Products</RBS.Nav.Link> */}
                         </RBS.Nav>
