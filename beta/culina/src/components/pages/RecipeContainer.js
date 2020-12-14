@@ -279,10 +279,12 @@ class RecipeContainer extends React.Component {
     document.body.style.overflow = modal == null ? "scroll" : "hidden";
 
     return (
-      <div className="recipeContainer">
-        <button onClick={this.displayBlankCard}>New Card</button>
-        {recipes}
-        {modal}
+      <div className="around-page">
+        <div className="recipeContainer">
+          <button onClick={this.displayBlankCard}>New Card</button>
+          {recipes}
+          {modal}
+        </div>
       </div>
     );
   }

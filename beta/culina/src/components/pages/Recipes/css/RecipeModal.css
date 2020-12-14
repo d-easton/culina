@@ -8,6 +8,7 @@
     background-image: url(./images/recipe_container_background.jpg);
     */
   background-size: cover;
+  background: url(./images/food-image.jpg) no-repeat center center fixed;
 }
 
 .recipeContainer button {
@@ -263,7 +264,7 @@
 }
 
 .droppableField.enabled {
-  /* border: 2px dashed black; */
+  //border: 2px dashed black;
 }
 
 .droppableField ul,
@@ -293,8 +294,8 @@ ol {
   border-radius: 5px;
   border: 1px solid gray;
   border-radius: 5px;
-  /* color: white;
-    background: #212529; */
+  //color: white;
+  //background: #212529;
 }
 
 .draggableField.enabled {
@@ -364,7 +365,7 @@ ol {
 .contentEditable {
   overflow-wrap: anywhere;
   margin: 0;
-  /* border: 1px solid red; */
+  //border: 1px solid red;
 }
 
 h1.contentEditable {

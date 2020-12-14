@@ -1,7 +1,5 @@
 import React from "react";
 import GroceryList from "./GroceryList/GroceryList";
-import "./css/GroceryList.css";
-
 const axios = require("axios");
 const addGroceryListURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addItemToList";
@@ -88,15 +86,19 @@ class ListContainer extends React.Component {
   render() {
     if (this.state.showModalGL && this.state.items) {
       return (
-        <div className="listContainer">
-          <button onClick={this.toggleGroceryList}>Close List</button>
-          <GroceryList list={this.state.items} email={this.state.email} />
+        <div className="around-page">
+          <div className="listContainer">
+            <button onClick={this.toggleGroceryList}>Close List</button>
+            <GroceryList list={this.state.items} email={this.state.email} />
+          </div>
         </div>
       );
     } else {
       return (
-        <div className="listContainer">
-          <button onClick={this.toggleGroceryList}>View List</button>
+        <div className="around-page">
+          <div className="listContainer">
+            <button onClick={this.toggleGroceryList}>View List</button>
+          </div>
         </div>
       );
     }

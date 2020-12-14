@@ -10,7 +10,6 @@ import SearchContainer from "./components/pages/SearchContainer";
 import Login from "./components/pages/Login";
 import fire from "./fire";
 import { DragDropContext } from "react-beautiful-dnd";
-import "bootstrap/dist/css/bootstrap.min.css";
 const bcrypt = require("bcryptjs");
 
 const App = () => {
