@@ -11,6 +11,7 @@ const RowCard = (props) => {
   // const [recipes, setRecipes] = useState([]);
   // const [likedmodalShow, setLikedModalShow] = useState(false);
   // const [showToast, setShowToast] = useState(false);
+  // const forceUpdate = useForceUpdate();
 
   // useEffect(() => {}, []);
 
@@ -134,6 +135,7 @@ const RowCard = (props) => {
   //       .then((response) => {
   //         console.log(response);
   //         setModalShow(false);
+  //         forceUpdate(); // force re-render
   //       })
   //       .catch((err) => console.log("err", err));
   //   }
@@ -215,3 +217,11 @@ const RowCard = (props) => {
 };
 
 export default RowCard;
+
+// export function useForceUpdate() {
+//   const [, setTick] = useState(0);
+//   const update = useCallback(() => {
+//     setTick((tick) => tick + 1);
+//   }, []);
+//   return update;
+// }
