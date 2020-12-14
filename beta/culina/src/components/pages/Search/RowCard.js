@@ -8,12 +8,12 @@ const updateRecipeURL =
 
 const RowCard = (props) => {
   const [modalShow, setModalShow] = useState(false);
-  // const [recipes, setRecipes] = useState([]);
-  // const [likedmodalShow, setLikedModalShow] = useState(false);
-  // const [showToast, setShowToast] = useState(false);
-  // const forceUpdate = useForceUpdate();
+  const [likedmodalShow, setLikedModalShow] = useState(false);
+  const [dislikedmodalShow, setDislikedModal] = useState(false);
+  const [like, setLike] = useState();
+  const [dislike, setDislike] = useState();
 
-  // useEffect(() => {}, []);
+  useEffect(() => {}, []);
 
   function Modal(props) {
     let ingridients = [];
@@ -26,6 +26,19 @@ const RowCard = (props) => {
       steps.push(props.recipe.steps[i].text);
       steps.push(<br></br>);
     }
+
+    if (props.recipe.addLike == 1) {
+      setLike(props.recipe.likes + 1);
+    } else {
+      setLike(props.recipe.likes);
+    }
+
+    if (props.recipe.addDislike == 1) {
+      setDislike(props.recipe.dislikes + 1);
+    } else {
+      setDislike(props.recipe.dislikes);
+    }
+
     return (
       <bs.Modal
         {...props}
@@ -55,20 +68,17 @@ const RowCard = (props) => {
           <br></br>
           <h4>Steps</h4>
           <p>{steps}</p>
-          {/* <br></br>
-          <h5>Likes: {props.recipe.likes}</h5>
           <br></br>
-          <h5>Dislikes: {props.recipe.dislikes}</h5> */}
+          <h5>Likes: {like}</h5>
+          <br></br>
+          <h5>Dislikes: {dislike}</h5>
         </bs.Modal.Body>
 
         <bs.Modal.Footer>
-          {/* <bs.Button
+          <bs.Button
             className="likeModal  ml-1"
             variant="success"
             onClick={() => {
-              {
-                props.recipe.likes = props.recipe.likes + 1;
-              }
               addLike(props.recipe, props.user);
             }}
           >
@@ -78,14 +88,11 @@ const RowCard = (props) => {
             className="dislikeModal  mr-auto"
             variant="danger"
             onClick={() => {
-              {
-                props.recipe.dislikes = props.recipe.dislikes + 1;
-              }
               addDislike(props.recipe, props.user);
             }}
           >
             Dislike
-          </bs.Button> */}
+          </bs.Button>
           <bs.Button
             className="closeModal"
             variant="secondary"
@@ -98,101 +105,125 @@ const RowCard = (props) => {
     );
   }
 
-  // function getData(recipe) {
-  //   const savedRecipe = {
-  //     id: recipe.id,
-  //     email: recipe.email,
-  //     author: recipe.author,
-  //     image: recipe.image,
-  //     title: recipe.title,
-  //     public: recipe.public,
-  //     likes: recipe.likes,
-  //     dislikes: recipe.dislikes,
-  //     description: recipe.description,
-  //     category: recipe.category,
-  //     liked: recipe.liked,
-  //     disliked: recipe.disliked,
-  //     ingredients: recipe.ingredients,
-  //     steps: recipe.steps,
-  //   };
-  //   return savedRecipe;
-  // }
+  function getData(recipe) {
+    const savedRecipe = {
+      id: recipe.id,
+      email: recipe.email,
+      author: recipe.author,
+      image: recipe.image,
+      title: recipe.title,
+      public: recipe.public,
+      likes: recipe.likes,
+      dislikes: recipe.dislikes,
+      description: recipe.description,
+      category: recipe.category,
+      liked: recipe.liked,
+      disliked: recipe.disliked,
+      ingredients: recipe.ingredients,
+      steps: recipe.steps,
+    };
+    return savedRecipe;
+  }
 
-  // function addLike(recipe, currentUser) {
-  //   if (
-  //     currentUser.email == recipe.email ||
-  //     recipe.liked.includes(currentUser.email)
-  //   ) {
-  //     console.log("You already liked it");
-  //     // setModalShow(false);
-  //     // setLikedModalShow(true);
-  //   } else {
-  //     const data = getData(recipe);
-  //     data.likes = data.likes + 1;
-  //     console.log("about to write: ", data);
-  //     axios
-  //       .put(updateRecipeURL, data)
-  //       .then((response) => {
-  //         console.log(response);
-  //         setModalShow(false);
-  //         forceUpdate(); // force re-render
-  //       })
-  //       .catch((err) => console.log("err", err));
-  //   }
-  // }
+  function addLike(recipe, currentUser) {
+    if (
+      currentUser.email == recipe.email ||
+      recipe.liked.includes(currentUser.email)
+    ) {
+      setLikedModalShow(true);
+      setModalShow(false);
+    } else {
+      props.recipe.addLike = 1;
+      setLike(props.recipe.likes + 1);
+      const data = getData(recipe);
+      data.likes = data.likes + 1;
+      let likedPeople = data.liked;
+      likedPeople.push(currentUser.email);
+      axios
+        .put(updateRecipeURL, data)
+        .then((response) => {
+          setModalShow(false);
+        })
+        .catch((err) => console.log("err", err));
+    }
+  }
 
-  // function addDislike(recipe, currentUser) {
-  //   console.log(currentUser, recipe.email);
-  //   if (currentUser == recipe.email) {
-  //     console.log("You already disliked it");
-  //   } else {
-  //     const data = getData(recipe);
-  //     data.dislikes = data.dislikes + 1;
-  //     console.log("about to write: ", data);
-  //     axios
-  //       .put(updateRecipeURL, data)
-  //       .then((response) => {
-  //         console.log(response);
-  //         setModalShow(false);
-  //       })
-  //       .catch((err) => console.log("err", err));
-  //   }
-  // }
+  function addDislike(recipe, currentUser) {
+    if (
+      currentUser == recipe.email ||
+      recipe.disliked.includes(currentUser.email)
+    ) {
+      setDislikedModal(true);
+      setModalShow(false);
+    } else {
+      props.recipe.addDislike = 1;
+      setDislike(props.recipe.dislikes + 1);
+      const data = getData(recipe);
+      data.dislikes = data.dislikes + 1;
+      let dislikedPeople = data.disliked;
+      dislikedPeople.push(currentUser.email);
+      axios
+        .put(updateRecipeURL, data)
+        .then((response) => {
+          setModalShow(false);
+        })
+        .catch((err) => console.log("err", err));
+    }
+  }
 
-  // function LikedModal() {
-  //   return (
-  //     <bs.Modal
-  //       {...props}
-  //       size="lg"
-  //       aria-labelledby="contained-modal-title-vcenter"
-  //       centered
-  //     >
-  //       <bs.Modal.Header>
-  //         <bs.Modal.Title id="contained-modal-title-vcenter"></bs.Modal.Title>
-  //       </bs.Modal.Header>
+  function LikedModal(props) {
+    return (
+      <bs.Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <bs.Modal.Body>
+          <h2>You already liked this recipe</h2>
+        </bs.Modal.Body>
 
-  //       <bs.Modal.Body></bs.Modal.Body>
+        <bs.Modal.Footer>
+          <bs.Button
+            className="closeModal"
+            variant="secondary"
+            onClick={props.onHide}
+          >
+            Close
+          </bs.Button>
+        </bs.Modal.Footer>
+      </bs.Modal>
+    );
+  }
 
-  //       <bs.Modal.Footer>
-  //         <bs.Button
-  //           className="closeModal"
-  //           variant="secondary"
-  //           onClick={addDislike(props.recipe, props.user)}
-  //         >
-  //           Close
-  //         </bs.Button>
-  //       </bs.Modal.Footer>
-  //     </bs.Modal>
-  //   );
-  // }
+  function DislikedModal(props) {
+    return (
+      <bs.Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <bs.Modal.Body>
+          <h2>You already disliked this recipe</h2>
+        </bs.Modal.Body>
+
+        <bs.Modal.Footer>
+          <bs.Button
+            className="closeModal"
+            variant="secondary"
+            onClick={props.onHide}
+          >
+            Close
+          </bs.Button>
+        </bs.Modal.Footer>
+      </bs.Modal>
+    );
+  }
 
   return (
     <>
-      <li
-        className="boxs__item"
-        // onClick={() => handleClick(props.recipe)}
-        onClick={() => setModalShow(true)}
-      >
+      <li className="boxs__item" onClick={() => setModalShow(true)}>
         <a className="boxs__item__link" href={props.pathname}>
           <figure className="boxs__item__pic-wrap" data-category={props.label}>
             <img className="boxs__item__img" alt="Food Image" src={props.src} />
@@ -208,20 +239,20 @@ const RowCard = (props) => {
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
-      {/* <LikedModal
+      <LikedModal
+        recipe={props.recipe}
+        user={props.user}
         show={likedmodalShow}
         onHide={() => setLikedModalShow(false)}
-      /> */}
+      />
+      <DislikedModal
+        recipe={props.recipe}
+        user={props.user}
+        show={dislikedmodalShow}
+        onHide={() => setDislikedModal(false)}
+      />
     </>
   );
 };
 
 export default RowCard;
-
-// export function useForceUpdate() {
-//   const [, setTick] = useState(0);
-//   const update = useCallback(() => {
-//     setTick((tick) => tick + 1);
-//   }, []);
-//   return update;
-// }

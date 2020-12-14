@@ -3,8 +3,7 @@ import "./css/Row.css";
 import RowCard from "./RowCard";
 
 const axios = require("axios");
-const getRecipeURL =
-  "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getAllRecipe";
+const getRecipeURL = "http://35.193.28.175:8085/getAllRecipe";
 
 const Row = (props) => {
   const { email, category } = props;
