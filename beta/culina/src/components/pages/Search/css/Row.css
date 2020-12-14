@@ -2,6 +2,10 @@
   margin-left: 20px;
 }
 
+.row_text {
+  margin-left: 20px;
+}
+
 .row__images {
   display: flex;
   overflow-y: hidden;

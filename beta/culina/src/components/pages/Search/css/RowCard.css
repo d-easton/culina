@@ -96,3 +96,22 @@
     margin-bottom: 2rem;
   }
 }
+
+.modal_pic {
+  width: 100%;
+  height: 500px;
+}
+
+.closeModal {
+  width: 150px;
+}
+
+.likeModal {
+  width: 150px;
+  align-items: left;
+}
+
+.dislikeModal {
+  width: 150px;
+  align-items: left;
+}

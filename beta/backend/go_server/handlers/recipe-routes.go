@@ -83,6 +83,7 @@ func AddRecipeForUser(response http.ResponseWriter, request *http.Request) {
 }
 
 func UpdateRecipeForUser(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Access-Control-Allow-Origin", "*")
 	response.Header().Set("Content-Type", "application/json")
 	var recipe entity.Recipe
 	err := json.NewDecoder(request.Body).Decode(&recipe)

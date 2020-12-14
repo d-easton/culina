@@ -21,11 +21,17 @@ const Row = (props) => {
         .catch((err) => console.log("err", err));
     }
     fetchRecipes();
+
+    // const interval = setInterval(() => {
+    //   fetchRecipes();
+    // }, 10000);
+
+    // return () => clearInterval(interval);
   }, [email, category]);
 
   return (
     <div className="row">
-      <h2>{category}</h2>
+      <h2 className="row_text">{category}</h2>
 
       <div className="row__images">
         {recipes.map((recipe) => (
@@ -36,6 +42,8 @@ const Row = (props) => {
             src={recipe.image}
             text={recipe.title}
             label={category}
+            user={email}
+            category={category}
           />
         ))}
       </div>
