@@ -56,6 +56,7 @@ class RecipeContainer extends React.Component {
       defaultRecipe: {
         title: "New Recipe",
         author: "Author",
+        description: "Add description",
         ingredients: [],
         steps: [],
       },

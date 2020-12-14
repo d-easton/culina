@@ -104,10 +104,16 @@ class RecipeCard extends React.Component {
           }
         >
           <div className="recipeInnerBody">
+            <div className="recipeDescription">
+              <p>{this.props.recipe.description} </p>
+            </div>
             <h3>Ingredients</h3>
             <ul className="recipeList">{ingredientElements}</ul>
             <h3>Steps</h3>
             <ol className="recipeList">{stepElements}</ol>
+          </div>
+          <div className="recipeBodyFooter">
+            <p>Category: {this.props.recipe.category}</p>
           </div>
         </div>
         <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
