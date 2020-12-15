@@ -183,6 +183,11 @@ class CalendarContainer extends React.Component {
             });
         });
 
+        if (payload.length == 0) {
+            alert("It looks like your calendar is currently empty. Add some recipes to the calendar before you export to the Grocery List.");
+            return;
+        }
+
         //gets all the current items on the list through user's email
         //pushes onto ingredients array
         const getL = {

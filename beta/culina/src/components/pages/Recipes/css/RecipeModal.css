@@ -70,7 +70,6 @@
     }
 
 .recipeCard {
-<<<<<<< HEAD
   /*Recipe card for main container*/
   flex-basis: 30%;
   height: 500px;
@@ -81,26 +80,10 @@
   padding: 0 0 10px 0;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.7fr 3.5fr;
+  grid-template-rows: 0.3fr 4fr 0.3fr;
   grid-gap: 10px 0px;
   box-shadow: 20px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.4s ease;
-=======
-    /*Recipe card for main container*/
-    flex-basis: 30%;
-    height: 500px;
-    background: #212529;
-    border-radius: 5px;
-    position: relative;
-    margin: 20px 0;
-    padding: 0 0 10px 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.3fr 4fr 0.3fr;
-    grid-gap: 10px 0px;
-    box-shadow: 20px 20px rgba(0, 0, 0, 0.15);
-    transition: all 0.4s ease;
->>>>>>> a1b232df0633c69d8a18fceca9ff32c54ee63aff
 }
 
 .modal .recipeCard {
@@ -326,15 +309,9 @@
     background: inherit;
 }
 
-<<<<<<< HEAD
 .droppableField.enabled {
   /* //border: 2px dashed black; */
 }
-=======
-    .droppableField.enabled {
-        //border: 2px dashed black;
-    }
->>>>>>> a1b232df0633c69d8a18fceca9ff32c54ee63aff
 
     .droppableField ul,
     ol {
@@ -356,7 +333,6 @@
 }
 
 .draggableField {
-<<<<<<< HEAD
   /*Draggable Elements in recipe modal*/
   background: white;
   padding: 10px 20px 10px 10px;
@@ -373,24 +349,6 @@
   padding-left: 30px;
   padding-right: 60px;
 }
-=======
-    /*Draggable Elements in recipe modal*/
-    background: white;
-    padding: 10px 20px 10px 10px;
-    position: relative;
-    border: 1px solid gray;
-    border-radius: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    //color: white;
-    //background: #212529;
-}
-
-    .draggableField.enabled {
-        padding-left: 30px;
-        padding-right: 60px;
-    }
->>>>>>> a1b232df0633c69d8a18fceca9ff32c54ee63aff
 
 .recipeHeader .draggableField {
 }
@@ -452,15 +410,9 @@
     }
 
 .contentEditable {
-<<<<<<< HEAD
   overflow-wrap: anywhere;
   margin: 0;
   /* //border: 1px solid red; */
-=======
-    overflow-wrap: anywhere;
-    margin: 0;
-    //border: 1px solid red;
->>>>>>> a1b232df0633c69d8a18fceca9ff32c54ee63aff
 }
 
 h1.contentEditable {
