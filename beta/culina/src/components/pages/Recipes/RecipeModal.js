@@ -220,6 +220,24 @@ class RecipeModal extends React.Component {
       ingredients: ingredients,
       steps: steps,
     };
+
+      let error_log = "";
+
+      
+      if (savedRecipe.title.length == 1 && savedRecipe.title === " ") {
+          error_log += "Missing Title \n"
+      }
+      if (savedRecipe.author.length == 1 && savedRecipe.author === " ") {
+          error_log += "Missing Author \n"
+      }
+      if (savedRecipe.description.length == 1 && savedRecipe.description === " ") {
+          error_log += "Missing Description \n"
+      }
+
+      if (error_log.length != 0) {
+          return { error_log: error_log }
+      }
+      
     this.setState({ isDisabled: true, category: savedRecipe.category });
     return savedRecipe;
   }
@@ -230,12 +248,19 @@ class RecipeModal extends React.Component {
   }
 
   addRecipe() {
-    const data = this.exportData();
+      const data = this.exportData();
+      
+      if (data.error_log) {
+          console.log("prevented update: \n" + data.error_log)
+          alert(data.error_log)
+          return;
+      }
+      
     if (this.state.pictureFile == undefined) {
       axios
         .post(addRecipeURL, data)
-        .then((response) => {
-          this.props.addLocalCard(data);
+          .then((response) => {
+          this.props.addLocalCard(response.data);
         })
         .catch((err) => console.log("err", err));
     } else {
@@ -270,11 +295,16 @@ class RecipeModal extends React.Component {
 
   updateRecipe() {
     const data = this.exportData();
+      if (data.error_log) {
+          console.log("prevented update: \n" + data.error_log)
+          alert(data.error_log)
+          return;
+      }
     if (this.state.pictureFile == undefined) {
       axios
         .put(updateRecipeURL, data)
-        .then((response) => {
-          this.props.addLocalCard(data);
+          .then((response) => {
+          this.props.updateLocalCard(data);
         })
         .catch((err) => console.log("err", err));
     } else {
@@ -297,8 +327,8 @@ class RecipeModal extends React.Component {
 
               axios
                 .put(updateRecipeURL, data)
-                .then((response) => {
-                  this.props.addLocalCard(data);
+                  .then((response) => {
+                  this.props.updateLocalCard(data);
                 })
                 .catch((err) => console.log("err", err));
             });

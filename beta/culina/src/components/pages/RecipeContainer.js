@@ -82,6 +82,9 @@ class RecipeContainer extends React.Component {
 
         //UNDO AFTER SERVER FIXED
 
+    }
+
+    componentDidMount() {
         this.fetchData();
     }
 

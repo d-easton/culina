@@ -70,7 +70,6 @@ class RecipeCard extends React.Component {
     }
 
     handleClick() {
-        console.log("handling click");
         this.props.onClick(this.props.recipe);
     }
 
@@ -112,10 +111,11 @@ class RecipeCard extends React.Component {
             <h3>Steps</h3>
             <ol className="recipeList">{stepElements}</ol>
           </div>
-          <div className="recipeBodyFooter">
-            <p>Category: {this.props.recipe.category}</p>
-          </div>
+         
         </div>
+            <div className="recipeBodyFooter">
+                <p>Category: {this.props.recipe.category}</p>
+            </div>
         <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
       </div>
     );
