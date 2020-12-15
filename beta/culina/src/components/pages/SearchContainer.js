@@ -20,6 +20,7 @@ const SearchContainer = (props) => {
       <Row email={user} category={"Breakfast"} />
       <Row email={user} category={"Lunch"} />
       <Row email={user} category={"Dinner"} />
+      <Row email={user} category={"Dessert"} />
     </div>
   );
 };

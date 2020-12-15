@@ -3,7 +3,9 @@ import EditableList from "../Modal/EditableList";
 import EditableRecipeField from "../Modal/EditableRecipeField";
 import DroppableField from "../Modal/DroppableField.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { storage } from "../../../fire";
 //import './css/RecipeModal.css';
+
 const axios = require("axios");
 const addRecipeURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addRecipeForUser";
@@ -15,6 +17,7 @@ const deleteRecipeURL =
 class RecipeModal extends React.Component {
   constructor(props) {
     super(props);
+    // const [image, setImage] = useState(null);
 
     //Gets all recipe info and puts it into elements with unique ids
     let elementCount = 0;
@@ -113,6 +116,7 @@ class RecipeModal extends React.Component {
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleCommentsChange = this.handleCommentsChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
 
     // this.titleDivRef = React.createRef();
     // this.ingListRef = React.createRef();
@@ -211,13 +215,11 @@ class RecipeModal extends React.Component {
       dislikes: 0,
       description: this.state.description,
       category: this.categoryFieldRef.current.value,
-      liked: [],
+      liked: [this.state.email],
       disliked: [],
       ingredients: ingredients,
       steps: steps,
     };
-    console.log("exported: ");
-    console.log(savedRecipe);
     this.setState({ isDisabled: true, category: savedRecipe.category });
     return savedRecipe;
   }
@@ -229,20 +231,80 @@ class RecipeModal extends React.Component {
 
   addRecipe() {
     const data = this.exportData();
-    axios
-      .post(addRecipeURL, data)
-      .then((response) => {
-        this.props.addLocalCard(data);
-      })
-      .catch((err) => console.log("err", err));
+    if (this.state.pictureFile == undefined) {
+      axios
+        .post(addRecipeURL, data)
+        .then((response) => {
+          this.props.addLocalCard(data);
+        })
+        .catch((err) => console.log("err", err));
+    } else {
+      const uploadTask = storage
+        .ref(`images/users/${this.state.email}/${this.state.pictureFile.name}`)
+        .put(this.state.pictureFile);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref(`images/users/${this.state.email}/`)
+            .child(this.state.pictureFile.name)
+            .getDownloadURL()
+            .then((url) => {
+              data.image = url;
+
+              axios
+                .post(addRecipeURL, data)
+                .then((response) => {
+                  this.props.addLocalCard(data);
+                })
+                .catch((err) => console.log("err", err));
+            });
+        }
+      );
+    }
   }
 
   updateRecipe() {
     const data = this.exportData();
-    axios
-      .put(updateRecipeURL, data)
-      .then((response) => this.props.updateLocalCard(data))
-      .catch((err) => console.log("err", err));
+    if (this.state.pictureFile == undefined) {
+      axios
+        .put(updateRecipeURL, data)
+        .then((response) => {
+          this.props.addLocalCard(data);
+        })
+        .catch((err) => console.log("err", err));
+    } else {
+      const uploadTask = storage
+        .ref(`images/users/${this.state.email}/${this.state.pictureFile.name}`)
+        .put(this.state.pictureFile);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref(`images/users/${this.state.email}/`)
+            .child(this.state.pictureFile.name)
+            .getDownloadURL()
+            .then((url) => {
+              data.image = url;
+
+              axios
+                .put(updateRecipeURL, data)
+                .then((response) => {
+                  this.props.addLocalCard(data);
+                })
+                .catch((err) => console.log("err", err));
+            });
+        }
+      );
+    }
   }
 
   deleteRecipe() {
@@ -256,6 +318,13 @@ class RecipeModal extends React.Component {
   refreshPage() {
     window.location.reload(true);
   }
+
+  handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      //   setImage(e.target.files[0]);
+      this.setState({ pictureFile: e.target.files[0] });
+    }
+  };
 
   handleRemoveElement(fieldID, elementID) {
     let tempDraggableFields = this.state.draggableFields;
@@ -521,8 +590,9 @@ class RecipeModal extends React.Component {
                   <label>Image: </label>
                   <input
                     type="file"
-                    accept=".jpg, .png"
+                    accept=".jpg, .png, .jpeg"
                     ref={this.imageFieldRef}
+                    onChange={this.handleImageChange}
                   />
                 </div>
                 <div
