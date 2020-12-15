@@ -6,8 +6,10 @@ const getRecipeURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
 
 const Display = (props) => {
-  const { email } = props;
   const [recipe, setRecipe] = useState([]);
+  const email = {
+    email: "000@gmail.com",
+  };
 
   useEffect(() => {
     async function fetchRecipes() {
