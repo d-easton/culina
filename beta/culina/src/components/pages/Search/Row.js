@@ -34,18 +34,20 @@ const Row = (props) => {
       <h2 className="row_text">{category}</h2>
 
       <div className="row__images">
-        {recipes.map((recipe) => (
-          <RowCard
-            recipe={recipe}
-            className="row_image"
-            key={recipe.id}
-            src={recipe.image}
-            text={recipe.title}
-            label={category}
-            user={email}
-            category={category}
-          />
-        ))}
+        {recipes
+          .filter((recipe) => recipe.image.length > 5)
+          .map((recipe) => (
+            <RowCard
+              recipe={recipe}
+              className="row_image"
+              key={recipe.id}
+              src={recipe.image}
+              text={recipe.title}
+              label={category}
+              user={email}
+              category={category}
+            />
+          ))}
       </div>
     </div>
   );
