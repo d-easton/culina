@@ -15,7 +15,7 @@ const RecipeBoxList = styled.div`
     border-radius: 10px;
 
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
     justify-content: space-between;
 `;
 

@@ -47,6 +47,9 @@ class CalendarContainer extends React.Component {
 
         this.onChange = this.onChange.bind(this);
         this.buildCalendarObj = this.buildCalendarObj.bind(this);
+
+        this.handleSave = this.handleSave.bind(this);
+        this.handleLoad = this.handleLoad.bind(this);
     
         this.handleDragEnd = this.handleDragEnd.bind(this);
     }
@@ -209,6 +212,7 @@ class CalendarContainer extends React.Component {
                     this.setState({ isDisabled: true });
                     axios.put(updateGroceryListURL, savedList)
                     .catch(err => console.log('err', err));
+                    alert("Grocery List updated with the ingredients you'll need for this week.")
                 }
             })
             .catch((err) => {
@@ -240,6 +244,13 @@ class CalendarContainer extends React.Component {
             "title": this.state.calendarTitle,
             "data": this.state.calendarData
         }
+    }
+
+    handleSave = () => {
+        alert("Feature coming soon!");
+    }
+    handleLoad = () => {
+        alert("Feature coming soon!");
     }
 
     /** DND FUNCTIONS */
@@ -317,6 +328,8 @@ class CalendarContainer extends React.Component {
         }
     }
 
+
+
     render() {
 
         let recipeElements = constants.data;
@@ -342,8 +355,8 @@ class CalendarContainer extends React.Component {
                             </div>
                             <div>
                                 <button className="btn btn-light btn-header" onClick={this.exportData}>Export</button>
-                                <button className="btn btn-light btn-header">Save</button>
-                                <button className="btn btn-light btn-header">Load</button>
+                                <button className="btn btn-light btn-header" onClick={this.handleSave}>Save</button>
+                                <button className="btn btn-light btn-header"onClick={this.handleLoad}>Load</button>
                             </div>
                         </div>
                         <div id="calendar-track">

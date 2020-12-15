@@ -282,7 +282,7 @@ class RecipeContainer extends React.Component {
     return (
       <div className="around-page">
         <div className="recipeContainer">
-          <button onClick={this.displayBlankCard}>New Card</button>
+          <button className="blue-dark white-text"onClick={this.displayBlankCard}>New Card</button>
           {recipes}
           {modal}
         </div>

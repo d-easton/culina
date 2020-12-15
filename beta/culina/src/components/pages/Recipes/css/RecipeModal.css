@@ -73,7 +73,7 @@
   /*Recipe card for main container*/
   flex-basis: 30%;
   height: 500px;
-  background: #212529;
+  background: #142843;
   border-radius: 5px;
   position: relative;
   margin: 20px 0;
@@ -294,7 +294,7 @@
 }
 
 .droppableField.enabled {
-  //border: 2px dashed black;
+  /* //border: 2px dashed black; */
 }
 
 .droppableField ul,
@@ -325,8 +325,8 @@ ol {
   border-radius: 5px;
   border: 1px solid gray;
   border-radius: 5px;
-  //color: white;
-  //background: #212529;
+  /* //color: white;
+  //background: #212529; */
 }
 
 .draggableField.enabled {
@@ -396,7 +396,7 @@ ol {
 .contentEditable {
   overflow-wrap: anywhere;
   margin: 0;
-  //border: 1px solid red;
+  /* //border: 1px solid red; */
 }
 
 h1.contentEditable {
@@ -486,4 +486,27 @@ h1.contentEditable {
     width: 90vmax;
     height: 85vmin;
   }
+}
+
+/* Palette styling */
+.blue-dark {
+  background-color: #142843;
+}
+.blue-mid {
+  background-color: #487A90
+}
+.blue-light {
+  background-color: #9CA9B1;
+}
+.sand-dark {
+  background-color: #D0836E;
+}
+.sand-mid{
+  background-color: #E5C4AB;
+}
+.sand-light {
+  background-color: #F4E3D7;
+}
+.white-text {
+  color: whitesmoke;
 }
