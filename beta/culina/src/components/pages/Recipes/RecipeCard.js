@@ -2,77 +2,76 @@ import React from "react";
 
 const axios = require("axios");
 const updateGroceryListURL =
-  "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
+    "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
 const getGroceryListURL =
-  "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
+    "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
 
 class RecipeCard extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      email: props.email,
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-    this.sendToGroceryList = this.sendToGroceryList.bind(this);
-  }
-
-  //FUNCTION TO ADD TO GROCERY LIST
-  sendToGroceryList(e) {
-    e.stopPropagation();
-    let payload = [];
-    let ingredients = [];
-    //pushes ingredients from specified recipe card to payload array
-    this.props.recipe.ingredients.forEach((element) => {
-      payload.push(element.text);
-    });
-    //Gets current grocery list from db, pushes onto ingredients array
-    const getL = {
-      email: this.state.email,
-    };
-    axios
-      .post(getGroceryListURL, getL)
-      .then((response) => {
-        response.data[0].ingredients.forEach((element) => {
-          ingredients.push(element);
-        });
-        //Once current list is received, push new ingredients from recipe card
-        //onto ingredients array
-        payload.forEach((element) => {
-          ingredients.push(element);
-        });
-
-        //update grocery list with new ingredients array
-        const savedList = {
-          id: 0,
-          email: this.state.email,
-          ingredients: ingredients,
+        this.state = {
+            email: props.email,
         };
-        this.setState({ isDisabled: true });
-        axios
-          .put(updateGroceryListURL, savedList)
-          .catch((err) => console.log("err", err));
-      })
-      .catch((err) => {
-        payload.forEach((element) => {
-          ingredients.push(element);
+
+        this.handleClick = this.handleClick.bind(this);
+        this.sendToGroceryList = this.sendToGroceryList.bind(this);
+    }
+
+    //FUNCTION TO ADD TO GROCERY LIST
+    sendToGroceryList(e) {
+        e.stopPropagation();
+        let payload = [];
+        let ingredients = [];
+        //pushes ingredients from specified recipe card to payload array
+        this.props.recipe.ingredients.forEach((element) => {
+            payload.push(element.text);
         });
-        const savedList = {
-          id: 0,
-          email: this.state.email,
-          ingredients: ingredients,
+        //Gets current grocery list from db, pushes onto ingredients array
+        const getL = {
+            email: this.state.email,
         };
         axios
-          .put(updateGroceryListURL, savedList)
-          .catch((err) => console.log("err", err));
-      });
-  }
+            .post(getGroceryListURL, getL)
+            .then((response) => {
+                response.data[0].ingredients.forEach((element) => {
+                    ingredients.push(element);
+                });
+                //Once current list is received, push new ingredients from recipe card
+                //onto ingredients array
+                payload.forEach((element) => {
+                    ingredients.push(element);
+                });
 
-  handleClick() {
-    console.log("handling click");
-    this.props.onClick(this.props.recipe);
-  }
+                //update grocery list with new ingredients array
+                const savedList = {
+                    id: 0,
+                    email: this.state.email,
+                    ingredients: ingredients,
+                };
+                this.setState({ isDisabled: true });
+                axios
+                    .put(updateGroceryListURL, savedList)
+                    .catch((err) => console.log("err", err));
+            })
+            .catch((err) => {
+                payload.forEach((element) => {
+                    ingredients.push(element);
+                });
+                const savedList = {
+                    id: 0,
+                    email: this.state.email,
+                    ingredients: ingredients,
+                };
+                axios
+                    .put(updateGroceryListURL, savedList)
+                    .catch((err) => console.log("err", err));
+            });
+    }
+
+    handleClick() {
+        this.props.onClick(this.props.recipe);
+    }
 
   render() {
     const ingredientElements = [];
@@ -112,10 +111,11 @@ class RecipeCard extends React.Component {
             <h3>Steps</h3>
             <ol className="recipeList">{stepElements}</ol>
           </div>
-          <div className="recipeBodyFooter">
-            <p>Category: {this.props.recipe.category}</p>
-          </div>
+         
         </div>
+            <div className="recipeBodyFooter">
+                <p>Category: {this.props.recipe.category}</p>
+            </div>
         <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
       </div>
     );
