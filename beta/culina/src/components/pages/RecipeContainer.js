@@ -51,20 +51,20 @@ class RecipeContainer extends React.Component {
             showModalRC: false,
             showNewCardOption: false,
 
-            modalRecipe: null,
-            isNewCard: false,
-            defaultRecipe: {
-                title: "New Recipe",
-                author: "Author",
-                description: "Add description",
-                ingredients: [],
-                steps: [],
-            },
-            //recipes: testData,
-            recipes: [],
-            ocrOutput: null,
-            email: props.user.email,
-        };
+      modalRecipe: null,
+      isNewCard: false,
+      defaultRecipe: {
+        title: "New Recipe",
+        author: "Author",
+        description: "Add description",
+        ingredients: [],
+        steps: [],
+      },
+      //recipes: testData,
+      recipes: [],
+      ocrOutput: null,
+      email: props.user.email,
+    };
 
         this.closeModal = this.closeModal.bind(this);
         this.displayModalRC = this.displayModalRC.bind(this);

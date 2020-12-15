@@ -197,6 +197,27 @@
 .modal .recipeBodyFooterElement label {
     margin-right: 20px;
 }
+.recipeBodyFooter p {
+  color: white;
+}
+
+.modal .recipeBodyFooter.disabled {
+  grid-template-columns: 1fr;
+}
+.modal .recipeBodyFooter {
+  grid-row: 3/3;
+  grid-column: 1/1;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+.modal .recipeBodyFooterElement {
+  display: flex;
+  justify-content: center;
+}
+.modal .recipeBodyFooterElement label {
+  margin-right: 20px;
+}
 .recipeBody.disabled {
     overflow: hidden;
 }

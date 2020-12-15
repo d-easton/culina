@@ -74,48 +74,52 @@ class RecipeCard extends React.Component {
         this.props.onClick(this.props.recipe);
     }
 
-    render() {
-        const ingredientElements = [];
-        this.props.recipe.ingredients.forEach((ing, index) => {
-            ingredientElements.push(
-                <li className="listElement" key={index}>
-                    {ing.text}
-                </li>
-            );
-        });
-        const stepElements = [];
-        this.props.recipe.steps.forEach((step, index) => {
-            stepElements.push(
-                <li className="listElement" key={index}>
-                    {step.text}
-                </li>
-            );
-        });
-        return (
-            <div className="recipeCard" onClick={this.handleClick}>
-                <div className="recipeHeader">
-                    <h1>{this.props.recipe.title}</h1>
-                    <h2>By: {this.props.recipe.author} </h2>
-                    <hr />
-                </div>
-                <div className={ this.props.modalEnabled ? "recipeBody disabled" : "recipeBody" } >
-                    <div className="recipeInnerBody">
-                        <div className="recipeDescription">
-                            <p>{this.props.recipe.description} </p>
-                        </div>
-                        <h3>Ingredients</h3>
-                        <ul className="recipeList">{ingredientElements}</ul>
-                        <h3>Steps</h3>
-                        <ol className="recipeList">{stepElements}</ol>
-                    </div>
-                    <div className="recipeBodyFooter">
-                        <p>Category: {this.props.recipe.category}</p>
-                    </div>
-                </div>
-                <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
+  render() {
+    const ingredientElements = [];
+    this.props.recipe.ingredients.forEach((ing, index) => {
+      ingredientElements.push(
+        <li className="listElement" key={index}>
+          {ing.text}
+        </li>
+      );
+    });
+    const stepElements = [];
+    this.props.recipe.steps.forEach((step, index) => {
+      stepElements.push(
+        <li className="listElement" key={index}>
+          {step.text}
+        </li>
+      );
+    });
+    return (
+      <div className="recipeCard" onClick={this.handleClick}>
+        <div className="recipeHeader">
+          <h1>{this.props.recipe.title}</h1>
+          <h2>By: {this.props.recipe.author} </h2>
+          <hr />
+        </div>
+        <div
+          className={
+            this.props.modalEnabled ? "recipeBody disabled" : "recipeBody"
+          }
+        >
+          <div className="recipeInnerBody">
+            <div className="recipeDescription">
+              <p>{this.props.recipe.description} </p>
             </div>
-        );
-    }
+            <h3>Ingredients</h3>
+            <ul className="recipeList">{ingredientElements}</ul>
+            <h3>Steps</h3>
+            <ol className="recipeList">{stepElements}</ol>
+          </div>
+          <div className="recipeBodyFooter">
+            <p>Category: {this.props.recipe.category}</p>
+          </div>
+        </div>
+        <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
+      </div>
+    );
+  }
 }
 
 export default RecipeCard;

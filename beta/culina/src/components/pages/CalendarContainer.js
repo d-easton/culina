@@ -211,6 +211,19 @@ class CalendarContainer extends React.Component {
                     .catch(err => console.log('err', err));
                 }
             })
+            .catch((err) => {
+                payload.forEach((element) => {
+                  ingredients.push(element);
+                });
+                const savedList = {
+                  id: 0,
+                  email: this.state.email,
+                  ingredients: ingredients,
+                };
+                axios
+                  .put(updateGroceryListURL, savedList)
+                  .catch((err) => console.log("err", err));
+              });
     }
 
     onChange(id, newTitle) {
