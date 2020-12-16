@@ -37,7 +37,6 @@ export default class Card extends React.Component {
                         onClick={this.handleClick}
                     >
                         {this.props.recipe.title}
-                        Ree
                     </CardDiv>
                 )}
             </Draggable>
