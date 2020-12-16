@@ -21,8 +21,8 @@ export default class Frame extends React.Component {
                 <Droppable droppableId={this.props.frame.id}>
                     {provided => (
                         <CardList ref={provided.innerRef} {...provided.droppableProps} >
-                            {this.props.recipes.map( (recipe, index) => (
-                                <Card key={recipe.id} recipe={recipe} index={index}/>
+                            {this.props.recipes.map((recipe, index) => (
+                                <Card key={recipe.id} recipe={recipe} index={index} recipeClickCallback={this.props.recipeClickCallback} />
                             ))}
                             {provided.placeholder}
                         </CardList>

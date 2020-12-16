@@ -90,6 +90,30 @@ class RecipeCard extends React.Component {
         </li>
       );
     });
+      if (this.props.recipe.image) {
+          return (
+              <div className="recipeCard" onClick={this.handleClick}>
+                  <div className="recipeHeader">
+                      <h1>{this.props.recipe.title}</h1>
+                      <h2>By: {this.props.recipe.author} </h2>
+                      <hr />
+                  </div>
+                  <div
+                      className={
+                          this.props.modalEnabled ? "recipeBody disabled" : "recipeBody"
+                      }
+                  >
+                  <img src={this.props.recipe.image} />
+
+                  </div>
+                  <div className="recipeBodyFooter">
+                      <p>Category: {this.props.recipe.category}</p>
+                  </div>
+                  <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
+              </div>
+          );
+      }
+     
     return (
       <div className="recipeCard" onClick={this.handleClick}>
         <div className="recipeHeader">

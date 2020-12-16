@@ -1,4 +1,5 @@
 import React from 'react';
+import * as bs from "react-bootstrap";
 import '../../App.css';
 import './Calendar/css/Calendar.css';
 import constants from './Calendar/constants.js';
@@ -14,7 +15,78 @@ const axios = require('axios');
 // this is an incorrect url, just there to test ^
 const updateGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
 const getGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
+//import "../Search/css/RowCard.css";
 
+function Modal(props) {
+    let ingridients = [];
+    for (let i = 0; i < props.recipe.ingredients.length; i++) {
+        ingridients.push(props.recipe.ingredients[i].text);
+        ingridients.push(<br></br>);
+    }
+    let steps = [];
+    for (let i = 0; i < props.recipe.steps.length; i++) {
+        steps.push(props.recipe.steps[i].text);
+        steps.push(<br></br>);
+    }
+
+    /*
+    if (props.recipe.addLike == 1) {
+        setLike(props.recipe.likes + 1);
+    } else {
+        setLike(props.recipe.likes);
+    }
+
+    if (props.recipe.addDislike == 1) {
+        setDislike(props.recipe.dislikes + 1);
+    } else {
+        setDislike(props.recipe.dislikes);
+    }
+    */
+
+    return (
+        <bs.Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <bs.Modal.Header>
+                <bs.Modal.Title id="contained-modal-title-vcenter">
+                    {props.recipe.title}
+                    <br></br>
+                    {props.recipe.author}
+                </bs.Modal.Title>
+            </bs.Modal.Header>
+
+            <bs.Modal.Body>
+                <img
+                    className="modal_pic"
+                    alt="Food Image"
+                    src={props.recipe.image}
+                />
+                <br></br> <br></br>
+                <p>{props.recipe.description}</p>
+                <br></br>
+                <h4>Ingredients</h4>
+                <p>{ingridients}</p>
+                <br></br>
+                <h4>Steps</h4>
+                <p>{steps}</p>
+                <br></br>
+            </bs.Modal.Body>
+
+            <bs.Modal.Footer>
+                <bs.Button
+                    className="closeModal"
+                    variant="secondary"
+                    onClick={props.onHide}
+                >
+                    Close
+          </bs.Button>
+            </bs.Modal.Footer>
+        </bs.Modal>
+    );
+}
 
 class CalendarContainer extends React.Component {
     // config
@@ -32,7 +104,9 @@ class CalendarContainer extends React.Component {
             email: props.user.email,
             // draggableFields: draggableInitial,
             // isDisabled: false,
-
+            wasRecipeClicked: false,
+            selectedRecipe: null,
+            showRecipeModal: false,
             recipes: constants.data.recipes,
             calendarOrder: constants.data.calendarOrder,
             recipeBoxData: constants.data.recipeBox,
@@ -47,6 +121,9 @@ class CalendarContainer extends React.Component {
 
         this.onChange = this.onChange.bind(this);
         this.buildCalendarObj = this.buildCalendarObj.bind(this);
+
+
+        this.onRecipeClick = this.onRecipeClick.bind(this);
 
         this.handleSave = this.handleSave.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
@@ -251,6 +328,26 @@ class CalendarContainer extends React.Component {
         }
     }
 
+    onRecipeClick(recipeJSON) {
+        //If wasClicked == false: set wasClicked to true & selectedRecipe to recipeJSON and showRecipeModal = false
+        //If selectedRecipe != recipeJSON: update selectedRecipe, leave wasClicked and showRecipeModal = false
+        //If wasClicked == true && selectedRecipe == recipeJSON: showRecipeModal = true
+
+        let wasClicked = this.state.wasRecipeClicked;
+        let selectedRecipe = this.state.selectedRecipe;
+        let showRecipeModal = this.state.showRecipeModal;
+        if (!wasClicked) {
+            wasClicked = true;
+            selectedRecipe = recipeJSON;
+        } else if (selectedRecipe != recipeJSON) {
+            selectedRecipe = recipeJSON;
+        } else {
+            showRecipeModal = true;
+        }
+        this.setState({ wasRecipeClicked: wasClicked, selectedRecipe: selectedRecipe, showRecipeModal: showRecipeModal });
+    }
+
+
     handleSave = () => {
         alert("Feature coming soon!");
     }
@@ -339,8 +436,19 @@ class CalendarContainer extends React.Component {
 
         let recipeElements = constants.data;
 
+        //SAVE + LOAD BUTTONS
+        //<button className="btn btn-light btn-header" onClick={this.handleSave}>Save</button>
+        //<button className="btn btn-light btn-header"onClick={this.handleLoad}>Load</button>
+        const recipeModal = !this.state.showRecipeModal ? null : (
+            <Modal
+                recipe={this.state.selectedRecipe}
+                user={this.props.user}
+                show={this.state.selectedRecipe != null}
+                onHide={() => this.setState({ selectedRecipe: null, showRecipeModal: false, wasRecipeClicked: false })}
+            />);
         return (
             <DragDropContext onDragEnd={this.handleDragEnd}>
+                {recipeModal} 
                 <div id="calendar-wrapper" className="grey">
                     <div id="calendar-div" className="blue-dark">
                         <div id="calendar-header"> 
@@ -360,15 +468,13 @@ class CalendarContainer extends React.Component {
                             </div>
                             <div>
                                 <button className="btn btn-light btn-header" onClick={this.exportData}>Export</button>
-                                <button className="btn btn-light btn-header" onClick={this.handleSave}>Save</button>
-                                <button className="btn btn-light btn-header"onClick={this.handleLoad}>Load</button>
                             </div>
                         </div>
                         <div id="calendar-track">
                             {this.state.calendarOrder.map(frameID => {
                                 const frame = this.state.frameData[frameID];
                                 const recipes = frame.recipeIDs.map( recipeID => this.state.recipes[recipeID] );
-                                return <Frame key={frame.id} frame={frame} recipes={recipes}></Frame>
+                                return <Frame key={frame.id} frame={frame} recipes={recipes} recipeClickCallback={this.onRecipeClick}></Frame>
                             })}
                         </div>
                     </div>
@@ -385,6 +491,7 @@ class CalendarContainer extends React.Component {
                             key="recipeBox"
                             recipes= {this.state.recipeBoxData.recipeIDs.map( recipeID => this.state.recipes[recipeID])}  //{Object.values(this.state.recipes)}
                             isDisabled={this.isDisbaled}
+                            recipeClickCallback={this.onRecipeClick}>
                         ></RecipeBox>
                     </div>
                 </div>
