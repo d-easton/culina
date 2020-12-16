@@ -251,7 +251,6 @@ class RecipeModal extends React.Component {
       const data = this.exportData();
       
       if (data.error_log) {
-          console.log("prevented update: \n" + data.error_log)
           alert(data.error_log)
           return;
       }
@@ -284,7 +283,7 @@ class RecipeModal extends React.Component {
               axios
                 .post(addRecipeURL, data)
                 .then((response) => {
-                  this.props.addLocalCard(data);
+                  this.props.addLocalCard(response.data);
                 })
                 .catch((err) => console.log("err", err));
             });
@@ -304,6 +303,7 @@ class RecipeModal extends React.Component {
       axios
         .put(updateRecipeURL, data)
           .then((response) => {
+              console.log(response.data)
           this.props.updateLocalCard(data);
         })
         .catch((err) => console.log("err", err));
@@ -328,6 +328,7 @@ class RecipeModal extends React.Component {
               axios
                 .put(updateRecipeURL, data)
                   .then((response) => {
+                      console.log(response.data)
                   this.props.updateLocalCard(data);
                 })
                 .catch((err) => console.log("err", err));

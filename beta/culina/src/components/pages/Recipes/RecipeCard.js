@@ -90,7 +90,7 @@ class RecipeCard extends React.Component {
         </li>
       );
     });
-      if (this.props.recipe.image) {
+      if (this.props.recipe.image != "url") {
           return (
               <div className="recipeCard" onClick={this.handleClick}>
                   <div className="recipeHeader">
@@ -98,12 +98,8 @@ class RecipeCard extends React.Component {
                       <h2>By: {this.props.recipe.author} </h2>
                       <hr />
                   </div>
-                  <div
-                      className={
-                          this.props.modalEnabled ? "recipeBody disabled" : "recipeBody"
-                      }
-                  >
-                  <img src={this.props.recipe.image} />
+                  <div className="recipeBody disabled" >
+                          <img className="recipeBodyImage" src={this.props.recipe.image} />
 
                   </div>
                   <div className="recipeBodyFooter">
