@@ -16,6 +16,15 @@ const CardDiv = styled.div`
 `;
 
 export default class Card extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.recipeClickCallback(this.props.recipe);
+    }
+
     render() {
         return (
             <Draggable draggableId={""+this.props.recipe.id} index={this.props.index} >  
@@ -24,7 +33,8 @@ export default class Card extends React.Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
-                        key={"carddiv"+this.props.recipe.id}
+                        key={"carddiv" + this.props.recipe.id}
+                        onClick={this.handleClick}
                     >
                         {this.props.recipe.title}
                     </CardDiv>

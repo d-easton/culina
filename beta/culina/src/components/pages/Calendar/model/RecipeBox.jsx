@@ -26,8 +26,8 @@ export default class RecipeBox extends React.Component {
             <Droppable droppableId={dropAreaID}>
                  {provided => (
                      <RecipeBoxList ref = {provided.innerRef}  {...provided.droppableProps} >
-                         {this.props.recipes.map( (recipe, index) => (
-                            <Card key={recipe.id} recipe={recipe} index={index} />
+                        {this.props.recipes.map((recipe, index) => (
+                            <Card key={recipe.id} recipe={recipe} index={index} recipeClickCallback={this.props.recipeClickCallback} />
                          ))}
                          {provided.placeholder}
                      </RecipeBoxList>
