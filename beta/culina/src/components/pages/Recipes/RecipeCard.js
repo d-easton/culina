@@ -90,7 +90,7 @@ class RecipeCard extends React.Component {
         </li>
       );
     });
-      if (this.props.recipe.image != "url") {
+      if (this.props.recipe.image != "") {
           return (
               <div className="recipeCard" onClick={this.handleClick}>
                   <div className="recipeHeader">
