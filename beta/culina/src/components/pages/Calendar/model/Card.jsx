@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const CardDiv = styled.div`    
     width: 150px;
-    height: 50px;
+    min-height: 50px;
     border-radius: 15px; 
     text-align: center;
     padding-top: 12.5px;
