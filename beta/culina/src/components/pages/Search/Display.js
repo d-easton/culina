@@ -40,10 +40,12 @@ const Display = (props) => {
     >
       <div className="banner_contents">
         <h1 className="banner_title">{recipe.title}</h1>
-        <h1 className="banner_title">{recipe.author}</h1>
+        <br></br>
+        <h1 className="banner_author">{recipe.author}</h1>
         {/* <div>
           <button className="banner_button">Recipe</button>
         </div> */}
+        <br></br>
         <h1 className="banner_description">
           {truncate(recipe.description, 500)}
         </h1>
