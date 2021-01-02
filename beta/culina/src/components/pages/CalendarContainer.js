@@ -119,7 +119,7 @@ class CalendarContainer extends React.Component {
         this.setData = this.setData.bind(this);
         this.exportData = this.exportData.bind(this);
 
-        this.onChange = this.onChange.bind(this);
+        this.onTitleChange = this.onTitleChange.bind(this);
         this.buildCalendarObj = this.buildCalendarObj.bind(this);
 
 
@@ -312,8 +312,7 @@ class CalendarContainer extends React.Component {
               });
     }
 
-    onChange(id, newTitle) {
-        console.log("id: " +id+ "  title changing to: "+newTitle);
+    onTitleChange(id, newTitle) {
         this.setState({
             calendarTitle: newTitle
         })
@@ -347,9 +346,22 @@ class CalendarContainer extends React.Component {
         this.setState({ wasRecipeClicked: wasClicked, selectedRecipe: selectedRecipe, showRecipeModal: showRecipeModal });
     }
 
-
     handleSave = () => {
-        alert("Feature coming soon!");
+        const payload = {
+            "monday": this.state.frameData["calMon"].recipeIDs,
+            "tuesday": this.state.frameData["calTue"].recipeIDs,
+            "wednesday": this.state.frameData["calWed"].recipeIDs,
+            "thursday": this.state.frameData["calThu"].recipeIDs,
+            "friday": this.state.frameData["calFri"].recipeIDs,
+            "saturday": this.state.frameData["calSat"].recipeIDs,
+            "sunday": this.state.frameData["calSun"].recipeIDs
+        }
+        const currentTitle = this.state.calendarTitle;
+        const record = {};
+        record[currentTitle] = payload;
+        
+        // ready for store
+        console.log(record);
     }
     handleLoad = () => {
         alert("Feature coming soon!");
@@ -436,9 +448,7 @@ class CalendarContainer extends React.Component {
 
         let recipeElements = constants.data;
 
-        //SAVE + LOAD BUTTONS
-        //<button className="btn btn-light btn-header" onClick={this.handleSave}>Save</button>
-        //<button className="btn btn-light btn-header"onClick={this.handleLoad}>Load</button>
+       
         const recipeModal = !this.state.showRecipeModal ? null : (
             <Modal
                 recipe={this.state.selectedRecipe}
@@ -454,12 +464,11 @@ class CalendarContainer extends React.Component {
                         <div id="calendar-header"> 
                             <div id="calendar-title">
                                 <EditableField
-                                    id={this.state.calenderID}
-                                    onChange={this.handleChange}
+                                    id={"calendar-id"}
                                     html={""}
                                     tagName={"h2"}
                                     disabled={false}      //{this.state.isDisabled}
-                                    onChange={this.onChange}
+                                    onChange={this.onTitleChange}
                                     style = {{
                                         'color': '#F4E3D7',
                                         'width': '700px',
@@ -467,6 +476,8 @@ class CalendarContainer extends React.Component {
                                 />
                             </div>
                             <div>
+                                <button className="btn btn-light btn-header" onClick={this.handleSave}>Save</button>
+                                <button className="btn btn-light btn-header"onClick={this.handleLoad}>View</button>
                                 <button className="btn btn-light btn-header" onClick={this.exportData}>Export</button>
                             </div>
                         </div>
@@ -491,7 +502,7 @@ class CalendarContainer extends React.Component {
                             key="recipeBox"
                             recipes= {this.state.recipeBoxData.recipeIDs.map( recipeID => this.state.recipes[recipeID])}  //{Object.values(this.state.recipes)}
                             isDisabled={this.isDisbaled}
-                            recipeClickCallback={this.onRecipeClick}>
+                            recipeClickCallback={this.onRecipeClick}
                         ></RecipeBox>
                     </div>
                 </div>

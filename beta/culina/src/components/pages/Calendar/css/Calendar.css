@@ -60,6 +60,12 @@
     margin-left: 2%;
     height:2px; 
 }
+
+#calendar-title {
+    width: 70%;
+    height: 30px;
+    color: white;
+}
 #divider-wrapper{
     display: flex;
     flex-direction: row;
