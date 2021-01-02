@@ -66,6 +66,43 @@
     height: 30px;
     color: white;
 }
+
+#view-dashboard {
+    position: absolute;
+	z-index: 99;
+	left: 25%;
+	width: 50%;
+	height: 95%;
+    top: 10%;
+    overflow-y: auto;
+	background-color: #303030;
+	color: white;
+    opacity: 100%;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+#dashboard-title{
+    margin-top: 10px;
+    float: left;
+    font-size: 30px;
+}
+
+.dashboard-close{
+    float: right;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    padding-top: 0px;
+}
+.clean-button {
+    border: none;
+	color: white;
+	background-color: transparent;
+	background: transparent;
+	outline: none;
+}
+
 #divider-wrapper{
     display: flex;
     flex-direction: row;

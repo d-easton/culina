@@ -122,6 +122,8 @@ class CalendarContainer extends React.Component {
         this.onTitleChange = this.onTitleChange.bind(this);
         this.buildCalendarObj = this.buildCalendarObj.bind(this);
 
+        this.closeViewDashboard = this.closeViewDashboard.bind(this);
+        this.openViewDashboard = this.openViewDashboard.bind(this);
 
         this.onRecipeClick = this.onRecipeClick.bind(this);
 
@@ -327,6 +329,13 @@ class CalendarContainer extends React.Component {
         }
     }
 
+    closeViewDashboard() {
+        document.getElementById("view-dashboard").style.visibility = "hidden";
+    }
+    openViewDashboard() {
+        document.getElementById("view-dashboard").style.visibility = "visible";
+    }
+
     onRecipeClick(recipeJSON) {
         //If wasClicked == false: set wasClicked to true & selectedRecipe to recipeJSON and showRecipeModal = false
         //If selectedRecipe != recipeJSON: update selectedRecipe, leave wasClicked and showRecipeModal = false
@@ -364,7 +373,7 @@ class CalendarContainer extends React.Component {
         console.log(record);
     }
     handleLoad = () => {
-        alert("Feature coming soon!");
+        this.openViewDashboard();
     }
 
     /** DND FUNCTIONS */
@@ -461,6 +470,10 @@ class CalendarContainer extends React.Component {
                 {recipeModal} 
                 <div id="calendar-wrapper" className="grey">
                     <div id="calendar-div" className="blue-dark">
+                    <div id="view-dashboard">
+                        <h4 id="dashboard-title">Your Meal Plans</h4>
+                        <button class="clean-button dashboard-close" onClick={this.closeViewDashboard}>x</button>
+                    </div>
                         <div id="calendar-header"> 
                             <div id="calendar-title">
                                 <EditableField
@@ -477,7 +490,7 @@ class CalendarContainer extends React.Component {
                             </div>
                             <div>
                                 <button className="btn btn-light btn-header" onClick={this.handleSave}>Save</button>
-                                <button className="btn btn-light btn-header"onClick={this.handleLoad}>View</button>
+                                <button className="btn btn-light btn-header" onClick={this.handleLoad}>View</button>
                                 <button className="btn btn-light btn-header" onClick={this.exportData}>Export</button>
                             </div>
                         </div>
