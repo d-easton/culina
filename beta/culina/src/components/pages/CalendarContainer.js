@@ -3,8 +3,8 @@ import * as bs from "react-bootstrap";
 import '../../App.css';
 import './Calendar/css/Calendar.css';
 import constants from './Calendar/constants.js';
-// import DroppableArea from './Calendar/model/DroppableArea.js';
 import EditableField from './Modal/EditableField';
+import Dashboard from './Calendar/model/Dashboard.jsx';
 
 import Frame from './Calendar/model/Frame.jsx';
 import RecipeBox from './Calendar/model/RecipeBox.jsx';
@@ -16,6 +16,40 @@ const axios = require('axios');
 const updateGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
 const getGroceryListURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
 //import "../Search/css/RowCard.css";
+
+const testPlanData = [
+    {
+        "title": "meal plan 1",
+        "monday": [48014],
+        "tuesday": [35640, 42276],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": [],
+        "sunday": [],
+    },
+    {
+        "title":"meal plan 2",
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [93407, 94608],
+        "saturday": [],
+        "sunday": [],
+    },
+    {
+        "title": "meal plan 3",
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": [],
+        "sunday": [],
+    }
+]
+
 
 function Modal(props) {
     let ingridients = [];
@@ -110,7 +144,9 @@ class CalendarContainer extends React.Component {
             recipes: constants.data.recipes,
             calendarOrder: constants.data.calendarOrder,
             recipeBoxData: constants.data.recipeBox,
-            frameData: constants.data.calendarFrames
+            frameData: constants.data.calendarFrames,
+
+            fetchedMealPlans: testPlanData
         }
 
         // this.config = this.config.bind(this);
@@ -126,6 +162,8 @@ class CalendarContainer extends React.Component {
         this.openViewDashboard = this.openViewDashboard.bind(this);
 
         this.onRecipeClick = this.onRecipeClick.bind(this);
+        this.onPlanOpen = this.onPlanOpen.bind(this);
+        this.onPlanDelete = this.onPlanDelete.bind(this);
 
         this.handleSave = this.handleSave.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
@@ -355,8 +393,18 @@ class CalendarContainer extends React.Component {
         this.setState({ wasRecipeClicked: wasClicked, selectedRecipe: selectedRecipe, showRecipeModal: showRecipeModal });
     }
 
+    onPlanOpen(plan) {
+        console.log("open callback received well -- "+plan.title);
+    }
+
+    onPlanDelete(plan) {
+        console.log("delete callback received well -- "+plan.title);
+    }
+
     handleSave = () => {
+        const currentTitle = this.state.calendarTitle;
         const payload = {
+            "title": currentTitle,
             "monday": this.state.frameData["calMon"].recipeIDs,
             "tuesday": this.state.frameData["calTue"].recipeIDs,
             "wednesday": this.state.frameData["calWed"].recipeIDs,
@@ -365,7 +413,6 @@ class CalendarContainer extends React.Component {
             "saturday": this.state.frameData["calSat"].recipeIDs,
             "sunday": this.state.frameData["calSun"].recipeIDs
         }
-        const currentTitle = this.state.calendarTitle;
         const record = {};
         record[currentTitle] = payload;
         
@@ -473,6 +520,11 @@ class CalendarContainer extends React.Component {
                     <div id="view-dashboard">
                         <h4 id="dashboard-title">Your Meal Plans</h4>
                         <button class="clean-button dashboard-close" onClick={this.closeViewDashboard}>x</button>
+                        <Dashboard
+                            mealPlans = {this.state.fetchedMealPlans}  //.map( recipeID => this.state.recipes[recipeID])
+                            openPlanCallback={this.onPlanOpen}
+                            deletePlanCallback={this.onPlanDelete}
+                        ></Dashboard>
                     </div>
                         <div id="calendar-header"> 
                             <div id="calendar-title">
