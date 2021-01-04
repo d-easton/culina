@@ -34,10 +34,8 @@ class DraggableField extends React.Component {
         if (this.props.comments) {
             let content = {text: this.props.html, comments: this.props.comments}
             if (index < 0) {
-                console.log("changing content.text")
                 content.text = value;
             } else {
-                console.log("changing content.comments[" + index + "]")
                 content.comments[index] = value;
             }
             this.props.passChangeOn(this.props.id, content);

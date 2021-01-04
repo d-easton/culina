@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"math/rand"
 	"net/http"
 
@@ -16,7 +15,14 @@ var (
 
 func GetRecipes(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
-	recipes, err := recipeRepo.FindAll()
+	var category entity.Category
+	err := json.NewDecoder(request.Body).Decode(&category)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{"error": "Error unmarshalling the recipe data"}`))
+	}
+
+	recipes, err := recipeRepo.FindAll(category.Category)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		response.Write([]byte(`{"error": "Error getting the posts"}`))
@@ -27,9 +33,6 @@ func GetRecipes(response http.ResponseWriter, request *http.Request) {
 
 //Adds to whole, not being used
 func AddRecipe(response http.ResponseWriter, request *http.Request) {
-	fmt.Println(response)
-	fmt.Println(request)
-
 	response.Header().Set("Content-Type", "application/json")
 	var recipe entity.Recipe
 	err := json.NewDecoder(request.Body).Decode(&recipe)
@@ -80,6 +83,7 @@ func AddRecipeForUser(response http.ResponseWriter, request *http.Request) {
 }
 
 func UpdateRecipeForUser(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Access-Control-Allow-Origin", "*")
 	response.Header().Set("Content-Type", "application/json")
 	var recipe entity.Recipe
 	err := json.NewDecoder(request.Body).Decode(&recipe)

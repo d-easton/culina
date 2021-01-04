@@ -1,0 +1,272 @@
+({
+  "id": 1,
+  "email": "000@gmail.com",
+  "description": "Breakfast Quesadillas are filled with egg, cheese and your favorite meat. From there, the possibilities are endless. Make it a vegetarian version by adding sauteed red peppers, bell peppers, or onions; or add all that even if you do like meat in your breakfast quesadillas. Unlike breakfast burritos, these are MUCH easier for kids to eat. Whenever my kids attempt breakfast burritos, they always have the eggs spilling out the back, not so with these. Everything stays nice and put. Personally, I like having the little crunch from the crispy shell. It just adds a nice dimension that a breakfast burrito doesn’t provide. Hope your family loves these as much as ours does! Enjoy!",
+  "image": "https://firebasestorage.googleapis.com/v0/b/culina-e7a1d.appspot.com/o/images%2Fusers%2Fprime%40gmail.com%2FScreen%20Shot%202020-12-14%20at%2011.42.33%20PM.png?alt=media&token=2fa2aa46-8311-4b7e-b171-ace6440a8b61",
+  "author": "Jeremie",
+  "title": "Breakfast Quesadillas",
+  "public": true,
+  "likes": 1,
+  "dislikes": 0,
+  "category": "Breakfast",
+  "liked": ["000@gmail.com"],
+  "disliked": [],
+  "ingredients": [
+    {
+      "text": "2 eggs",
+      "comments": []
+    },
+    {
+      "text": "Salt and Pepper",
+      "comments": []
+    },
+    {
+      "text": "2 Flour Tortilla Shells",
+      "comments": []
+    },
+    {
+      "text": "2 Slices of Bacon",
+      "comments": []
+    },
+    {
+      "text": "1/2 cup Cheese",
+      "comments": []
+    },
+    {
+      "text": "Salsa and Sour Cream",
+      "comments": []
+    }
+  ],
+  "steps": [
+    {
+      "text": "In a large skillet, scramble the eggs (add salt and pepper to taste).",
+      "comments": [""]
+    },
+    {
+      "text": "Spray skillet or griddle with cooking spray and heat over medium-high heat. Place one tortilla on the skillet or griddle and heat on one side.",
+      "comments": [""]
+    },
+    {
+      "text": "When tortilla is hot, flip and add half of the cheese.",
+      "comments": [""]
+    },
+    {
+      "text": "Add scrabled egg and distribute evenly.",
+      "comments": [""]
+    },
+    {
+      "text": "Add bacon over the top.",
+      "comments": [""]
+    },
+    {
+      "text": "Sprinkle on remaining cheese and top with remaining tortilla. Cook for about 1 minute or until cheese starts to melt, then CAREFULLY flip (you don't want all the egg falling out).",
+      "comments": [""]
+    },
+    {
+      "text": "When the cheese is melted and the tortilla is golden brown remove from pan. Cut into quarters with a pizza cutter and serve with sour cream and/or salsa.",
+      "comments": [""]
+    }
+  ]
+},
+{
+  "id": 2,
+  "email": "000@gmail.com",
+  "description": "The most amazing grilled cheese you will ever have!!!",
+  "image": "https://firebasestorage.googleapis.com/v0/b/culina-e7a1d.appspot.com/o/images%2Fusers%2Fprime%40gmail.com%2FScreen%20Shot%202020-12-15%20at%2012.15.18%20AM.png?alt=media&token=3ce37879-de51-4aad-8c07-2512d72ca166",
+  "author": "Jeremie",
+  "title": "Spicy Grilled Cheese Sandwich",
+  "public": true,
+  "likes": 1,
+  "dislikes": 0,
+  "category": "Lunch",
+  "liked": ["000@gmail.com"],
+  "disliked": [],
+  "ingredients": [
+    {
+      "text": "2 tbs butter",
+      "comments": []
+    },
+    {
+      "text": "4 slices white bread",
+      "comments": []
+    },
+    {
+      "text": "2  slices cheese",
+      "comments": []
+    },
+    {
+      "text": "1 roma tomato, thinly sliced",
+      "comments": []
+    },
+    {
+      "text": "1/4 small onion, chopped",
+      "comments": []
+    },
+    {
+      "text": "1 jalapeno pepper, chopped",
+      "comments": []
+    }
+  ],
+  "steps": [
+    {
+      "text": "Heat a large skillet over low heat.",
+      "comments": [""]
+    },
+    {
+      "text": "Spread butter or margarine onto one side of two slices of bread. ",
+      "comments": [""]
+    },
+    {
+      "text": "Place both pieces buttered side down in the skillet.",
+      "comments": [""]
+    },
+    {
+      "text": "Lay a slice of cheese on each one, and top with slices of tomato, onion and jalapeno.",
+      "comments": [""]
+    },
+    {
+      "text": "Butter one side of the remaining slices of bread, and place on top buttered side up.",
+      "comments": [""]
+    },
+    {
+      "text": "When the bottom of the sandwiches are toasted, flip and fry until brown on the other side.",
+      "comments": [""]
+    }
+  ]
+},
+{
+  "id": 3,
+  "email": "000@gmail.com",
+  "description": "This broccoli pesto recipe offers up a delicious solution—broccoli florets that are whizzed right into the pesto sauce itself, adding an even more vibrant punch of emerald green to the sauce as well as a serious nutritional boost. In addition to being a great source of fiber, this dark green member of the brassica family boasts lots of vitamin C and vitamin A, as well as some iron, calcium and potassium. Blended into a classic pesto along with some of the pasta cooking water, broccoli gives this pesto sauce just a bit of creaminess and a lot more oomph.",
+  "image": "https://firebasestorage.googleapis.com/v0/b/culina-e7a1d.appspot.com/o/images%2Fusers%2Fprime%40gmail.com%2FScreen%20Shot%202020-12-15%20at%2012.23.03%20AM.png?alt=media&token=623fd96f-eed4-4329-b947-0301a7850d85",
+  "author": "Jeremie",
+  "title": "Broccoli Pesto Pasta",
+  "public": true,
+  "likes": 1,
+  "dislikes": 0,
+  "category": "Dinner",
+  "liked": ["000@gmail.com"],
+  "disliked": [],
+  "ingredients": [
+    {
+      "text": "2 lb Cooked pasta of your choice, pasta water reserved",
+      "comments": []
+    },
+    {
+      "text": "4 cups Broccoli florets",
+      "comments": []
+    },
+    {
+      "text": "2  cups Basil leaves, lightly packed",
+      "comments": []
+    },
+    {
+      "text": "2 Garlic cloves",
+      "comments": []
+    },
+    {
+      "text": "1/4 Pine nuts",
+      "comments": []
+    },
+    {
+      "text": "1 cup Extra virgin olive oil",
+      "comments": []
+    },
+    {
+      "text": "1 tsp Salt",
+      "comments": []
+    },
+    {
+      "text": "1 cup Parmigiano-reggiano, grated",
+      "comments": []
+    }
+  ],
+  "steps": [
+    {
+      "text": "In a large pot bring water ** to a rapid boil. It is important to salt your water before adding the broccoli and pasta. Do this to your own taste.",
+      "comments": [""]
+    },
+    {
+      "text": "Add the broccoli, bring the water back up to a boil for two minutes. Do not drain the water! Immediately transfer broccoli (with a slotted spoon) to a colander place under cold running water to stop further cooking.",
+      "comments": [""]
+    },
+    {
+      "text": "Bring the water ** back to a boil and add your favorite pasta and cook according to the package (reserve 1 cup of pasta cooking water before draining).",
+      "comments": [""]
+    },
+    {
+      "text": "In a large blender or food processor, blend together broccoli, basil, garlic, pine nuts, olive oil, salt and Parmigiano-Reggiano until smooth. Slowly pour in 1 cup of reserved pasta water until a nice sauce is formed. If sauce is too thick, add more pasta water one tablespoon at a time.",
+      "comments": [""]
+    },
+    {
+      "text": "Toss hot pasta with sauce until completely coated. Top with extra Parmesan, pine nuts and chili flakes if desired. Enjoy!",
+      "comments": [""]
+    }
+  ]
+},
+{
+  "id": 4,
+  "email": "000@gmail.com",
+  "description": "This chocolate wafer and whipped cream icebox cake is a classic from everyone's childhood!",
+  "image": "https://firebasestorage.googleapis.com/v0/b/culina-e7a1d.appspot.com/o/images%2Fusers%2Fprime%40gmail.com%2FScreen%20Shot%202020-12-15%20at%2012.37.45%20AM.png?alt=media&token=6f78c4b4-e73f-474e-bc9e-7a0b12203d7e",
+  "author": "Jeremie",
+  "title": "Chocolate Cookie Icebox Dessert",
+  "public": true,
+  "likes": 1,
+  "dislikes": 0,
+  "category": "Dessert",
+  "liked": ["000@gmail.com"],
+  "disliked": [],
+  "ingredients": [
+    {
+      "text": "3 boxes of Nabisco Famous Chocolate Wafers",
+      "comments": []
+    },
+    {
+      "text": "4 cups of whipping cream",
+      "comments": []
+    },
+    {
+      "text": "3 tbsp sugar or to taste I don't like mine too sweet",
+      "comments": []
+    },
+    {
+      "text": "1 tsp vanilla extract",
+      "comments": []
+    }
+  ],
+  "steps": [
+    {
+      "text": "Combine the whipping cream, sugar and vanilla in a large bowl. Beat until light and fluffy.",
+      "comments": [""]
+    },
+    {
+      "text": "On a large serving platter, swirl a couple of tablespoons of whipped cream onto the plate. This will hold the bottom cookies in place.",
+      "comments": [""]
+    },
+    {
+      "text": "Place 8 wafers in a circle on the plate, leaving room to place 4 on top to make a solid layer.",
+      "comments": [""]
+    },
+    {
+      "text": "Top with whipped cream.",
+      "comments": [""]
+    },
+    {
+      "text": "Repeat for another 10-11 layers.",
+      "comments": [""]
+    },
+    {
+      "text": "Finish with whipped cream on top, then sprinkle with leftover broken cookies. There are always broken cookies.",
+      "comments": [""]
+    },
+    {
+      "text": "Wrap lightly with plastic wrap and refrigerate overnight until the next evening.",
+      "comments": [""]
+    },
+    {
+      "text": "Remove and slice carefully to serve!",
+      "comments": [""]
+    }
+  ]
+})
