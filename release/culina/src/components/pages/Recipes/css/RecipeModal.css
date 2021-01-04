@@ -96,9 +96,10 @@
     grid-template-columns: 1fr;
 }
 
+/*
 .editableRecipeCard {
-    /*CSS for recipe card in modal*/
 }
+*/
 
 .editableField{
     color: red;
@@ -118,9 +119,10 @@
     grid-template-rows: 2fr 1.5fr;
     grid-gap: 5px 0;
 }
-
+/*
 .modal .recipeHeader {
 }
+*/
 
     .modal .recipeHeader .droppableField {
         grid-row: 1/1;
@@ -328,10 +330,11 @@
     position: relative;
     background: inherit;
 }
-
+/*
 .droppableField.enabled {
-  /* //border: 2px dashed black; */
+   //border: 2px dashed black; 
 }
+*/
 
     .droppableField ul,
     ol {
@@ -369,9 +372,10 @@
   padding-left: 30px;
   padding-right: 60px;
 }
-
+/*
 .recipeHeader .draggableField {
 }
+*/
 
 .commentsDiv {
     background-color: rgba(100, 100, 100, 0.5);
@@ -467,8 +471,10 @@ h1.contentEditable {
         flex-basis: 75%;
     }
 
+    /*
     .actions {
     }
+    */
 
     .mainRecipeDiv.ocrActive {
         /*Shifts main card left and makes room for OCR output*/
@@ -520,9 +526,10 @@ h1.contentEditable {
         height: 75vmax;
         top: 20vmax;
     }
-
+    /*
     .actions {
     }
+    */
 }
 
 @media screen and (orientation: landscape) and (max-height: 600px) {

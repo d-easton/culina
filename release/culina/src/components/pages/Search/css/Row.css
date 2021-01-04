@@ -1,0 +1,31 @@
+.row {
+  margin-left: 20px;
+}
+
+.row_text {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.row__images {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 20px;
+}
+
+.row__images::-webkit-scrollbar {
+  display: none;
+}
+
+.row_image {
+  object-fit: contain;
+  max-height: 200px;
+  width: 200px;
+  margin-right: 10px;
+  transition: transform 450ms;
+}
+
+.row_image:hover {
+  transform: scale(1.08);
+}
