@@ -6,15 +6,16 @@ import SavedPlan from './SavedPlan.jsx';
 const DashboardList = styled.div`
     width: 90%;
     margin-left: 5%;
-    height: 50vh;
-    margin-top: 1vh;
-    padding: 15px;
+    height: 80vh;
+    margin-top: 7.5vh;
+    padding: 30px;
 
+    background-color: whitesmoke;
     border: 3px solid  #142843;
     border-radius: 10px;
 
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column;
     justify-content: space-between;
 `;
 
