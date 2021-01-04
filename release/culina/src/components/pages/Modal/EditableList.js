@@ -45,7 +45,7 @@ class EditableList extends React.Component {
 
     handleAdd() {
         let tempElements = this.state.elements;
-        tempElements.push("New " + this.props.elementName);
+        tempElements.push("");
         this.setState({ elements: tempElements });
         this.props.onChange(this.state.id, tempElements);
     }
@@ -68,6 +68,7 @@ class EditableList extends React.Component {
                         onChange={this.handleElementChange}
                         html={element}
                         disabled={this.props.isDisabled}
+                        placeholderText={this.props.placeholderText}
                     />
                     <ImageButton className="removeButton" key={"remove" + index} alt={"Remove"} imagePath={rm} onPress={this.handleRemove} id={index} isHidden={this.props.isDisabled} />
                 </div>

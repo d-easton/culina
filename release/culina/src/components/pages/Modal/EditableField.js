@@ -9,25 +9,47 @@ class EditableField extends React.Component {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
         this.endEditing = this.endEditing.bind(this);
         this.stripHtml = this.stripHtml.bind(this);
 
         this.contentEditable = React.createRef();
 
-        // Incoming html is found in this.props.html, but populate to "" so user doesn't have to delete any text
-            // TODO: explore placeholders? -- might look like this : <input placeholder="XYZ" />
-        this.state = { html: this.props.html };
-        
-    }
+        this.state = { 
+            html: this.props.html === "" ? this.props.placeholderText : this.props.html,
+            text: this.props.html,
+            isEmpty: this.props.html === ""  
+        }; 
+}
 
     //Updates the local state and updateds global copy
     handleChange(event) {
-
-
         //New HTML
-        const text = this.stripHtml(event.target.value);
-        //Updates local state
-        this.setState({ html: text })
+        const html = event.target.value;
+        const text = this.contentEditable.current.textContent;
+        let displayPlaceholder = (text === ""); 
+        this.setState({ 
+            html: html,
+            text: text,
+            isEmpty: displayPlaceholder,
+            isFocused: false 
+         })
+
+        const commentIndex = this.props.commentIndex != null ? this.props.commentIndex : -1;
+        this.props.onChange(text, commentIndex);
+    }
+
+    handleBlur(){
+        if(this.state.isEmpty){
+            this.setState({html: this.props.placeholderText});
+        }
+    }
+
+    handleFocus(){
+        if(this.state.isEmpty){
+            this.setState({html: ""})
+        }
     }
 
     stripHtml(html) {
@@ -40,16 +62,18 @@ class EditableField extends React.Component {
 
     //Renders an editable field
     render() {
+        let classes = this.props.childClass + (this.state.isEmpty ? " placeholder" : "");
         return (<ContentEditable
             innerRef={this.contentEditable}
             html={this.state.html}
             disabled={this.props.disabled}
             onChange={this.handleChange}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             tagName={this.props.tagName}
             key={this.props.childKey}
-            onBlur={this.endEditing}
-        />
-        );
+            className={classes}
+        />);
     }
 }
 

@@ -106,6 +106,7 @@ class GroceryList extends React.Component {
         isDisabled={this.state.isDisabled}
         onChange={this.handleFieldChange}
         listTitle={"Grocery List: "}
+        placeholderText="New Item"
       />
     );
 
