@@ -42,6 +42,7 @@ class DroppableField extends React.Component {
                         handleRemove={this.passRemoveOn}
                         html={elementJSON.content.text}
                         comments={elementJSON.content.comments}
+                        placeholderText={this.props.placeholderText}
                     />
                 </li>
             );
@@ -57,12 +58,13 @@ class DroppableField extends React.Component {
                     handleRemove={this.passRemoveOn}
                     html={elementJSON.content}
                     isDragDisabled={this.props.isDragDisabled}
+                    placeholderText={this.props.placeholderText}
                 />
             );
         }
 
         if (this.props.listType) {
-            if (this.props.listType == "ul") {
+            if (this.props.listType === "ul") {
                 draggables = <ul>
                     {draggables}
                 </ul>

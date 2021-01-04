@@ -34,10 +34,8 @@ class DraggableField extends React.Component {
         if (this.props.comments) {
             let content = {text: this.props.html, comments: this.props.comments}
             if (index < 0) {
-                console.log("changing content.text")
                 content.text = value;
             } else {
-                console.log("changing content.comments[" + index + "]")
                 content.comments[index] = value;
             }
             this.props.passChangeOn(this.props.id, content);
@@ -90,19 +88,19 @@ class DraggableField extends React.Component {
                             commentIndex={index}
                             disabled={this.props.isDisabled}
                         />
-                        <ImageButton childClass={"removeButton"} isHidden={this.props.isDisabled} key={"remove-comment" + this.props.id} alt="remove comment" imagePath={removeImage} onPress={() => { this.deleteComment(index) }}/>
+                        <ImageButton childClass={"removeButton"} isRendered={this.props.isDisabled} key={"remove-comment" + this.props.id} alt="remove comment" imagePath={removeImage} onPress={() => { this.deleteComment(index) }}/>
                     </div>
 
 
                 );
 
-                if (comments.length == 0) {
+                if (comments.length === 0) {
                     comments = <p>No comments made yet, add a new comment with the add button</p>;
                 }
                 commentDiv = (
-                    <div className="commentsDiv" isHidden={!this.state.showComments}>
+                    <div className="commentsDiv" isRendered={!this.state.showComments}>
                         <h4>Comments:</h4>
-                        <ImageButton childClass={"addButton"} isHidden={this.props.isDisabled} key={"add-comment" + this.props.id} alt={"add comment"} imagePath={addIcon} onPress={this.addComment} />
+                        <ImageButton childClass={"addButton"} isRendered={this.props.isDisabled} key={"add-comment" + this.props.id} alt={"add comment"} imagePath={addIcon} onPress={this.addComment} />
                         {comments}
                     </div>
                 ); 
@@ -120,7 +118,7 @@ class DraggableField extends React.Component {
                     >
                             <img className="dragIcon" src={dragIcon} alt="Move" hidden={this.props.isDisabled || this.props.isDragDisabled} {...provided.dragHandleProps}/>
                             <EditableRecipeField
-                                className="editableField"
+                                childClass="contentEditable"
                                 tagName={this.props.tagType}
                                 key={"editableField"+this.props.id}
                                 childKey={"contentEditable" + this.props.id}
@@ -128,6 +126,7 @@ class DraggableField extends React.Component {
                                 onChange={this.passOnChange}
                                 html={this.props.html}
                                 disabled={this.props.isDisabled}
+                                placeholderText={this.props.placeholderText}
                             />
                             {buttons}
                             {commentDiv}

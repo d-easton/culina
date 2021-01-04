@@ -9,13 +9,19 @@ class EditableRecipeField extends React.Component {
         super(props);
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
         this.stripHtml = this.stripHtml.bind(this);
 
         this.contentEditable = React.createRef();
 
         // Incoming html is found in this.props.html, but populate to "" so user doesn't have to delete any text
         // TODO: explore placeholders? -- might look like this : <input placeholder="XYZ" />
-        this.state = { html: this.props.html, text: this.props.html };
+        this.state = { 
+            html: this.props.html,
+            text: this.props.html,
+            isEmpty: this.props.html === ""  
+         };
         
         //console.log("constructor ran");
     }
@@ -24,19 +30,42 @@ class EditableRecipeField extends React.Component {
     handleChange(event) {
         //New HTML
         const html = event.target.value;
-        const text = this.stripHtml(html);
-        /*
-        console.log("text before strip");
-        console.log(text);
-        text = this.stripHtml(text);
-        console.log("text after strip")
-        console.log(text);
-        */
+        const text = this.contentEditable.current.textContent;
+
+        //console.log("text = " + text + ".")
+        //console.log(this.contentEditable.current)
+        let displayPlaceholder = (text === ""); 
+        //console.log(this.contentEditable)
+        //console.log(this.contentEditable.current.innerText)
+        // console.log("html = " +  html)
+        // console.log("text = " + text + ".")
+        //console.log("displayPlaceholder? = " + displayPlaceholder)
         //Updates local state
-        this.setState({ html: html, text: text })
+        this.setState({ 
+            html: html,
+            text: text,
+            isEmpty: displayPlaceholder,
+            isFocused: false 
+         })
 
         const commentIndex = this.props.commentIndex != null ? this.props.commentIndex : -1;
         this.props.onChange(text, commentIndex);
+    }
+
+    handleBlur(){
+        //console.log("blurred");
+        if(this.state.isEmpty){
+            //console.log("adding placeholder")
+            this.setState({html: this.props.placeholderText});
+        }
+    }
+
+    handleFocus(){
+        //console.log("focused")
+        if(this.state.isEmpty){
+            //console.log("removing placeholder")
+            this.setState({html: ""})
+        }
     }
 
     //Strips inputted text of any html tags
@@ -61,17 +90,17 @@ class EditableRecipeField extends React.Component {
         //console.log("editField test = " + this.props.testProp);
         //console.log("rendering field");
         let tag = this.props.tagName;
-        if (this.props.testProp) {
-            tag = this.props.testProp;
-        }
+        let classes = this.props.childClass + (this.state.isEmpty ? " placeholder" : "");
         return (<ContentEditable
             innerRef={this.contentEditable}     //Needed for content-editable to work
             html={this.state.html}              //Text inside the edited field
             disabled={this.props.disabled}      //If the field is editable or not
             onChange={this.handleChange}        //Function that is fired when the field is changed
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             tagName={tag}        //The type of html element to render
             key={this.props.childKey}           //Key used for React rerendering
-            className="contentEditable"
+            className={classes}
         />
         );
     }
