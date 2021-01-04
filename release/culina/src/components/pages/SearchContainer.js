@@ -1,26 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Row from "./Search/Row";
 import Display from "./Search/Display";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
+import "./css/Search.css";
 
 const SearchContainer = (props) => {
   const { user } = props;
+  const [search, setSearch] = useState([]);
 
   return (
     <div>
       <Display email={user} />
-      {/* ON DROPDOWN HAVE LARGE ONES */}
-      {/* <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-        <Dropdown.Item href="#/action-1">Breakfast</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </DropdownButton>
-      <Row email={user} category={"Breakfast"} /> */}
-      <Row email={user} category={"Breakfast"} />
-      <Row email={user} category={"Lunch"} />
-      <Row email={user} category={"Dinner"} />
-      <Row email={user} category={"Dessert"} />
+
+      <label className="text">
+        {" "}
+        Search:{" "}
+        <input
+          type="text"
+          className="textBox"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </label>
+      <Row email={user} category={"Breakfast"} search={search} />
+      <Row email={user} category={"Lunch"} search={search} />
+      <Row email={user} category={"Dinner"} search={search} />
+      <Row email={user} category={"Dessert"} search={search} />
     </div>
   );
 };

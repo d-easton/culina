@@ -8,6 +8,7 @@ type Recipe struct {
 	Description string        `json:"description"`
 	Title       string        `json:"title"`
 	Public      bool          `json:"public"`
+	Copy        bool          `json:"copy"`
 	Likes       int64         `json:"likes"`
 	Dislikes    int64         `json:"dislikes"`
 	Category    string        `json:"category"`
@@ -34,4 +35,16 @@ type GroceryList struct {
 	ID          int64       `json:"id"`
 	Email       string      `json:"email"`
 	Ingredients interface{} `json:"ingredients"`
+}
+
+type MealPlan struct {
+	ID        int64         `json:"id"`
+	Email     string        `json:"email"`
+	Sunday    []interface{} `json:"sunday"`
+	Monday    []interface{} `json:"monday"`
+	Tuesday   []interface{} `json:"tuesday"`
+	Wednesday []interface{} `json:"wednesday"`
+	Thursday  []interface{} `json:"thursday"`
+	Friday    []interface{} `json:"friday"`
+	Saturday  []interface{} `json:"saturday"`
 }

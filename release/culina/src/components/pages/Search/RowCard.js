@@ -5,11 +5,14 @@ import * as bs from "react-bootstrap";
 const axios = require("axios");
 const updateRecipeURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateRecipe";
+const addRecipeURL =
+  "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addRecipeForUser";
 
 const RowCard = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [likedmodalShow, setLikedModalShow] = useState(false);
   const [dislikedmodalShow, setDislikedModal] = useState(false);
+  const [alreadyShown, setAlreadyShown] = useState(false);
   const [like, setLike] = useState();
   const [dislike, setDislike] = useState();
 
@@ -93,6 +96,19 @@ const RowCard = (props) => {
           >
             Dislike
           </bs.Button>
+
+          <bs.Button
+            className="addRecipe"
+            onClick={() => {
+              if (props.recipe.email == props.user.email) {
+                alreadyInRecipes();
+              } else {
+                addToMyRecipes(props);
+              }
+            }}
+          >
+            Add to My Recipes
+          </bs.Button>
           <bs.Button
             className="closeModal"
             variant="secondary"
@@ -103,6 +119,24 @@ const RowCard = (props) => {
         </bs.Modal.Footer>
       </bs.Modal>
     );
+  }
+
+  function alreadyInRecipes() {
+    setAlreadyShown(true);
+    setModalShow(false);
+  }
+
+  function addToMyRecipes(props) {
+    let data = props.recipe;
+    data.email = props.user.email;
+    data.copy = true;
+
+    axios
+      .post(addRecipeURL, data)
+      .then((response) => {
+        setModalShow(false);
+      })
+      .catch((err) => console.log("err", err));
   }
 
   function getData(recipe) {
@@ -221,6 +255,31 @@ const RowCard = (props) => {
     );
   }
 
+  function AlreadyShownModal(props) {
+    return (
+      <bs.Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <bs.Modal.Body>
+          <h2>You already added this recipe to your list</h2>
+        </bs.Modal.Body>
+
+        <bs.Modal.Footer>
+          <bs.Button
+            className="closeModal"
+            variant="secondary"
+            onClick={props.onHide}
+          >
+            Close
+          </bs.Button>
+        </bs.Modal.Footer>
+      </bs.Modal>
+    );
+  }
+
   return (
     <>
       <li className="boxs__item" onClick={() => setModalShow(true)}>
@@ -250,6 +309,12 @@ const RowCard = (props) => {
         user={props.user}
         show={dislikedmodalShow}
         onHide={() => setDislikedModal(false)}
+      />
+      <AlreadyShownModal
+        recipe={props.recipe}
+        user={props.user}
+        show={alreadyShown}
+        onHide={() => setAlreadyShown(false)}
       />
     </>
   );

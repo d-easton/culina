@@ -106,6 +106,10 @@
   width: 150px;
 }
 
+.addRecipe {
+  width: 200px;
+}
+
 .likeModal {
   width: 150px;
   align-items: left;

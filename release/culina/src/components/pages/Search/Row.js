@@ -7,7 +7,7 @@ const getRecipeURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getAllRecipe";
 
 const Row = (props) => {
-  const { email, category } = props;
+  const { email, category, search } = props;
   const [recipes, setRecipes] = useState([]);
   const data = { Category: category };
 
@@ -36,6 +36,8 @@ const Row = (props) => {
       <div className="row__images">
         {recipes
           .filter((recipe) => recipe.image.length > 5)
+          .filter((recipe) => recipe.title.search(search) >= 0)
+          .sort((recipe1, recipe2) => recipe2.likes - recipe1.likes)
           .map((recipe) => (
             <RowCard
               recipe={recipe}

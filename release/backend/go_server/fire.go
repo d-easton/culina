@@ -36,10 +36,15 @@ func main() {
 	router.HandleFunc("/updateGroceryList", handler.UpdateGroceryList).Methods("PUT")
 	router.HandleFunc("/getGroceryList", handler.GetGroceryList).Methods("POST")
 
+	router.HandleFunc("/updateMealPlan", handler.UpdateMealPlan).Methods("PUT")
+	router.HandleFunc("/deleteMealPlan", handler.DeleteMealPlan).Methods("PUT")
+	router.HandleFunc("/addMealPlan", handler.AddMealPlan).Methods("POST")
+	router.HandleFunc("/getMealPlan", handler.GetMealPlan).Methods("POST")
+
 	// router.HandleFunc("/addRecipe", handler.AddRecipe).Methods("POST")
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins: []string{"*"},
 	})
 	handler := c.Handler(router)
 
