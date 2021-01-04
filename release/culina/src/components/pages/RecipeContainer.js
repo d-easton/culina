@@ -1,10 +1,11 @@
-import React from 'react';
-import RecipeCard from './Recipes/RecipeCard.js';
-import RecipeModal from './Recipes/RecipeModal.js';
-import Navbar from './Navbar';
-import './Recipes/css/RecipeModal.css';
-const axios = require('axios');
-const loadRecipeURL = "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
+import React from "react";
+import RecipeCard from "./Recipes/RecipeCard.js";
+import RecipeModal from "./Recipes/RecipeModal.js";
+import Navbar from "./Navbar";
+import "./Recipes/css/RecipeModal.css";
+const axios = require("axios");
+const loadRecipeURL =
+    "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
 
 class RecipeContainer extends React.Component {
     constructor(props) {
@@ -12,37 +13,37 @@ class RecipeContainer extends React.Component {
 
         //FOR TESTING COMMENTS
         /*
-        const testCommentRecipe = {
-            author: "Austin Evans",
-            email: "test2@gmail.com",
-            id: 12345,
-            ingredients: [
-                {
-                    text: "Chicken",
-                    comments: ["go for breasts next time"]
-                },
-                {
-                    text: "Salt",
-                    comments: []
-                },
-                {
-                    text: "Pepper",
-                    comments: []
-                }
-            ],
-            steps: [
-                {
-                    text: "Season chicken with salt and pepper",
-                    comments: ["add more salt next time"]
-                },
-                {
-                    text: "Bake in oven at 375 for 40 minutes",
-                    comments: []
-                }
-            ],
-            title: "Baked Chicken",
-        }
-*/
+            const testCommentRecipe = {
+                author: "Austin Evans",
+                email: "test2@gmail.com",
+                id: 12345,
+                ingredients: [
+                    {
+                        text: "Chicken",
+                        comments: ["go for breasts next time"]
+                    },
+                    {
+                        text: "Salt",
+                        comments: []
+                    },
+                    {
+                        text: "Pepper",
+                        comments: []
+                    }
+                ],
+                steps: [
+                    {
+                        text: "Season chicken with salt and pepper",
+                        comments: ["add more salt next time"]
+                    },
+                    {
+                        text: "Bake in oven at 375 for 40 minutes",
+                        comments: []
+                    }
+                ],
+                title: "Baked Chicken",
+            }
+    */
         //const testData = [testCommentRecipe]
 
         //console.log(testData)
@@ -50,20 +51,21 @@ class RecipeContainer extends React.Component {
             showModalRC: false,
             showNewCardOption: false,
 
-            modalRecipe: null,
-            isNewCard: false,
-            defaultRecipe: {
-                title: "New Recipe",
-                author: "Author",
-                ingredients: [],
-                steps: []
-            },
-            //recipes: testData,
-            recipes: [],
-            ocrOutput: null,
-            email: props.user.email
-        }
-        
+      modalRecipe: null,
+      isNewCard: false,
+      defaultRecipe: {
+        title: "New Recipe",
+        author: "Author",
+        description: "Add description",
+        ingredients: [],
+        steps: [],
+      },
+      //recipes: testData,
+      recipes: [],
+      ocrOutput: null,
+      email: props.user.email,
+    };
+
         this.closeModal = this.closeModal.bind(this);
         this.displayModalRC = this.displayModalRC.bind(this);
         this.displayBlankCard = this.displayBlankCard.bind(this);
@@ -80,30 +82,33 @@ class RecipeContainer extends React.Component {
 
         //UNDO AFTER SERVER FIXED
 
+    }
+
+    componentDidMount() {
         this.fetchData();
     }
 
     fetchData() {
-        axios.post(loadRecipeURL, {
-            "Email": this.state.email,
-        },
-        ).then(res => {
-            //TESTING
-            //Mimick ocrOutput being included in backend
-            /*
-            const testOCROutput = {
-                id: "ocrOutput",
-                output: ["Ham and cheese", "Ham", "Cheese",
-                    "Assemble Sandwich"]
-            }
-            res.data.push(testOCROutput);
-            console.log(res.data);
-            //DELETE AFTER OCR SET IN FIRESTORE
-            */
-           
+        axios
+            .post(loadRecipeURL, {
+                Email: this.state.email,
+            })
+            .then((res) => {
+                //TESTING
+                //Mimick ocrOutput being included in backend
+                /*
+                    const testOCROutput = {
+                        id: "ocrOutput",
+                        output: ["Ham and cheese", "Ham", "Cheese",
+                            "Assemble Sandwich"]
+                    }
+                    res.data.push(testOCROutput);
+                    console.log(res.data);
+                    //DELETE AFTER OCR SET IN FIRESTORE
+                    */
 
-            this.setData(res.data);
-        });
+                this.setData(res.data);
+            });
     }
 
     setData(data) {
@@ -115,10 +120,13 @@ class RecipeContainer extends React.Component {
                 if (element.id == "ocrOutput") {
                     ocr = element.output;
                     data.splice(index, 1);
-                    this.setState({ modalRecipe: this.state.defaultRecipe, isNewCard: true });
+                    this.setState({
+                        modalRecipe: this.state.defaultRecipe,
+                        isNewCard: true,
+                    });
                 }
             });
-            this.setState({ recipes: data, ocrOutput: ocr});
+            this.setState({ recipes: data, ocrOutput: ocr });
         }
     }
     closeModal() {
@@ -126,7 +134,11 @@ class RecipeContainer extends React.Component {
     }
 
     displayModalRC(recipeJSON, isNewCard) {
-        this.setState({ modalRecipe: recipeJSON, showModalRC: true , isNewCard: isNewCard});
+        this.setState({
+            modalRecipe: recipeJSON,
+            showModalRC: true,
+            isNewCard: isNewCard,
+        });
     }
 
     displayBlankCard() {
@@ -135,12 +147,11 @@ class RecipeContainer extends React.Component {
     }
 
     displayNewCardPrompt() {
-        this.setState({ showNewCardOption: true, showModal:false });
+        this.setState({ showNewCardOption: true, showModal: false });
     }
 
     displayOCRUploadField() {
-        this.setState({showUploadOption: true, showNewCardOption: false})
-
+        this.setState({ showUploadOption: true, showNewCardOption: false });
     }
 
     uploadRecipeImage() {
@@ -152,16 +163,15 @@ class RecipeContainer extends React.Component {
         } else {
             alert("Uploading image");
             this.setState({ showUploadOption: false, showBuffering: true });
-
         }
     }
 
     addNewCardLocally(recipeJSON) {
-        var tempCards = this.state.recipes
-        tempCards.push(recipeJSON)
-        this.setState({ recipes: tempCards })
+        var tempCards = this.state.recipes;
+        tempCards.push(recipeJSON);
+        this.setState({ recipes: tempCards });
 
-        this.closeModal()
+        this.closeModal();
     }
 
     deleteCardLocally(recipeJSON) {
@@ -170,12 +180,12 @@ class RecipeContainer extends React.Component {
         tempCards.forEach((recipe, index) => {
             const current_id = recipe.id;
             if (current_id == recipeJSON.id) {
-                tempCards.splice(index, 1)
+                tempCards.splice(index, 1);
                 didUpdate = true;
             }
-        }) 
-        this.setState({recipes: tempCards})
-        this.closeModal()
+        });
+        this.setState({ recipes: tempCards });
+        this.closeModal();
     }
 
     updateCardLocally(recipeJSON) {
@@ -187,30 +197,46 @@ class RecipeContainer extends React.Component {
                 tempCards[index] = recipeJSON;
                 didUpdate = true;
             }
-        }) 
+        });
         this.setState({ recipes: tempCards });
     }
 
-
     render() {
         const renderModal = this.state.showModal || this.state.ocrOutput;
-
+        let _email = this.state.email;
         let recipes = [];
         this.state.recipes.forEach((recipe, index) => {
-            recipes.push(<RecipeCard recipe={recipe} key={index} onClick={this.displayModalRC} modalEnabled={renderModal} />);
+            recipes.push(
+                <RecipeCard
+                    recipe={recipe}
+                    key={index}
+                    email={_email}
+                    onClick={this.displayModalRC}
+                    modalEnabled={renderModal}
+                />
+            );
         });
-
 
         let modal = null;
         let bodyOverflow = "scroll";
         bodyOverflow = "hidden";
         if (this.state.ocrOutput != null || this.state.showModalRC == true) {
-            modal = <RecipeModal key="recipeModal" email={this.state.email}
-                onClose={this.closeModal} isNewCard={this.state.isNewCard}
-                fetchData={this.fetchData} show={this.state.showModalRC}
-                recipe={this.state.modalRecipe} addLocalCard={this.addNewCardLocally}
-                updateLocalCard={this.updateCardLocally} deleteLocalCard={this.deleteCardLocally}
-                ocrResults={this.state.ocrOutput} setDraggableFields={this.props.setDraggableFields} />
+            modal = (
+                <RecipeModal
+                    key="recipeModal"
+                    email={this.state.email}
+                    onClose={this.closeModal}
+                    isNewCard={this.state.isNewCard}
+                    fetchData={this.fetchData}
+                    show={this.state.showModalRC}
+                    recipe={this.state.modalRecipe}
+                    addLocalCard={this.addNewCardLocally}
+                    updateLocalCard={this.updateCardLocally}
+                    deleteLocalCard={this.deleteCardLocally}
+                    ocrResults={this.state.ocrOutput}
+                    setDraggableFields={this.props.setDraggableFields}
+                />
+            );
         } else if (this.state.showNewCardOption) {
             modal = (
                 <div className="grayedBackground">
@@ -220,12 +246,19 @@ class RecipeContainer extends React.Component {
                             <div className="manualOption">
                                 <h2>Manual</h2>
                                 <p>Manually type and upload a card</p>
-                                <button onClick={this.displayBlankCard}>Start Manual Card</button>
+                                <button onClick={this.displayBlankCard}>
+                                    Start Manual Card
+                </button>
                             </div>
                             <div className="automaticOption">
                                 <h2>Automatic</h2>
-                                <p>Upload a photo of a recipe and have Culina take care of the typing!</p>
-                                <button onClick={this.displayOCRUploadField}>Upload Photo</button>
+                                <p>
+                                    Upload a photo of a recipe and have Culina take care of the
+                                    typing!
+                </p>
+                                <button onClick={this.displayOCRUploadField}>
+                                    Upload Photo
+                </button>
                             </div>
                             <button onClick={this.closeModal}>Cancel</button>
                         </div>
@@ -239,26 +272,26 @@ class RecipeContainer extends React.Component {
                         <div className="uploadImageDiv">
                             <h1>Upload Image</h1>
                             <p>Upload a PNG or JPG</p>
-                            <input type="file" accept=".jpg, .png" ref={this.uploadField}/>
+                            <input type="file" accept=".jpg, .png" ref={this.uploadField} />
                             <button onClick={this.uploadRecipeImage}>Upload</button>
                         </div>
                     </div>
                 </div>
-                );
+            );
         }
-        
 
         document.body.style.overflow = modal == null ? "scroll" : "hidden";
 
-
-        return (
-            <div className="recipeContainer">
-                <button onClick={this.displayBlankCard}>New Card</button>
-                {recipes}
-                {modal}
-            </div>
-        );
-    }
+    return (
+      <div className="around-page">
+        <div className="recipeContainer">
+          <button className="blue-dark white-text"onClick={this.displayBlankCard}>New Card</button>
+          {recipes}
+          {modal}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default RecipeContainer;

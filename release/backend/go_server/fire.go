@@ -9,6 +9,7 @@ import (
 	handler "./handlers"
 	firebase "firebase.google.com/go"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"google.golang.org/api/option"
 )
 
@@ -29,14 +30,20 @@ func main() {
 	router.HandleFunc("/deleteRecipe", handler.DeleteRecipeForUser).Methods("PUT")
 	router.HandleFunc("/addRecipeForUser", handler.AddRecipeForUser).Methods("POST")
 	router.HandleFunc("/getRecipeForUser", handler.GetRecipesForUser).Methods("POST")
+	router.HandleFunc("/getAllRecipe", handler.GetRecipes).Methods("POST")
 
 	router.HandleFunc("/addItemToList", handler.AddItemToList).Methods("POST")
 	router.HandleFunc("/updateGroceryList", handler.UpdateGroceryList).Methods("PUT")
 	router.HandleFunc("/getGroceryList", handler.GetGroceryList).Methods("POST")
 
-	router.HandleFunc("/getAllRecipe", handler.GetRecipes).Methods("GET")
-	router.HandleFunc("/addRecipe", handler.AddRecipe).Methods("POST")
+	// router.HandleFunc("/addRecipe", handler.AddRecipe).Methods("POST")
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+	})
+	handler := c.Handler(router)
+
 	log.Println("Server listening on port", firePort)
-	log.Fatalln(http.ListenAndServe(firePort, router))
+	log.Fatalln(http.ListenAndServe(firePort, handler))
 
 }
