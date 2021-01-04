@@ -18,12 +18,11 @@ class EditableRecipeField extends React.Component {
         // Incoming html is found in this.props.html, but populate to "" so user doesn't have to delete any text
         // TODO: explore placeholders? -- might look like this : <input placeholder="XYZ" />
         this.state = { 
-            html: this.props.html,
+            html: this.props.html === "" ? this.props.placeholderText : this.props.html,
             text: this.props.html,
             isEmpty: this.props.html === ""  
          };
         
-        //console.log("constructor ran");
     }
 
     //Updates the local state and updateds global copy
@@ -32,20 +31,12 @@ class EditableRecipeField extends React.Component {
         const html = event.target.value;
         const text = this.contentEditable.current.textContent;
 
-        //console.log("text = " + text + ".")
-        //console.log(this.contentEditable.current)
         let displayPlaceholder = (text === ""); 
-        //console.log(this.contentEditable)
-        //console.log(this.contentEditable.current.innerText)
-        // console.log("html = " +  html)
-        // console.log("text = " + text + ".")
-        //console.log("displayPlaceholder? = " + displayPlaceholder)
         //Updates local state
         this.setState({ 
             html: html,
             text: text,
             isEmpty: displayPlaceholder,
-            isFocused: false 
          })
 
         const commentIndex = this.props.commentIndex != null ? this.props.commentIndex : -1;
@@ -89,7 +80,6 @@ class EditableRecipeField extends React.Component {
     render() {
         //console.log("editField test = " + this.props.testProp);
         //console.log("rendering field");
-        let tag = this.props.tagName;
         let classes = this.props.childClass + (this.state.isEmpty ? " placeholder" : "");
         return (<ContentEditable
             innerRef={this.contentEditable}     //Needed for content-editable to work
@@ -98,7 +88,7 @@ class EditableRecipeField extends React.Component {
             onChange={this.handleChange}        //Function that is fired when the field is changed
             onBlur={this.handleBlur}
             onFocus={this.handleFocus}
-            tagName={tag}        //The type of html element to render
+            tagName={this.props.tagName}        //The type of html element to render
             key={this.props.childKey}           //Key used for React rerendering
             className={classes}
         />

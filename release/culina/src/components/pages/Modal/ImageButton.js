@@ -12,7 +12,7 @@ class ImageButton extends React.Component {
 
     render() {
         return (
-            <input className={this.props.childClass} type="image" id={this.props.alt} alt={this.props.alt} src={this.props.imagePath} onClick={this.handleClick} hidden={this.props.isRendered} />
+            <input className={this.props.childClass} type="image" id={this.props.alt} alt={this.props.alt} src={this.props.imagePath} onClick={this.handleClick} hidden={this.props.isHidden} />
         );
 
     }

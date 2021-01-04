@@ -79,7 +79,7 @@ class DraggableField extends React.Component {
                 comments = this.props.comments.map((comment, index) =>
                     <div className="comment" key={"comment-div-" + this.props.id + "-" + index}>
                         <EditableRecipeField
-                            className="comment"
+                            childClass="comment"
                             tagName={"p"}
                             key={"comment-" + this.props.id + "-" + index}
                             childKey={"contentEditable-" + this.props.id + "-" + index}
@@ -88,7 +88,7 @@ class DraggableField extends React.Component {
                             commentIndex={index}
                             disabled={this.props.isDisabled}
                         />
-                        <ImageButton childClass={"removeButton"} isRendered={this.props.isDisabled} key={"remove-comment" + this.props.id} alt="remove comment" imagePath={removeImage} onPress={() => { this.deleteComment(index) }}/>
+                        <ImageButton childClass={"removeButton"} isHidden={this.props.isDisabled} key={"remove-comment" + this.props.id} alt="remove comment" imagePath={removeImage} onPress={() => { this.deleteComment(index) }}/>
                     </div>
 
 
@@ -100,12 +100,12 @@ class DraggableField extends React.Component {
                 commentDiv = (
                     <div className="commentsDiv" isRendered={!this.state.showComments}>
                         <h4>Comments:</h4>
-                        <ImageButton childClass={"addButton"} isRendered={this.props.isDisabled} key={"add-comment" + this.props.id} alt={"add comment"} imagePath={addIcon} onPress={this.addComment} />
+                        <ImageButton childClass={"addButton"} isHidden={this.props.isDisabled} key={"add-comment" + this.props.id} alt={"add comment"} imagePath={addIcon} onPress={this.addComment} />
                         {comments}
                     </div>
                 ); 
             }
-            buttons.push(<ImageButton childClass={this.props.isDisabled ? "commentButton" : "commentButton editing"} key={"comment" + this.props.id} alt={"comment"} imagePath = {this.state.showComments ? closeCommentIcon : commentIcon} onPress={this.showComments} />)
+            buttons.push(<ImageButton childClass={this.props.isDisabled ? "commentButton" : "commentButton editing"} key={"comment" + this.props.id} alt={"comment"} isHidden = {false} imagePath = {this.state.showComments ? closeCommentIcon : commentIcon} onPress={this.showComments} />)
         }
 
         return (

@@ -68,10 +68,10 @@ class RecipeModal extends React.Component {
       this.state = {
         title: this.props.recipe.title,
         author: this.props.recipe.author,
-        ingredients: this.props.recipe.ingredients,
+        //ingredients: this.props.recipe.ingredients,
         description: this.props.recipe.description,
         category: this.props.recipe.category,
-        steps: this.props.recipe.steps,
+        //steps: this.props.recipe.steps,
         email: props.email,
         isDisabled: !this.props.isNewCard,
         draggableFields: {
@@ -142,6 +142,7 @@ class RecipeModal extends React.Component {
   //Callback function passed to each sub-editable element
   //Updates the html of the element
   handleFieldChange(fieldID, elementID, value) {
+    console.log("handleFieldChange")
     if (fieldID == "authorField") {
       this.setState({ author: value });
       return;
@@ -169,6 +170,7 @@ class RecipeModal extends React.Component {
     this.setState({ description: value });
   }
   handleCommentsChange(commentIndex, value) {
+    console.log("handleCommentsChange fired")
     let tempArray = this.state.comments;
     tempArray.forEach((element, index) => {
       if (
@@ -194,14 +196,42 @@ class RecipeModal extends React.Component {
       title = draggableFields.titleField.elements[0].content;
     }
     let ingredients = [];
+    let emptyIngredientIndices = [];
     draggableFields.ingredientsField.elements.forEach((element) => {
-      ingredients.push(element.content);
+      if(element.content.text !== ""){
+        ingredients.push(element.content);
+      }else{
+        emptyIngredientIndices.push(element.id)
+      }
+      console.log(element.content.comments)
+      let temp_comments = [];
+      element.content.comments.forEach(element=>{
+        temp_comments.push(element);
+      });
+      for(let i = temp_comments.length - 1; i > -1; i--){
+        if(temp_comments[i] === ""){
+          temp_comments.splice(i, 1);
+        }
+      }
+      element.content.comments = temp_comments;
+      console.log(element.content.comments)
     });
+    emptyIngredientIndices.forEach(index => {
+      this.handleRemoveElement("ingredientsField", index)
+    })
 
     let steps = [];
+    let emptyStepIndices = [];
     draggableFields.stepsField.elements.forEach((element) => {
-      steps.push(element.content);
+      if(element.content.text !== ""){
+        steps.push(element.content);
+      }else{
+        emptyStepIndices.push(element.id);
+      }
     });
+    emptyStepIndices.forEach(index => {
+        this.handleRemoveElement("stepsField", index)
+    })
 
     const savedRecipe = {
       id: this.props.recipe.id,
@@ -383,7 +413,7 @@ class RecipeModal extends React.Component {
 
     fieldInfo.elements.push({
       content: {
-        text: "New Element",
+        text: "",
         comments: [],
       },
       id: tempDraggableFields.nextElementID,
