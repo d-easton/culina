@@ -60,6 +60,7 @@ func (*mealPlanRepo) UpdateMealPlanForUser(mealPlan *entity.MealPlan, user strin
 	_, err = client.Collection(mealPlanCollection+user).Doc(strconv.FormatInt(mealPlan.ID, 10)).Set(ctx, map[string]interface{}{
 		"ID":        mealPlan.ID,
 		"Email":     mealPlan.Email,
+		"Name":      mealPlan.Name,
 		"Sunday":    mealPlan.Sunday,
 		"Monday":    mealPlan.Monday,
 		"Tuesday":   mealPlan.Tuesday,
@@ -88,6 +89,7 @@ func (*mealPlanRepo) SaveMealPlanForUser(mealPlan *entity.MealPlan, user string)
 	_, err = client.Collection(mealPlanCollection+user).Doc(strconv.FormatInt(mealPlan.ID, 10)).Set(ctx, map[string]interface{}{
 		"ID":        mealPlan.ID,
 		"Email":     mealPlan.Email,
+		"Name":      mealPlan.Name,
 		"Sunday":    mealPlan.Sunday,
 		"Monday":    mealPlan.Monday,
 		"Tuesday":   mealPlan.Tuesday,
@@ -128,6 +130,7 @@ func (*mealPlanRepo) FindMealPlanForUser(user string) ([]entity.MealPlan, error)
 		meals := entity.MealPlan{
 			ID:        doc.Data()["ID"].(int64),
 			Email:     doc.Data()["Email"].(string),
+			Name:      doc.Data()["Name"].(string),
 			Sunday:    doc.Data()["Sunday"].([]interface{}),
 			Monday:    doc.Data()["Monday"].([]interface{}),
 			Tuesday:   doc.Data()["Tuesday"].([]interface{}),
