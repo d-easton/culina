@@ -361,7 +361,7 @@ class CalendarContainer extends React.Component {
 
   handleSave = () => {
     const payload = {
-      title: this.state.calendarTitle,
+      name: this.state.calendarTitle,
       id: 1,
       email: this.state.email,
       monday: this.state.frameData["calMon"].recipeIDs,
@@ -378,6 +378,15 @@ class CalendarContainer extends React.Component {
 
     // ready for store
     console.log(payload);
+
+    axios
+      .post(addMealPlanURL, payload)
+      .then((response) => {
+        //whatever you want to do
+        //nothing too important is returned
+        console.log("wrote meal plan to db");
+      })
+      .catch((err) => console.log("err", err));
   };
   handleLoad = () => {
     alert("Feature coming soon!");
@@ -387,7 +396,7 @@ class CalendarContainer extends React.Component {
     // Meal Plan methods
 
     const data = {
-      title: this.state.calendarTitle,
+      name: this.state.calendarTitle,
       id: 1,
       email: this.state.email,
       monday: this.state.frameData["calMon"].recipeIDs,
