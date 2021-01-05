@@ -27,6 +27,9 @@ const deleteMealPlanURL =
 const updateMealPlanURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateMealPlan";
 
+const getRecipeURL =
+  "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
+
 //import "../Search/css/RowCard.css";
 
 function Modal(props) {
@@ -459,7 +462,18 @@ class CalendarContainer extends React.Component {
             },
             ...... more mealplans
         ]
+
+        put loop through the meal plan they click for open
+       then put into a dict of ids and what day of week
         */
+
+        axios
+          .post(getRecipeURL, userData)
+          .then((response) => {
+            //   This will get all the recipies then you can filter by dict of ids you created
+            // then store list of filter recipes in correct spot of week and put all the recipes in bottom section if they wanted to change it
+          })
+          .catch((err) => console.log("err", err));
       })
       .catch((err) => console.log("err", err));
   }
