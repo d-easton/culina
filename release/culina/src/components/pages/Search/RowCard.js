@@ -147,6 +147,7 @@ const RowCard = (props) => {
       image: recipe.image,
       title: recipe.title,
       public: recipe.public,
+      copy: recipe.copy,
       likes: recipe.likes,
       dislikes: recipe.dislikes,
       description: recipe.description,
