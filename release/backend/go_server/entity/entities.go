@@ -40,6 +40,7 @@ type GroceryList struct {
 type MealPlan struct {
 	ID        int64         `json:"id"`
 	Email     string        `json:"email"`
+	Name      string        `json:"name"`
 	Sunday    []interface{} `json:"sunday"`
 	Monday    []interface{} `json:"monday"`
 	Tuesday   []interface{} `json:"tuesday"`
