@@ -28,10 +28,10 @@ class DroppableField extends React.Component {
     render() {
 
         let draggables = null;
-
         if (this.props.listType) {
-            draggables = this.props.elements.map((elementJSON, index) =>
-                <li key={"li"+ elementJSON.id}>
+            draggables = this.props.elements.map((elementJSON, index) => {
+            
+            return  <li key={"li"+ elementJSON.id}>
                     <DraggableField
                         id={elementJSON.id}
                         isDisabled={this.props.isDisabled}
@@ -45,7 +45,7 @@ class DroppableField extends React.Component {
                         placeholderText={this.props.placeholderText}
                     />
                 </li>
-            );
+            });
         } else {
             draggables = this.props.elements.map((elementJSON, index) =>
                 <DraggableField

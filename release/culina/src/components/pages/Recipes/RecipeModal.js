@@ -127,15 +127,35 @@ class RecipeModal extends React.Component {
   }
 
   setUpFieldElements(content, count, length) {
+    //console.log(content)
     let newField = [];
     for (let i = 0; i < length; i++) {
-      let newElement = {
-        content: content[i],
-        id: count,
-      };
-      newField.push(newElement);
+      if(content[i].comments){
+        let newText = content[i].text;
+        let newComments = content[i].comments.map(commentText => {
+          return {
+            comment: commentText,
+            id: getRandomInt(10000)
+          }});
+          //console.log(newText);
+        let newElement = {
+          content: {
+            text: newText,
+            comments: newComments
+          },
+          id: count
+        }
+        newField.push(newElement);
+      }else{
+        let newElement = {
+          content: content[i],
+          id: count,
+        };
+        newField.push(newElement);
+      }
       count++;
     }
+    console.log(newField);
     return newField;
   }
 
@@ -195,34 +215,61 @@ class RecipeModal extends React.Component {
     if (draggableFields.titleField.elements.length != 0) {
       title = draggableFields.titleField.elements[0].content;
     }
+
+    let oldIngredients = JSON.parse(JSON.stringify(draggableFields.ingredientsField));
+
     let ingredients = [];
     let emptyIngredientIndices = [];
     draggableFields.ingredientsField.elements.forEach((element) => {
+
+      let emptyCommentIndices = [];
+      let cleansedComment = [];
+      element.content.comments.forEach((commentObj, index) => {
+        if(commentObj.comment !== ""){
+          cleansedComment.push(commentObj.comment);
+        }else{
+          emptyCommentIndices.push(index)
+        }
+      });
+      for(let i = emptyCommentIndices.length - 1; i > -1; i--){
+        element.content.comments.splice(emptyCommentIndices[i],1);
+      }
+      oldIngredients = JSON.parse(JSON.stringify(draggableFields.ingredientsField));
+      element.content.comments = cleansedComment;
+
+
+
       if(element.content.text !== ""){
         ingredients.push(element.content);
       }else{
         emptyIngredientIndices.push(element.id)
       }
-      console.log(element.content.comments)
-      let temp_comments = [];
-      element.content.comments.forEach(element=>{
-        temp_comments.push(element);
-      });
-      for(let i = temp_comments.length - 1; i > -1; i--){
-        if(temp_comments[i] === ""){
-          temp_comments.splice(i, 1);
-        }
-      }
-      element.content.comments = temp_comments;
-      console.log(element.content.comments)
+     
     });
     emptyIngredientIndices.forEach(index => {
       this.handleRemoveElement("ingredientsField", index)
     })
 
+    let oldSteps = JSON.parse(JSON.stringify(draggableFields.stepsField));
+
     let steps = [];
     let emptyStepIndices = [];
     draggableFields.stepsField.elements.forEach((element) => {
+      let emptyCommentIndices = [];
+      let cleansedComment = [];
+      element.content.comments.forEach((commentObj, index) => {
+        if(commentObj.comment !== ""){
+          cleansedComment.push(commentObj.comment);
+        }else{
+          emptyCommentIndices.push(index)
+        }
+      });
+      for(let i = emptyCommentIndices.length - 1; i > -1; i--){
+        element.content.comments.splice(emptyCommentIndices[i],1);
+      }
+      oldSteps = JSON.parse(JSON.stringify(draggableFields.stepsField));
+      element.content.comments = cleansedComment;
+
       if(element.content.text !== ""){
         steps.push(element.content);
       }else{
@@ -268,8 +315,10 @@ class RecipeModal extends React.Component {
     if (error_log.length != 0) {
       return { error_log: error_log };
     }
-
-    this.setState({ isDisabled: true, category: savedRecipe.category });
+    draggableFields.ingredientsField = oldIngredients;
+    draggableFields.stepsField = oldSteps;
+    this.setState({ isDisabled: true, category: savedRecipe.category, draggableFields: draggableFields});
+    console.log(savedRecipe);
     return savedRecipe;
   }
 
@@ -695,6 +744,9 @@ class RecipeModal extends React.Component {
 
 function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
+}
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 export default RecipeModal;

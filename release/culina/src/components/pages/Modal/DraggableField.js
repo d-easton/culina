@@ -36,7 +36,7 @@ class DraggableField extends React.Component {
             if (index < 0) {
                 content.text = value;
             } else {
-                content.comments[index] = value;
+                content.comments[index].comment = value;
             }
             this.props.passChangeOn(this.props.id, content);
         } else {
@@ -56,7 +56,10 @@ class DraggableField extends React.Component {
 
     addComment() {
         let newContent = { text: this.props.html, comments: this.props.comments }
-        newContent.comments.push("New Comment");
+        newContent.comments.push({
+            comment: "",
+            id: Math.floor(Math.random() * Math.floor(10000))
+        });
         this.props.passChangeOn(this.props.id, newContent);
     }
 
@@ -76,17 +79,18 @@ class DraggableField extends React.Component {
         let buttons = [<ImageButton childClass="removeButton" key={"remove" + this.props.id} alt={"remove"} imagePath={removeImage} onPress={this.handleRemove} isHidden={this.props.isDisabled || this.props.isDragDisabled} />]
         if (this.props.comments) {
             if (this.state.showComments) {
-                comments = this.props.comments.map((comment, index) =>
-                    <div className="comment" key={"comment-div-" + this.props.id + "-" + index}>
+                comments = this.props.comments.map((commentObj, index) =>
+                    <div className="comment" key={"comment-div-" + this.props.id + "-" + index + "-" + commentObj.id}>
                         <EditableRecipeField
                             childClass="comment"
                             tagName={"p"}
                             key={"comment-" + this.props.id + "-" + index}
                             childKey={"contentEditable-" + this.props.id + "-" + index}
                             onChange={this.passOnChange}
-                            html={comment}
+                            html={commentObj.comment}
                             commentIndex={index}
                             disabled={this.props.isDisabled}
+                            placeholderText="New Comment"
                         />
                         <ImageButton childClass={"removeButton"} isHidden={this.props.isDisabled} key={"remove-comment" + this.props.id} alt="remove comment" imagePath={removeImage} onPress={() => { this.deleteComment(index) }}/>
                     </div>
