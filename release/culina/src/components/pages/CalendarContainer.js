@@ -3,6 +3,7 @@ import * as bs from "react-bootstrap";
 import "../../App.css";
 import "./Calendar/css/Calendar.css";
 import constants from "./Calendar/constants.js";
+import funcs from "./Calendar/funcs.js";
 import EditableField from "./Modal/EditableField";
 import Dashboard from './Calendar/model/Dashboard.jsx';
 
@@ -153,7 +154,7 @@ class CalendarContainer extends React.Component {
             recipeBoxData: constants.data.recipeBox,
             frameData: constants.data.calendarFrames,
 
-            fetchedMealPlans: testPlanData
+            fetchedMealPlans:  testPlanData
         };
 
         // this.config = this.config.bind(this);
@@ -190,6 +191,12 @@ class CalendarContainer extends React.Component {
     }
 
     fetchData() {
+
+        const userData = {
+            email: this.state.email,
+        };
+
+        // get recipes
         axios
             .post(constants.getRecipeURL, {
                 Email: this.state.email,
@@ -197,6 +204,15 @@ class CalendarContainer extends React.Component {
             .then((res) => {
                 this.setData(res.data, constants.recipeCode);
             });
+            
+        //get all mealplans
+        axios
+           .post(getMealPlanURL, userData)
+           .then((response) => {
+               this.state.fetchedMealPlans = response;
+           })
+           .catch((err) => console.log("err", err));
+        console.log(this.state.fetchedMealPlans);
     }
 
     getData(mode) {
@@ -408,6 +424,29 @@ class CalendarContainer extends React.Component {
 
     onPlanOpen(plan) {
         console.log("open callback received well -- "+plan.title);
+        console.log(plan);
+        if (!(funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(plan.title))) {
+            alert("We had trouble opening that calendar right now. Please try again later.")
+        }
+        this.state.frameData["calMon"].recipeIDs = plan.monday;
+        this.state.frameData["calTue"].recipeIDs = plan.tuesday;
+        this.state.frameData["calWed"].recipeIDs = plan.wednesday;
+        this.state.frameData["calThu"].recipeIDs = plan.thursday;
+        this.state.frameData["calFri"].recipeIDs = plan.friday;
+        this.state.frameData["calSat"].recipeIDs = plan.saturday;
+        this.state.frameData["calSun"].recipeIDs = plan.sunday;
+
+        console.log(this.state.frameData);
+        console.log(this.state.recipes)
+        // this.forceUpdate();
+        // let targetPL;
+        // this.state.fetchedMealPlans.forEach( (element) => {
+        //     if (element.title == plan.title){
+        //         plan = 
+        //     }
+        // })
+        
+
     }
     onPlanDelete(plan) {
         console.log("delete callback received well -- "+plan.title);
@@ -431,17 +470,31 @@ class CalendarContainer extends React.Component {
         // record[currentTitle] = payload;
 
         // ready for store
+        console.log("ready for store");
         console.log(payload);
-
-        axios
-            .post(addMealPlanURL, payload)
-            .then((response) => {
-                //whatever you want to do
-                //nothing too important is returned
-                console.log("wrote meal plan to db");
-            })
-            .catch((err) => console.log("err", err));
+        console.log(this.state.fetchedMealPlans)
+        if (funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(this.state.calendarTitle)) {
+            console.log("update");
+            //update
+            axios
+                .put(updateMealPlanURL, payload)
+                .then((response) => {
+                    //TODO: Confirmation of successful write
+                })
+                .catch((err) => console.log("err", err));
+        }
+        else {
+            console.log("add");
+            // add
+            axios
+                .post(addMealPlanURL, payload)
+                .then((response) => {
+                    //TODO: Confirmation of successful write
+                })
+                .catch((err) => console.log("err", err));
+        }
     };
+
     handleLoad = () => {
         this.openViewDashboard();
     };
@@ -465,23 +518,24 @@ class CalendarContainer extends React.Component {
         const userData = {
             email: this.state.email,
         };
-        // add
-        axios
-            .post(addMealPlanURL, data)
-            .then((response) => {
-                //whatever you want to do
-                //nothing too important is returned
-            })
-            .catch((err) => console.log("err", err));
+        
+        // // add
+        // axios
+        //     .post(addMealPlanURL, data)
+        //     .then((response) => {
+        //         //whatever you want to do
+        //         //nothing too important is returned
+        //     })
+        //     .catch((err) => console.log("err", err));
 
-        //update
-        axios
-            .put(updateMealPlanURL, data)
-            .then((response) => {
-                //whatever you want to do
-                //nothing too important is returned
-            })
-            .catch((err) => console.log("err", err));
+        // //update
+        // axios
+        //     .put(updateMealPlanURL, data)
+        //     .then((response) => {
+        //         //whatever you want to do
+        //         //nothing too important is returned
+        //     })
+        //     .catch((err) => console.log("err", err));
 
         //delete
         axios

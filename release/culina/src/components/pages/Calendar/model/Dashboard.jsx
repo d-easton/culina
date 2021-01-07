@@ -21,8 +21,8 @@ const DashboardList = styled.div`
 
 export default class Dashboard extends React.Component {
     render() {
-        console.log("PLANS");
-        console.log(this.props.mealPlans);
+        // console.log("PLANS");
+        // console.log(this.props.mealPlans);
         // const dropAreaID = "recipeBox";
         return (
             
