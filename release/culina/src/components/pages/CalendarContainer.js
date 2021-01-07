@@ -455,7 +455,6 @@ class CalendarContainer extends React.Component {
 
     }
     onPlanDelete(plan) {
-        
         console.log("delete callback received well -- "+plan.title);
         const data = {
             title: this.state.calendarTitle,
@@ -469,6 +468,7 @@ class CalendarContainer extends React.Component {
             saturday: this.state.frameData["calSat"].recipeIDs,
             sunday: this.state.frameData["calSun"].recipeIDs,
         };
+
         //delete
         axios
             .put(deleteMealPlanURL, data)
@@ -478,7 +478,6 @@ class CalendarContainer extends React.Component {
             })
             .catch((err) => console.log("err", err));
         this.fetchMealPlans();
-        
     }
 
     handleSave = () => {
