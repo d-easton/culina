@@ -5,8 +5,9 @@ import "./Calendar/css/Calendar.css";
 import constants from "./Calendar/constants.js";
 import funcs from "./Calendar/funcs.js";
 import EditableField from "./Modal/EditableField";
-import Dashboard from './Calendar/model/Dashboard.jsx';
+import Dashboard from "./Calendar/model/Dashboard.jsx";
 
+import CalendarTrack from "./Calendar/model/CalendarTrack.jsx"
 import Frame from "./Calendar/model/Frame.jsx";
 import RecipeBox from "./Calendar/model/RecipeBox.jsx";
 
@@ -159,7 +160,6 @@ class CalendarContainer extends React.Component {
 
         // this.config = this.config.bind(this);
 
-        this.getData = this.getData.bind(this);
         this.setData = this.setData.bind(this);
         this.exportData = this.exportData.bind(this);
 
@@ -221,61 +221,61 @@ class CalendarContainer extends React.Component {
             .catch((err) => console.log("err", err));
     }
 
-    getData(mode) {
-        let header = {
-            email: this.state.email,
-        };
-        let url;
-        const CALENDAR = constants.calendarCode;
-        const RECIPE = constants.recipeCode;
+    // getData(mode) {
+    //     let header = {
+    //         email: this.state.email,
+    //     };
+    //     let url;
+    //     const CALENDAR = constants.calendarCode;
+    //     const RECIPE = constants.recipeCode;
 
-        if (mode == CALENDAR) {
-            // any necessary header modifications
-            url = constants.getCalendarURL;
-        } else if (mode == RECIPE) {
-            // any necessary header modifications
-            url = constants.getRecipeURL;
-        } else {
-            const err = "Invalid data mode";
-            console.log("err", err);
-            return;
-        }
+    //     if (mode == CALENDAR) {
+    //         // any necessary header modifications
+    //         url = constants.getCalendarURL;
+    //     } else if (mode == RECIPE) {
+    //         // any necessary header modifications
+    //         url = constants.getRecipeURL;
+    //     } else {
+    //         const err = "Invalid data mode";
+    //         console.log("err", err);
+    //         return;
+    //     }
 
-        axios
-            .post(url, header)
-            .then((response) => {
-                if (this._mounted) {
-                    if (mode == CALENDAR) {
-                        this.setData(response.data[0].ingredients, CALENDAR);
-                    } else if (mode == RECIPE) {
-                        this.setData(response.data[0].ingredients, RECIPE); // TODO: fix this format
-                    }
-                }
-            })
-            .catch((err) =>
-                axios
-                    .put(url, header)
-                    .then((response) => {
-                        if (this._mounted) {
-                            if (mode == CALENDAR) {
-                                this.setData(response.data[0].ingredients, CALENDAR);
-                            } else if (mode == RECIPE) {
-                                this.setData(response.data[0].ingredients, RECIPE); // TODO: fix this format
-                            }
-                        }
-                    })
-                    .catch((err) => {
-                        // if(this.__mounted) {
-                        if (mode == CALENDAR) {
-                            this.setData(null, CALENDAR);
-                        } else if (mode == RECIPE) {
-                            this.setData(null, RECIPE);
-                        }
-                        // }
-                        console.log("err", err);
-                    })
-            );
-    }
+    //     axios
+    //         .post(url, header)
+    //         .then((response) => {
+    //             if (this._mounted) {
+    //                 if (mode == CALENDAR) {
+    //                     this.setData(response.data[0].ingredients, CALENDAR);
+    //                 } else if (mode == RECIPE) {
+    //                     this.setData(response.data[0].ingredients, RECIPE); // TODO: fix this format
+    //                 }
+    //             }
+    //         })
+    //         .catch((err) =>
+    //             axios
+    //                 .put(url, header)
+    //                 .then((response) => {
+    //                     if (this._mounted) {
+    //                         if (mode == CALENDAR) {
+    //                             this.setData(response.data[0].ingredients, CALENDAR);
+    //                         } else if (mode == RECIPE) {
+    //                             this.setData(response.data[0].ingredients, RECIPE); // TODO: fix this format
+    //                         }
+    //                     }
+    //                 })
+    //                 .catch((err) => {
+    //                     // if(this.__mounted) {
+    //                     if (mode == CALENDAR) {
+    //                         this.setData(null, CALENDAR);
+    //                     } else if (mode == RECIPE) {
+    //                         this.setData(null, RECIPE);
+    //                     }
+    //                     // }
+    //                     console.log("err", err);
+    //                 })
+    //         );
+    // }
 
     setData(res, mode) {
         const CALENDAR = constants.calendarCode;
@@ -434,16 +434,22 @@ class CalendarContainer extends React.Component {
         if (!(funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(plan.title))) {
             alert("We had trouble opening that calendar right now. Please try again later.")
         }
-        this.state.frameData["calMon"].recipeIDs = plan.monday;
-        this.state.frameData["calTue"].recipeIDs = plan.tuesday;
-        this.state.frameData["calWed"].recipeIDs = plan.wednesday;
-        this.state.frameData["calThu"].recipeIDs = plan.thursday;
-        this.state.frameData["calFri"].recipeIDs = plan.friday;
-        this.state.frameData["calSat"].recipeIDs = plan.saturday;
-        this.state.frameData["calSun"].recipeIDs = plan.sunday;
+
+        let updateFrameData = this.state.frameData;
+        updateFrameData["calMon"].recipeIDs = plan.monday;
+        updateFrameData["calTue"].recipeIDs = plan.tuesday;
+        updateFrameData["calWed"].recipeIDs = plan.wednesday;
+        updateFrameData["calThu"].recipeIDs = plan.thursday;
+        updateFrameData["calFri"].recipeIDs = plan.friday;
+        updateFrameData["calSat"].recipeIDs = plan.saturday;
+        updateFrameData["calSun"].recipeIDs = plan.sunday;
+        this.setState({
+            frameData: updateFrameData
+        });
 
         console.log(this.state.frameData);
-        console.log(this.state.recipes)
+        console.log(this.state.recipes);
+        
         // this.forceUpdate();
         // let targetPL;
         // this.state.fetchedMealPlans.forEach( (element) => {
@@ -566,49 +572,49 @@ class CalendarContainer extends React.Component {
         //     })
         //     .catch((err) => console.log("err", err));
 
-        //delete
-        axios
-            .put(deleteMealPlanURL, data)
-            .then((response) => {
-                //whatever you want to do
-                //nothing too important is returned
-            })
-            .catch((err) => console.log("err", err));
+        // //delete
+        // axios
+        //     .put(deleteMealPlanURL, data)
+        //     .then((response) => {
+        //         //whatever you want to do
+        //         //nothing too important is returned
+        //     })
+        //     .catch((err) => console.log("err", err));
 
         //get
-        axios
-            .post(getMealPlanURL, userData)
-            .then((response) => {
-                /*whatever you want to do
-                will be a list of mealplans stored similary to how the data above is
-                [
-                    {
-                        "id": 1253,
-                        "email": "hi@gmail.com",
-                        "name": "we",
-                        "sunday":["id1","id2","id3"],
-                        "monday":["id1","id2","id3"],
-                        "tuesday":["id1","id2","id3"],
-                        "wednesday":["id1","id2","id3"],
-                        "thursday":["id1","id2","id3"],
-                        "friday":["id1","id2","id3"],
-                        "saturday":["id1","id2","id3"],
-                    },
-                    ...... more mealplans
-                ]
-                put loop through the meal plan they click for open
-               then put into a dict of ids and what day of week
-                */
+        // axios
+        //     .post(getMealPlanURL, userData)
+        //     .then((response) => {
+        //         /*whatever you want to do
+        //         will be a list of mealplans stored similary to how the data above is
+        //         [
+        //             {
+        //                 "id": 1253,
+        //                 "email": "hi@gmail.com",
+        //                 "name": "we",
+        //                 "sunday":["id1","id2","id3"],
+        //                 "monday":["id1","id2","id3"],
+        //                 "tuesday":["id1","id2","id3"],
+        //                 "wednesday":["id1","id2","id3"],
+        //                 "thursday":["id1","id2","id3"],
+        //                 "friday":["id1","id2","id3"],
+        //                 "saturday":["id1","id2","id3"],
+        //             },
+        //             ...... more mealplans
+        //         ]
+        //         put loop through the meal plan they click for open
+        //        then put into a dict of ids and what day of week
+        //         */
 
-                axios
-                    .post(getRecipeURL, userData)
-                    .then((response) => {
-                        //   This will get all the recipies then you can filter by dict of ids you created
-                        // then store list of filter recipes in correct spot of week and put all the recipes in bottom section if they wanted to change it
-                    })
-                    .catch((err) => console.log("err", err));
-            })
-            .catch((err) => console.log("err", err));
+        //         axios
+        //             .post(getRecipeURL, userData)
+        //             .then((response) => {
+        //                 //   This will get all the recipies then you can filter by dict of ids you created
+        //                 // then store list of filter recipes in correct spot of week and put all the recipes in bottom section if they wanted to change it
+        //             })
+        //             .catch((err) => console.log("err", err));
+        //     })
+        //     .catch((err) => console.log("err", err));
     }
 
     /** DND FUNCTIONS */
@@ -738,7 +744,7 @@ class CalendarContainer extends React.Component {
                             <div id="calendar-title">
                                 <EditableField
                                     id={"calendar-id"}
-                                    html={""}
+                                    html={"Enter title"}
                                     tagName={"h2"}
                                     disabled={false} //{this.state.isDisabled}
                                     onChange={this.onTitleChange}
@@ -769,22 +775,14 @@ class CalendarContainer extends React.Component {
                                 </button>
                             </div>
                         </div>
-                        <div id="calendar-track">
-                            {this.state.calendarOrder.map((frameID) => {
-                                const frame = this.state.frameData[frameID];
-                                const recipes = frame.recipeIDs.map(
-                                    (recipeID) => this.state.recipes[recipeID]
-                                );
-                                return (
-                                    <Frame
-                                        key={frame.id}
-                                        frame={frame}
-                                        recipes={recipes}
-                                        recipeClickCallback={this.onRecipeClick}
-                                    ></Frame>
-                                );
-                            })}
-                        </div>
+                        <CalendarTrack
+                            calendarOrder={this.state.calendarOrder}
+                            recipes={this.state.recipes}
+                            frameData={this.state.frameData}
+                            onRecipeClick={this.onRecipeClick}
+                        >
+                        </CalendarTrack>
+                        
                     </div>
                     <div id="recipes-div" className="sand-dark">
                         <div id="divider-wrapper">
