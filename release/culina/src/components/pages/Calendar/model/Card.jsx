@@ -11,8 +11,8 @@ const CardDiv = styled.div`
     margin-top: 5px;
     margin-bottom: 5px;
 
-    background-color: #487A90;
-    color: whitesmoke;
+    background-color: #6c757d;
+    color: white;
 `;
 
 export default class Card extends React.Component {

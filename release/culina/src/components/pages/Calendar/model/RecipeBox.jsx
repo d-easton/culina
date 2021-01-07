@@ -10,14 +10,18 @@ const RecipeBoxList = styled.div`
     margin-top: 2vh;
     padding: 15px;
 
-    background-color:#F4E3D7;
+    background-color: white;
     border: 3px solid  #142843;
     border-radius: 10px;
+    
+    box-shadow: 0px 8px 11px -7px #030303, 3px 3px 50px 5px rgba(121,121,121,0.25);
 
     display: flex;
     flex-flow: column wrap;
     justify-content: space-between;
 `;
+
+//#F4E3D7
 
 export default class RecipeBox extends React.Component {
     render() {
