@@ -163,6 +163,9 @@ class CalendarContainer extends React.Component {
         this.setData = this.setData.bind(this);
         this.exportData = this.exportData.bind(this);
 
+        this.fetchData = this.fetchData.bind(this);
+        this.fetchMealPlans = this.fetchMealPlans.bind(this);
+
         this.onTitleChange = this.onTitleChange.bind(this);
         this.buildCalendarObj = this.buildCalendarObj.bind(this);
         this.onPlanOpen = this.onPlanOpen.bind(this);
@@ -191,11 +194,6 @@ class CalendarContainer extends React.Component {
     }
 
     fetchData() {
-
-        const userData = {
-            email: this.state.email,
-        };
-
         // get recipes
         axios
             .post(constants.getRecipeURL, {
@@ -205,14 +203,22 @@ class CalendarContainer extends React.Component {
                 this.setData(res.data, constants.recipeCode);
             });
             
+        this.fetchMealPlans();
+        console.log(this.state.fetchedMealPlans);
+    }
+
+    fetchMealPlans() {
+        const userData = {
+            email: this.state.email,
+        };
+
         //get all mealplans
         axios
-           .post(getMealPlanURL, userData)
-           .then((response) => {
-               this.state.fetchedMealPlans = response;
-           })
-           .catch((err) => console.log("err", err));
-        console.log(this.state.fetchedMealPlans);
+            .post(getMealPlanURL, userData)
+            .then((response) => {
+                this.state.fetchedMealPlans = response;
+            })
+            .catch((err) => console.log("err", err));
     }
 
     getData(mode) {
@@ -449,12 +455,10 @@ class CalendarContainer extends React.Component {
 
     }
     onPlanDelete(plan) {
+        
         console.log("delete callback received well -- "+plan.title);
-    }
-
-    handleSave = () => {
-        const payload = {
-            name: this.state.calendarTitle,
+        const data = {
+            title: this.state.calendarTitle,
             id: 1,
             email: this.state.email,
             monday: this.state.frameData["calMon"].recipeIDs,
@@ -465,6 +469,32 @@ class CalendarContainer extends React.Component {
             saturday: this.state.frameData["calSat"].recipeIDs,
             sunday: this.state.frameData["calSun"].recipeIDs,
         };
+        //delete
+        axios
+            .put(deleteMealPlanURL, data)
+            .then((response) => {
+                //whatever you want to do
+                //nothing too important is returned
+            })
+            .catch((err) => console.log("err", err));
+        this.fetchMealPlans();
+        
+    }
+
+    handleSave = () => {
+        const payload = {
+            title: this.state.calendarTitle,
+            id: 1,
+            email: this.state.email,
+            monday: this.state.frameData["calMon"].recipeIDs,
+            tuesday: this.state.frameData["calTue"].recipeIDs,
+            wednesday: this.state.frameData["calWed"].recipeIDs,
+            thursday: this.state.frameData["calThu"].recipeIDs,
+            friday: this.state.frameData["calFri"].recipeIDs,
+            saturday: this.state.frameData["calSat"].recipeIDs,
+            sunday: this.state.frameData["calSun"].recipeIDs,
+        };
+        
         // const currentTitle = this.state.calendarTitle;
         // const record = {};
         // record[currentTitle] = payload;
@@ -503,7 +533,7 @@ class CalendarContainer extends React.Component {
         // Meal Plan methods
 
         const data = {
-            name: this.state.calendarTitle,
+            title: this.state.calendarTitle,
             id: 1,
             email: this.state.email,
             monday: this.state.frameData["calMon"].recipeIDs,
