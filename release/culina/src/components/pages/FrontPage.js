@@ -6,8 +6,7 @@ import Footer from './FrontPage/Footer';
 
 const FrontPage = (props) => {
   const { user } = props;
-  // console.log(user.email)
-  let email =''
+  let email ='';
   if(user == undefined) {
     email = undefined
   } else {

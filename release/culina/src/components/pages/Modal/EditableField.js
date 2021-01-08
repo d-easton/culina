@@ -73,6 +73,8 @@ class EditableField extends React.Component {
             tagName={this.props.tagName}
             key={this.props.childKey}
             className={classes}
+
+            id={this.props.id}
         />);
     }
 }

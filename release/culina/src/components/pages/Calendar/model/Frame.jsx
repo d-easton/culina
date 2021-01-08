@@ -5,7 +5,9 @@ import styled from 'styled-components';
 
 const CardList = styled.div`
     margin: 3px;
-    min-height: 200px;
+    margin-top: 10px;
+    min-height: 250px;
+    overflow:auto;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
