@@ -213,12 +213,19 @@ class CalendarContainer extends React.Component {
         };
 
         //get all mealplans
+        let mealPlans = [];
         axios
             .post(getMealPlanURL, userData)
             .then((response) => {
-                this.state.fetchedMealPlans = response;
+                mealPlans = response.data;
             })
             .catch((err) => console.log("err", err));
+
+        if (mealPlans == undefined || mealPlans == null) {
+           mealPlans = [];
+        }
+        
+        this.setState({ fetchedMealPlans: mealPlans });
     }
 
     // getData(mode) {
@@ -383,10 +390,11 @@ class CalendarContainer extends React.Component {
             });
     }
 
-    onTitleChange(id, newTitle) {
+    onTitleChange() {
         this.setState({
-            calendarTitle: newTitle,
+            calendarTitle: document.getElementById("calendar-id").innerHTML,
         });
+        console.log(this.state.calendarTitle);
     }
 
     buildCalendarObj() {
@@ -431,6 +439,7 @@ class CalendarContainer extends React.Component {
     onPlanOpen(plan) {
         console.log("open callback received well -- "+plan.title);
         console.log(plan);
+        console.log(this.state.fetchedMealPlans);
         if (!(funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(plan.title))) {
             alert("We had trouble opening that calendar right now. Please try again later.")
         }
@@ -488,7 +497,7 @@ class CalendarContainer extends React.Component {
 
     handleSave = () => {
         const payload = {
-            title: this.state.calendarTitle,
+            name: this.state.calendarTitle,
             id: 1,
             email: this.state.email,
             monday: this.state.frameData["calMon"].recipeIDs,
@@ -528,6 +537,7 @@ class CalendarContainer extends React.Component {
                 })
                 .catch((err) => console.log("err", err));
         }
+        this.fetchMealPlans();
     };
 
     handleLoad = () => {
@@ -726,6 +736,12 @@ class CalendarContainer extends React.Component {
                 }
             />
         );
+
+        let mealPlans = [];
+        if (this.state.fetchedMealPlans != undefined || this.state.fetchedMealPlans != null) {
+            mealPlans = this.state.fetchedMealPlans;
+        }
+
         return (
             <DragDropContext onDragEnd={this.handleDragEnd}>
                 {recipeModal}
@@ -736,7 +752,7 @@ class CalendarContainer extends React.Component {
                                 <h4 id="dashboard-title">Your Meal Plans</h4>
                                 <button class="clean-button dashboard-close" onClick={this.closeViewDashboard}>x</button>
                                 <Dashboard
-                                    mealPlans = {this.state.fetchedMealPlans}  //.map( recipeID => this.state.recipes[recipeID])
+                                    mealPlans = {mealPlans}  //.map( recipeID => this.state.recipes[recipeID])
                                     openPlanCallback={this.onPlanOpen}
                                     deletePlanCallback={this.onPlanDelete}
                                 ></Dashboard>

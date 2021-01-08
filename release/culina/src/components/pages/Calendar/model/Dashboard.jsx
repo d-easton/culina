@@ -27,7 +27,7 @@ export default class Dashboard extends React.Component {
         return (
             
             <DashboardList>
-                {this.props.mealPlans.map((plan, index) => (
+                { this.props.mealPlans.map( (plan, index) => (
                     <SavedPlan 
                         // key={plan.title} 
                         plan={plan} 
@@ -35,7 +35,8 @@ export default class Dashboard extends React.Component {
                         openPlanCallback={this.props.openPlanCallback} 
                         deletePlanCallback={this.props.deletePlanCallback} 
                     />
-                ))}
+                ))
+                }
             </DashboardList>
             
         );
