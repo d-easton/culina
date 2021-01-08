@@ -444,10 +444,7 @@ class CalendarContainer extends React.Component {
     }
 
     onPlanOpen(plan) {
-        console.log("open callback received well -- "+plan.title);
-        console.log(plan);
-        console.log(this.state.fetchedMealPlans);
-        if (!(funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(plan.title))) {
+        if (!(funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(plan.name))) {
             alert("We had trouble opening that calendar right now. Please try again later.")
         }
 
@@ -462,46 +459,33 @@ class CalendarContainer extends React.Component {
         this.setState({
             frameData: updateFrameData
         });
-
-        console.log(this.state.frameData);
-        console.log(this.state.recipes);
-        
-        // this.forceUpdate();
-        // let targetPL;
-        // this.state.fetchedMealPlans.forEach( (element) => {
-        //     if (element.title == plan.title){
-        //         plan = 
-        //     }
-        // })
-        
-
     }
     onPlanDelete(plan) {
-        console.log("delete callback received well -- "+plan.title);
-        const data = {
-            title: this.state.calendarTitle,
-            id: 1,
-            email: this.state.email,
-            monday: this.state.frameData["calMon"].recipeIDs,
-            tuesday: this.state.frameData["calTue"].recipeIDs,
-            wednesday: this.state.frameData["calWed"].recipeIDs,
-            thursday: this.state.frameData["calThu"].recipeIDs,
-            friday: this.state.frameData["calFri"].recipeIDs,
-            saturday: this.state.frameData["calSat"].recipeIDs,
-            sunday: this.state.frameData["calSun"].recipeIDs,
-        };
+        console.log("delete callback received well -- "+plan.name);
+        console.log(plan);
+        console.log(this.state.fetchedMealPlans);
+        // const payload = {
+        //     title: plan.name,
+        //     id: plan.id,
+        //     email: this.state.email,
+        //     monday: this.state.frameData["calMon"].recipeIDs,
+        //     tuesday: this.state.frameData["calTue"].recipeIDs,
+        //     wednesday: this.state.frameData["calWed"].recipeIDs,
+        //     thursday: this.state.frameData["calThu"].recipeIDs,
+        //     friday: this.state.frameData["calFri"].recipeIDs,
+        //     saturday: this.state.frameData["calSat"].recipeIDs,
+        //     sunday: this.state.frameData["calSun"].recipeIDs,
+        // };
 
         //delete
-        
         console.log("CALL3");
         axios
-            .put(deleteMealPlanURL, data)
+            .put(deleteMealPlanURL, plan)
             .then((response) => {
-                //whatever you want to do
-                //nothing too important is returned
+                this.fetchMealPlans();
+                console.log(this.state.fetchedMealPlans);
             })
             .catch((err) => console.log("err", err));
-        this.fetchMealPlans();
     }
 
     handleSave = () => {
