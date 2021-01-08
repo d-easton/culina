@@ -416,6 +416,7 @@ class CalendarContainer extends React.Component {
         document.getElementById("view-dashboard").style.visibility = "hidden";
     }
     openViewDashboard() {
+        this.fetchMealPlans();
         document.getElementById("view-dashboard").style.visibility = "visible";
     }
 
@@ -523,10 +524,6 @@ class CalendarContainer extends React.Component {
 
         // ready for store
         console.log("ready for store");
-        // console.log(payload);
-        // console.log(this.state.fetchedMealPlans)
-        console.log(funcs.getMealPlanTitles(this.state.fetchedMealPlans));
-        console.log(this.state.calendarTitle);
         if (funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(this.state.calendarTitle)) {
             console.log("update");
 
