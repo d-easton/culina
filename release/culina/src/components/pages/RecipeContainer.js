@@ -2,7 +2,9 @@ import React from "react";
 import RecipeCard from "./Recipes/RecipeCard.js";
 import RecipeModal from "./Recipes/RecipeModal.js";
 import Navbar from "./Navbar";
+import ImageButton from "./Modal/ImageButton.js"
 import "./Recipes/css/RecipeModal.css";
+import removeButton from './Modal/images/close_icon.png';
 const axios = require("axios");
 const loadRecipeURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
@@ -65,6 +67,9 @@ class RecipeContainer extends React.Component {
       recipes: [],
       ocrOutput: null,
       email: props.user.email,
+      isFilterDropdownVisible: false,
+      searchQuery: "",
+      categoryFilter: null
     };
 
     this.closeModal = this.closeModal.bind(this);
@@ -78,8 +83,10 @@ class RecipeContainer extends React.Component {
     this.displayNewCardPrompt = this.displayNewCardPrompt.bind(this);
     this.displayOCRUploadField = this.displayOCRUploadField.bind(this);
     this.uploadRecipeImage = this.uploadRecipeImage.bind(this);
+    this.handleCategoryFilters = this.handleCategoryFilters.bind(this);
 
     this.uploadField = React.createRef();
+    this.searchBox = React.createRef();
 
     //UNDO AFTER SERVER FIXED
   }
@@ -89,11 +96,12 @@ class RecipeContainer extends React.Component {
   }
 
   fetchData() {
+    console.log("fetching data");
     axios
       .post(loadRecipeURL, {
-        headers: {
-          'Access-Control-Allow-Origin' : '*',
-        },
+        //headers: {
+          //'Access-Control-Allow-Origin' : '*',
+        //},
         Email: this.state.email,
       })
       .then((res) => {
@@ -157,6 +165,7 @@ class RecipeContainer extends React.Component {
     this.setState({ showUploadOption: true, showNewCardOption: false });
   }
 
+
   uploadRecipeImage() {
     //Server post of uploaded photo
     //Display buffer until get a response
@@ -191,6 +200,27 @@ class RecipeContainer extends React.Component {
     this.closeModal();
   }
 
+  handleCategoryFilters(category){
+    console.log("changing filter to " + category)
+    let newCategory = null;
+    let currentCategory = this.state.categoryFilter;
+    switch(category){
+      case "Breakfast":
+        newCategory = currentCategory === "Breakfast" ? null : "Breakfast"
+        break;
+      case "Lunch":
+        newCategory = currentCategory === "Lunch" ? null : "Lunch"
+        break;
+      case "Dinner":
+        newCategory = currentCategory === "Dinner" ? null : "Dinner"
+        break;
+      case "Dessert":
+        newCategory = currentCategory === "Dessert" ? null : "Dessert"
+        break;
+    }
+    this.setState({categoryFilter: newCategory})
+  }
+
   updateCardLocally(recipeJSON) {
     var tempCards = this.state.recipes;
     var didUpdate = false;
@@ -209,15 +239,30 @@ class RecipeContainer extends React.Component {
     let _email = this.state.email;
     let recipes = [];
     this.state.recipes.forEach((recipe, index) => {
-      recipes.push(
-        <RecipeCard
-          recipe={recipe}
-          key={index}
-          email={_email}
-          onClick={this.displayModalRC}
-          modalEnabled={renderModal}
-        />
-      );
+      let addToRecipes = true;
+      console.log(this.state.categoryFilter);
+      console.log(recipe.category)
+      if(this.state.categoryFilter !== null && this.state.categoryFilter !== recipe.category){
+        console.log("removing from render");
+        addToRecipes = false;
+      }
+      if(this.state.searchQuery !== ""){
+        let query = this.state.searchQuery.toLowerCase();
+        if(!recipe.title.toLowerCase().includes(query)){
+          addToRecipes = false;
+        }
+      }
+      if(addToRecipes){
+        recipes.push(
+          <RecipeCard
+            recipe={recipe}
+            key={index}
+            email={_email}
+            onClick={this.displayModalRC}
+            modalEnabled={renderModal}
+          />
+        );
+      }
     });
 
     let modal = null;
@@ -288,12 +333,32 @@ class RecipeContainer extends React.Component {
     return (
       <div className="around-page">
         <div className="recipeContainer">
-          <button
-            className="blue-dark white-text"
-            onClick={this.displayBlankCard}
-          >
-            New Card
-          </button>
+          <div className="containerTools">
+            <div className="filterDiv">
+              <button className="filterRecipeButton" onClick={()=>{this.setState({isFilterDropdownVisible: !this.state.isFilterDropdownVisible});}}> Filter </button>
+              <div className={this.state.isFilterDropdownVisible ? "filterDropdown show" : "filterDropdown"}>
+                <div className="searchOption">
+                  Search
+                  <input type="text" placeholder="Search Titles" onChange={(event)=>{this.setState({searchQuery: event.target.value})}} ref={this.searchBox}/>
+                  <ImageButton childClass={"clearButton"} alt={"clear text"} imagePath={removeButton} onPress={()=>{
+                    console.log("pressed");
+                    this.searchBox.current.value = "";
+                    this.setState({searchQuery: ""})
+                    }} />
+                </div>
+                <div className="filterOptions">
+                  Filter by:
+                  <input className={this.state.categoryFilter === "Breakfast" ? "categoryFilterButton active" : "categoryFilterButton"} type="button" value="Breakfast" onClick={()=>{this.handleCategoryFilters("Breakfast")}} />
+                  <input className={this.state.categoryFilter === "Lunch" ? "categoryFilterButton active" : "categoryFilterButton"} type="button" value="Lunch" onClick={()=>{this.handleCategoryFilters("Lunch")}} />
+                  <input className={this.state.categoryFilter === "Dinner" ? "categoryFilterButton active" : "categoryFilterButton"} type="button" value="Dinner" onClick={()=>{this.handleCategoryFilters("Dinner")}} />
+                  <input className={this.state.categoryFilter === "Dessert" ? "categoryFilterButton active" : "categoryFilterButton"} type="button" value="Dessert" onClick={()=>{this.handleCategoryFilters("Dessert")}} />
+                </div>
+              </div>
+            </div>
+            <button className="addRecipeButton" onClick={this.displayBlankCard} >
+              New Card
+            </button>
+          </div>
           {recipes}
           {modal}
         </div>

@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
+    padding-top: 75px;
     /*
     background-image: url(./images/recipe_container_background.jpg);
     */
@@ -11,9 +12,52 @@
     background: url(./images/food-image.jpg) no-repeat center center fixed;
 }
 
-    .recipeContainer button {
-        background: #212529;
-    }
+.recipeContainer button {
+    background: #212529;
+}
+
+.recipeContainer button:hover{
+    background: #2f2f2f;
+}
+
+.containerTools{
+    width: 100%;
+    background: red;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    position: fixed;
+    top: 56px;
+    z-index: 1000;
+}
+.filterDropdown{
+    position: absolute;
+    top: 54px;
+    display: none;
+    background: white;
+    color: black;
+    width: 300px;
+}
+.filterDropdown.show{
+    display: block;
+}
+.addRecipeButton{
+}
+
+.filterRecipeDiv{
+
+}
+.searchRecipeDiv{
+    background: #212529;
+    color: white;
+}
+
+.categoryFilterButton{
+    color: blue;
+}
+.categoryFilterButton.active{
+    background: green;
+}
 
 /*Recipe Modal*/
 .grayedBackground {
