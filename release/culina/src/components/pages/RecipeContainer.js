@@ -252,17 +252,15 @@ class RecipeContainer extends React.Component {
           addToRecipes = false;
         }
       }
-      if(addToRecipes){
-        recipes.push(
-          <RecipeCard
-            recipe={recipe}
-            key={index}
-            email={_email}
-            onClick={this.displayModalRC}
-            modalEnabled={renderModal}
-          />
-        );
-      }
+      recipes.push(
+        <RecipeCard
+          recipe={recipe}
+          key={index}
+          email={_email}
+          onClick={this.displayModalRC}
+          modalEnabled={renderModal}
+          isHidden={!addToRecipes}
+        />);
     });
 
     let modal = null;
