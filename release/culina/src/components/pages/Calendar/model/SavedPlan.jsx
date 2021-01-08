@@ -35,9 +35,9 @@ export default class SavedPlan extends React.Component {
     render() {
         return (
             <PlanDiv
-                key={"plandiv" + this.props.plan.title}
+                key={"plandiv" + this.props.plan.name}
             >   
-                <p class="plan-title-field"> {this.props.plan.title} </p>
+                <p class="plan-title-field"> {this.props.plan.name} </p>
                 <button class="plan-button btn-info plan-delete" onClick={this.handleDelete}>Delete</button>
                 <button class="plan-button btn-info plan-open" onClick={this.handleOpen}>Open</button>
             </PlanDiv>

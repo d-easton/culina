@@ -34,7 +34,7 @@ const getRecipeURL =
 
     const testPlanData = [
         {
-            "title": "meal plan 1",
+            "name": "meal plan 1",
             "monday": [48014],
             "tuesday": [35640, 42276],
             "wednesday": [],
@@ -44,7 +44,7 @@ const getRecipeURL =
             "sunday": [],
         },
         {
-            "title":"meal plan 2",
+            "name":"meal plan 2",
             "monday": [],
             "tuesday": [],
             "wednesday": [],
@@ -54,7 +54,7 @@ const getRecipeURL =
             "sunday": [],
         },
         {
-            "title": "meal plan 3",
+            "name": "meal plan 3",
             "monday": [],
             "tuesday": [],
             "wednesday": [],
@@ -195,6 +195,8 @@ class CalendarContainer extends React.Component {
 
     fetchData() {
         // get recipes
+        
+        console.log("CALL6");
         axios
             .post(constants.getRecipeURL, {
                 Email: this.state.email,
@@ -214,18 +216,20 @@ class CalendarContainer extends React.Component {
 
         //get all mealplans
         let mealPlans = [];
+        console.log("CALL1");
         axios
             .post(getMealPlanURL, userData)
             .then((response) => {
+                console.log(response.data);
                 mealPlans = response.data;
+                // console.log("check response");
+                // console.log(mealPlans);
+                if (mealPlans == undefined || mealPlans == null) {
+                   mealPlans = [];
+                }
+                this.setState({ fetchedMealPlans: mealPlans });
             })
             .catch((err) => console.log("err", err));
-
-        if (mealPlans == undefined || mealPlans == null) {
-           mealPlans = [];
-        }
-        
-        this.setState({ fetchedMealPlans: mealPlans });
     }
 
     // getData(mode) {
@@ -342,6 +346,8 @@ class CalendarContainer extends React.Component {
         const getL = {
             email: this.state.email,
         };
+        
+        console.log("CALL2");
         axios
             .post(getGroceryListURL, getL)
             .then((response) => {
@@ -485,6 +491,8 @@ class CalendarContainer extends React.Component {
         };
 
         //delete
+        
+        console.log("CALL3");
         axios
             .put(deleteMealPlanURL, data)
             .then((response) => {
@@ -498,7 +506,7 @@ class CalendarContainer extends React.Component {
     handleSave = () => {
         const payload = {
             name: this.state.calendarTitle,
-            id: 1,
+            id: funcs.getCalendarIDFromTitle(this.state.fetchedMealPlans, this.state.calendarTitle),
             email: this.state.email,
             monday: this.state.frameData["calMon"].recipeIDs,
             tuesday: this.state.frameData["calTue"].recipeIDs,
@@ -515,11 +523,21 @@ class CalendarContainer extends React.Component {
 
         // ready for store
         console.log("ready for store");
-        console.log(payload);
-        console.log(this.state.fetchedMealPlans)
+        // console.log(payload);
+        // console.log(this.state.fetchedMealPlans)
+        console.log(funcs.getMealPlanTitles(this.state.fetchedMealPlans));
+        console.log(this.state.calendarTitle);
         if (funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(this.state.calendarTitle)) {
             console.log("update");
+
+            // update id in payload
+            console.log(payload);
+            console.log(funcs.getCalendarIDFromTitle(this.state.fetchedMealPlans, this.state.calendarTitle));
+            // payload.id = funcs.getCalendarIDFromTitle(this.state.fetchedMealPlans, this.state.calendarTitle);
+            console.log(payload);
             //update
+            
+            console.log("CALL4");
             axios
                 .put(updateMealPlanURL, payload)
                 .then((response) => {
@@ -530,6 +548,8 @@ class CalendarContainer extends React.Component {
         else {
             console.log("add");
             // add
+            
+        console.log("CALL5");
             axios
                 .post(addMealPlanURL, payload)
                 .then((response) => {
