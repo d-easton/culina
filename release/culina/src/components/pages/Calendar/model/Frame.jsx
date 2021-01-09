@@ -19,7 +19,7 @@ export default class Frame extends React.Component {
         return (
             <div id={this.props.frame.id} className="calendar-day">
                 <h4 className="frame-title">{this.props.frame.title}</h4>
-                <div className="bar sand-dark"></div>
+                <div className="bar grey"></div>
                 <Droppable droppableId={this.props.frame.id}>
                     {provided => (
                         <CardList ref={provided.innerRef} {...provided.droppableProps} >
