@@ -556,6 +556,12 @@ const ingredientDatabase = {
 
         ]
     },
+    "ICEBERG_LETTUCE": {
+        "display_name": "iceberg lettuce",
+        "translation": [
+
+        ]
+    },
     "LEMON" : {
         "display_name": "lemon",
         "translation": [
@@ -596,6 +602,12 @@ const ingredientDatabase = {
         "display_name": "RASPBERRY",
         "translation": [
             
+        ]
+    },
+    "ROMAINE_LETTUCE" : {
+        "display_name": "lemon",
+        "translation": [
+
         ]
     },
     "STRAWBERRY" : {
@@ -732,10 +744,367 @@ const ingredientDatabase = {
             "extra-sharp cheddar cheese",
         ]
     },
+    // MARK: PROTEIN
+    // MARK: NON-ANIMAL PROTEINS
+    "ALMOND": {
+        "display_name": "almonds",
+        "translations": [
+        ]
+    },
+    "BLACK_BEAN": {
+        "display_name": "black beans",
+        "translations": [
+        ]
+    },
+    "CASHEW": {
+        "display_name": "cashews",
+        "translations": [
+        ]
+    },
+    "DRIED_CHICKPEAS": {
+        "display_name": "dried chickpeas",
+        "translations": [
+        ]
+    },
+    "KIDNEY_BEAN": {
+        "display_name": "kidney beans",
+        "translations": [
+        ]
+    },
+    "PEANUT": {
+        "display_name": "peanuts",
+        "translations": [
+        ]
+    },
+    "PISTACHIO": {
+        "display_name": "peanuts",
+        "translations": [
+        ]
+    },
+    "PINTO_BEAN": {
+        "display_name": "pinto beans",
+        "translations": [
+        ]
+    },
+    "RED_BEAN": {
+        "display_name": "red beans",
+        "translations": [
+        ]
+    },
+    "ROASTED_PEANUT": {
+        "display_name": "roasted peanuts",
+        "translations": [
+        ]
+    },
+    "TEMPEH": {
+        "display_name": "tempeh",
+        "translations": [
+            "tempe"
+        ]
+    },
+    "TOFU": {
+        "display_name": "tofu",
+        "translations": [
+        ]
+    },
 
-    
+    //MARK: ANIMAL PROTEINS
+    "BACON": {
+        "display_name": "bacon",
+        "translations": [
+        ]
+    },
+    "BLACK_FOREST_HAM": {
+        "display_name": "black_forest_ham",
+        "translations": [
+        ]
+    },
+    "BEEF_BACK_RIBS": {
+        "display_name": "beef back ribs",
+        "translations": [
 
+        ]
+    },
+    "BEEF_TENDERLOIN": {
+        "display_name": "beef tenderloin",
+        "translations": [
+            "tenderloin beef"
+        ]
+    },
+    "BEEF_MEDALLIONS": {
+        "display_name": "beef tenderloin",
+        "translations": [
+            "tender medallions",
+            "beef tender medallions",
+            "shoulder tender medallions",
+            "beef shoulder medallions",
+            "beef shoulder tender medallions",
+        ]
+    },
+    "BONE_IN_CHICKEN_BREASTS": {
+        "display_name": "bone-in chicken breasts",
+        "translations": [
+            "bone-in chicken breasts"
+        ]
+    },
+    "BONELESS_CHICKEN_BREASTS": {
+        "display_name": "chicken breasts",
+        "translations": [
+            "chicken breasts"
+        ]
+    },
+    "BONE_IN_CHICKEN_thighs": {
+        "display_name": "bone-in chicken thighs",
+        "translations": [
+            "bone-in chicken thighs"
+        ]
+    },
+    "BONELESS_CHICKEN_THIGHS": {
+        "display_name": "chicken thighs",
+        "translations": [
+            "chicken thighs"
+        ]
+    },
+    "BRATWURST": {
+        "display_name": "bratwurst",
+        "translations": [
+        ]
+    },
+    "CHICKEN_TENDERLOIN" :{
+        "display_name": "chicken tenderloin",
+        "translations": [
+            "chicken tender"
+        ]
+    },
+    "CHICKEN" :{
+        "display_name": "whole chicken",
+        "translations": [
+            "whole chicken"
+        ]
+    },
+    "CHUCK_ROATS": {
+        "display_name": "chuck roast",
+        "translations": [
+            "chuck roast steak"
+        ]
+    },
+    "COWBOY_STEAK": {
+        "display_name": "cowboy steak",
+        "translations": [
+        ]
+    },
+    "FILET_MIGNON": {
+        "display_name": "filet mignon",
+        "translations": [
+        ]
+    },
+    "FLANK_STEAK": {
+        "display_name": "flank steak",
+        "translations": [
+        ]
+    },
+    "GROUND_BEEF": {
+        "display_name": "ground beef",
+        "translations": [
+        ]
+    },  
+    "GROUND_CHICKEN": {
+        "display_name": "ground chicken",
+        "translations": [
+        ]
+    },
+    "GROUND_PORK": {
+        "display_name": "ground pork",
+        "translations": [
+        ]
+    },
+    "GROUND_TURKEY": {
+        "display_name": "ground beef",
+        "translations": [
+        ]
+    },
+    "HAM": {
+        "display_name": "ham",
+        "translations": [
+            "spiral ham"
+        ]
+    },
+    "PORK_CHOP": {
+        "display_name": "pork chop",
+        "translations": [
+            "pork chops"
+        ]
+    },
+    "PORK_BELLY": {
+        "display_name": "pork belly",
+        "translations": [
+            
+        ]
+    },
+    "PORK_RIBS": {
+        "display_name": "pork ribs",
+        "translations": [
+            "rack of ribs"
+        ]
+    },
+    "PORK_SHOULDER": {
+        "display_name": "pork shoulder",
+        "translations": [
+        ]
+    },
+    "PORK_TENDERLOIN": {
+        "display_name": "pork tenderloin",
+        "translations": [
+            
+        ]
+    },
+    "PORTERHOUSE": {
+        "display_name": "porterhouse steak",
+        "translations": [
+            "porter house steak",
+            "porter hourse"
+        ]
+    },
+    "ROAST_BEEF": {
+        "display_name": "roast_beef",
+        "translations": [
+            "roast_beef_cold_cuts",
+        ]
+    },
+    "RIB_FILET": {
+        "display_name": "rib filet",
+        "translations": [
+            "rib filet steak",
+            "beef rib filet"
+        ]
+    },
+    "RIBEYE_ROAST": {
+        "display_name": "ribeye roast",
+        "translations": [
+            "rib eye roast",
+            "rib-eye roast"
+        ]
+    },
+    "RIBEYE_STEAK": {
+        "display_name": "ribeye steak",
+        "translations": [
+            "rib eye steak",
+            "rib-eye steak"
+        ]
+    },
+    "SAUSAGE" :{
+        "display_name": "sausage",
+        "translations": [
+        ]
+    }
+    "SIRLOIN_STEAK": {
+        "display_name": "sirloin steak",
+        "translations": [
+            "sirloin filet",
+            "sirloin filet steak"
+        ]
+    },
+    "T_BONE_STEAK": {
+        "display_name": "T-Bone Steak",
+        "translations": [
+            "t bone steak",
+            "tbone steak"
+        ]
+    },
+    "TURKEY": {
+        "display_name": "whole turkey",
+        "translations": [
+            "whole turkey"
+        ]
+    },
+    // MARK: CONDIMENTS
+    "DIJON_MUSTARD": {
+        "display_name": "dijon mustard",
+        "translations": [
+        ]
+    },
+    "FISH_SAUCE": {
+        "display_name": "fish sauce",
+        "translations": [
+        ]
+    },
+    "KIMCHI": {
+        "display_name": "kimchi",
+        "translations": [
+        ]
+    },
+    "MALT_VINEGAR": {
+        "display_name": "malt vinegar",
+        "translations": [
+        ]
+    },
+    "MAYONNAISE": {
+        "display_name": "mayonnaise",
+        "translations": [
+            "mayo"
+        ]
+    },
+    "SHAOXING_WINE": {
+        "display_name": "shaoxing wine",
+        "translations": [
+            "shaoxing",
+            "chinese cooking wine",
+        ]
+    },
+    "SHERRY_VINEGAR": {
+        "display_name": "sherry vinegar",
+        "translations": [
+            "spanish sherry vinegar",
+        ]
+    },
+    "SOY_SAUCE": {
+        "display_name": "soy sauce",
+        "translations": [
+        ]
+    },
+    "TARTAR_SAUCE": {
+        "display_name": "tartar_sauce",
+        "translations": [
+        ]
+    },
+    "TOMATO_KETCHUP": {
+        "display_name": "tomato ketchup",
+        "translations": [
+            "ketchup",
+            "catsup",
+        ]
+    },
+    "WORCHESTERSHIRE_SAUCE": {
+        "display_name": "worchestershire sauce",
+        "translations": [
+        ]
+    },
+    "YELLOW_MUSTARD": {
+        "display_name": "dijon mustard",
+        "translations": [
+        ]
+    },
+    // MARK: DRIED GOODS
+    "JASMINE_RICE": {
+        "display_name": "jasmine rice",
+        "translations": [
+        ]
+    },
+    "BROWN_JASMINE_RICE": {
+        "display_name":  "brown jasmine rice",
+        "translations": [
+        ]
+    },
 
-
-
+    // MARK: MISCELLANIOUS
+    "BLACK_OLIVES": {
+        "display_name": "green olives",
+        "translations": [
+        ]
+    },
+    "GREEN_OLIVES": {
+        "display_name": "green olives",
+        "translations": [
+        ]
+    },
 }
