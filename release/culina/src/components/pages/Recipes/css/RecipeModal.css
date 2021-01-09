@@ -1,15 +1,18 @@
+.around-page{
+    background: white;
+}
+
 /*Recipe Container*/
 .recipeContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
-    padding-top: 75px;
+    padding-bottom: 20px;
     /*
     background-image: url(./images/recipe_container_background.jpg);
     */
-    background-size: cover;
-    background: url(./images/food-image.jpg) no-repeat center center fixed;
+    background-image: unset;
 }
 
 .recipeContainer button {
@@ -27,12 +30,12 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     position: fixed;
-    top: 56px;
+    bottom: 0;
     z-index: 1000;
 }
 .filterDropdown{
     position: absolute;
-    top: 54px;
+    bottom: 54px;
     display: none;
     background: white;
     color: black;
@@ -47,6 +50,10 @@
 .filterRecipeDiv{
 
 }
+.clearButton{
+    position: relative;
+    top: 5px;
+}
 .searchRecipeDiv{
     background: #212529;
     color: white;
@@ -57,6 +64,64 @@
 }
 .categoryFilterButton.active{
     background: green;
+}
+
+.newRecipeCard{
+    width: 350px;
+    height: 303px;
+    display: flex;
+    flex-flow: column;
+    box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    margin-top: 30px;
+}
+.newRecipeCard.hidden{
+    display: none;
+}
+.recipeCardBody{
+    position: relative;
+    width: 350px;
+    height: 235px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+.recipeCardBodyImage{
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    transition: all 0.2s linear;
+}
+.recipeCardBodyImage:hover{
+    transform: scale(1.1);
+}
+.recipeCardBodyCategory{
+    position: absolute;
+    z-index: 999;
+    bottom: 0;
+    left: 10px;
+    padding: 6px 8px;
+    max-width: calc((100%) - 60px);
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    background-color: #1f98f4;
+    box-sizing: border-box;
+}
+.recipeCardFooter{
+    padding: 10px 16px 10px;
 }
 
 /*Recipe Modal*/
@@ -450,7 +515,8 @@
 .removeButton,
 .addButton,
 .dragIcon,
-.commentButton {
+.commentButton,
+.clearButton {
     /*CSS Common for all icons*/
     height: 20px;
     width: 20px;
@@ -541,6 +607,11 @@ h1.contentEditable {
         width: 90vmin;
         height: 70vmax;
         top: 15vmax;
+    }
+}
+@media screen and (max-width: 767px){
+    .containerTools{
+
     }
 }
 

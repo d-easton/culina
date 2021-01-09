@@ -1,4 +1,5 @@
 import React from "react";
+import blankImage from "./css/images/question_mark.png"
 
 const axios = require("axios");
 const updateGroceryListURL =
@@ -76,6 +77,7 @@ class RecipeCard extends React.Component {
   render() {
     const ingredientElements = [];
     this.props.recipe.ingredients.forEach((ing, index) => {
+      console.log(ing);
       ingredientElements.push(
         <li className="listElement" key={index}>
           {ing.text}
@@ -91,6 +93,47 @@ class RecipeCard extends React.Component {
       );
     });
       if (this.props.recipe.image != "") {
+        return (
+          <div className={this.props.isHidden ? "newRecipeCard hidden" : "newRecipeCard"} onClick={this.handleClick}>
+            <div className="recipeCardBody">
+              <img className="recipeCardBodyImage" src={this.props.recipe.image}/>
+              <div className="recipeCardBodyCategory">{this.props.recipe.category}</div>
+            </div>
+            <div className="recipeCardFooter">
+              <h5>{this.props.recipe.title}</h5>
+            </div>
+          </div>
+        );
+      }
+     //Recipe without image
+     return (
+          <div className={this.props.isHidden ? "newRecipeCard hidden" : "newRecipeCard"} onClick={this.handleClick}>
+            <div className="recipeCardBody">
+              <img className="recipeCardBodyImage" src={blankImage}/>
+              <div className="recipeCardBodyCategory">{this.props.recipe.category}</div>
+            </div>
+            <div className="recipeCardFooter">
+              <h5>{this.props.recipe.title}</h5>
+            </div>
+          </div>
+       /*
+          <div className={this.props.isHidden ? "newRecipeCard hidden" : "newRecipeCard"} onClick={this.handleClick}>
+            <div className="recipeCardBody">
+              <div className="recipeCardBodyInfo">
+                <h6>Ingredients</h6>
+                <ul className="recipeList">{ingredientElements}</ul>
+                <h6>Steps</h6>
+                <ol className="recipeList">{stepElements}</ol> 
+                </div>
+              <div className="recipeCardBodyCategory">{this.props.recipe.category}</div>
+            </div>
+            <div className="recipeCardFooter">
+              <h5>{this.props.recipe.title}</h5>
+            </div>
+          </div>
+          */
+     );
+        /*
           return (
               <div className="recipeCard" onClick={this.handleClick}>
                   <div className="recipeHeader">
@@ -108,8 +151,8 @@ class RecipeCard extends React.Component {
                   <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
               </div>
           );
-      }
-     
+          */
+      /*
     return (
       <div className="recipeCard" onClick={this.handleClick}>
         <div className="recipeHeader">
@@ -139,6 +182,9 @@ class RecipeCard extends React.Component {
         <button onClick={this.sendToGroceryList}>Add to Grocery List</button>
       </div>
     );
+    */
+   //Recipe with image
+    
   }
 }
 

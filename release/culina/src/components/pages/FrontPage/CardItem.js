@@ -10,7 +10,8 @@ function CardItem(props) {
     <>
       <a href={props.link}>
         <li className="cards__item">
-          <a className="cards__item__link" href={props.pathname}>
+          <a className="cards__item__link">
+            {/* href={props.pathname}> */}
             <figure
               className="cards__item__pic-wrap"
               data-category={props.label}
