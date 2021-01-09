@@ -1,0 +1,21 @@
+.welcome {
+    padding: 4rem;
+    background: #fff;
+   
+}
+
+.welcome__container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 1120px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.divider{
+    border-top: 3px solid #bbb;
+    width:90%;
+    margin-left: 5%;
+    margin-right:5%;
+}  
