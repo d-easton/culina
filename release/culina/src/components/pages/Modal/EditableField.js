@@ -74,6 +74,7 @@ class EditableField extends React.Component {
     render() {
         //let classes = this.props.childClass + (this.state.isEmpty ? " placeholder" : "");
         let classes = ((this.state.crossedOff) ? "true" : "false");
+        classes = (this.state.isEmpty ? " placeholder" : classes);
         //let style = { }
         return (<ContentEditable
             innerRef={this.contentEditable}

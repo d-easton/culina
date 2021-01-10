@@ -408,7 +408,14 @@ class RecipeModal extends React.Component {
           .then((response) => {
           this.props.updateLocalCard(data);
         })
-        .catch((err) => console.log("err", err));
+        .catch((err) => {
+          if(err.response.status == 429){
+            alert("Error 429: Could not update recipe right now, please try again later");
+          }else{
+            console.log("error with adding recipe")
+            console.log("err", err)
+          }
+        });
     } else {
       const uploadTask = storage
         .ref(`images/users/${this.state.email}/${this.state.pictureFile.name}`)
@@ -432,7 +439,14 @@ class RecipeModal extends React.Component {
                 .then((response) => {
                   this.props.updateLocalCard(data);
                 })
-                .catch((err) => console.log("err", err));
+                .catch((err) => {
+                  if(err.response.status == 429){
+                    alert("Error 429: Could not update recipe right now, please try again later");
+                  }else{
+                    console.log("error with adding recipe")
+                    console.log("err", err)
+                  }
+                });
             });
         }
       );
@@ -444,7 +458,14 @@ class RecipeModal extends React.Component {
     axios
       .put(deleteRecipeURL, data)
       .then((response) => this.props.deleteLocalCard(data))
-      .catch((err) => console.log("err", err));
+      .catch((err) => {
+        if(err.response.status == 429){
+          alert("Error 429: Could not delete recipe right now, please try again later");
+        }else{
+          console.log("error with adding recipe")
+          console.log("err", err)
+        }
+      });
   }
 
   refreshPage() {
