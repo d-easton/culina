@@ -56,9 +56,9 @@ class RecipeContainer extends React.Component {
       modalRecipe: null,
       isNewCard: false,
       defaultRecipe: {
-        title: "New Recipe",
-        author: "Author",
-        description: "Add description",
+        title: "",
+        author: "",
+        description: "",
         ingredients: [],
         steps: [],
         copy: false,
@@ -331,7 +331,7 @@ class RecipeContainer extends React.Component {
     return (
       <div className="around-page">
         <div className="recipeContainer">
-          <div className="containerTools">
+          <div className="containerTools" hidden={this.state.showModalRC}>
             <div className="filterDiv">
               <button className="filterRecipeButton" onClick={()=>{this.setState({isFilterDropdownVisible: !this.state.isFilterDropdownVisible});}}> Filter </button>
               <div className={this.state.isFilterDropdownVisible ? "filterDropdown show" : "filterDropdown"}>

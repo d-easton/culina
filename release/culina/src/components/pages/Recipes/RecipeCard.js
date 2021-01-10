@@ -98,6 +98,7 @@ class RecipeCard extends React.Component {
             <div className="recipeCardBody">
               <img className="recipeCardBodyImage" src={this.props.recipe.image}/>
               <div className="recipeCardBodyCategory">{this.props.recipe.category}</div>
+              <input className="groceryListButton" type="button" onClick={this.sendToGroceryList} value="+ to Grocery List"/>
             </div>
             <div className="recipeCardFooter">
               <h5>{this.props.recipe.title}</h5>
@@ -111,6 +112,7 @@ class RecipeCard extends React.Component {
             <div className="recipeCardBody">
               <img className="recipeCardBodyImage" src={blankImage}/>
               <div className="recipeCardBodyCategory">{this.props.recipe.category}</div>
+              <input className="groceryListButton" type="button" onClick={this.sendToGroceryList} value="+ to Grocery List"/>
             </div>
             <div className="recipeCardFooter">
               <h5>{this.props.recipe.title}</h5>
