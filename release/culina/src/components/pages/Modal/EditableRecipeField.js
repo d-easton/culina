@@ -28,9 +28,12 @@ class EditableRecipeField extends React.Component {
     //Updates the local state and updateds global copy
     handleChange(event) {
         //New HTML
-        const html = this.stripHtml(event.target.value);
+        console.log(this.contentEditable.current);
+        const html = event.target.value;
+        //const html = this.contentEditable.current.textContent;
         const text = this.contentEditable.current.textContent;
-        console.log(html);
+        console.log(event.target.value)
+        console.log(html + ".");
         console.log(text);
 
         let displayPlaceholder = (text === ""); 

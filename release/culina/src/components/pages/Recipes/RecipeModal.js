@@ -223,7 +223,7 @@ class RecipeModal extends React.Component {
     }
 
     let oldIngredients = JSON.parse(JSON.stringify(draggableFields.ingredientsField));
-
+    console.log(oldIngredients);
     let ingredients = [];
     let emptyIngredientIndices = [];
     draggableFields.ingredientsField.elements.forEach((element) => {
@@ -240,7 +240,8 @@ class RecipeModal extends React.Component {
       for(let i = emptyCommentIndices.length - 1; i > -1; i--){
         element.content.comments.splice(emptyCommentIndices[i],1);
       }
-      oldIngredients = JSON.parse(JSON.stringify(draggableFields.ingredientsField));
+      console.log(oldIngredients);
+      //oldIngredients = JSON.parse(JSON.stringify(draggableFields.ingredientsField));
       element.content.comments = cleansedComment;
 
 
@@ -273,7 +274,7 @@ class RecipeModal extends React.Component {
       for(let i = emptyCommentIndices.length - 1; i > -1; i--){
         element.content.comments.splice(emptyCommentIndices[i],1);
       }
-      oldSteps = JSON.parse(JSON.stringify(draggableFields.stepsField));
+      //oldSteps = JSON.parse(JSON.stringify(draggableFields.stepsField));
       element.content.comments = cleansedComment;
 
       if(element.content.text !== ""){
@@ -321,8 +322,10 @@ class RecipeModal extends React.Component {
     if (error_log.length != 0) {
       return { error_log: error_log };
     }
+    console.log(oldIngredients);
     draggableFields.ingredientsField = oldIngredients;
     draggableFields.stepsField = oldSteps;
+    console.log(draggableFields);
     this.setState({ isDisabled: true, category: savedRecipe.category, draggableFields: draggableFields});
     console.log(savedRecipe);
     return savedRecipe;
@@ -347,7 +350,14 @@ class RecipeModal extends React.Component {
         .then((response) => {
           this.props.addLocalCard(response.data);
         })
-        .catch((err) => console.log("err", err));
+        .catch((err) => {
+          if(err.response.status == 429){
+            alert("Error 429: Could not add new recipe right now, please try again later");
+          }else{
+            console.log("error with adding recipe")
+            console.log("err", err)
+          }
+        });
     } else {
       const uploadTask = storage
         .ref(`images/users/${this.state.email}/${this.state.pictureFile.name}`)
@@ -371,7 +381,14 @@ class RecipeModal extends React.Component {
                 .then((response) => {
                   this.props.addLocalCard(response.data);
                 })
-                .catch((err) => console.log("err", err));
+                .catch((err) => {
+                  if(err.response.status == 429){
+                    alert("Error 429: Could not add new recipe right now, please try again later");
+                  }else{
+                    console.log("error with adding recipe")
+                    console.log("err", err)
+                  }
+                });
             });
         }
       );
@@ -391,7 +408,14 @@ class RecipeModal extends React.Component {
           .then((response) => {
           this.props.updateLocalCard(data);
         })
-        .catch((err) => console.log("err", err));
+        .catch((err) => {
+          if(err.response.status == 429){
+            alert("Error 429: Could not update recipe right now, please try again later");
+          }else{
+            console.log("error with adding recipe")
+            console.log("err", err)
+          }
+        });
     } else {
       const uploadTask = storage
         .ref(`images/users/${this.state.email}/${this.state.pictureFile.name}`)
@@ -415,7 +439,14 @@ class RecipeModal extends React.Component {
                 .then((response) => {
                   this.props.updateLocalCard(data);
                 })
-                .catch((err) => console.log("err", err));
+                .catch((err) => {
+                  if(err.response.status == 429){
+                    alert("Error 429: Could not update recipe right now, please try again later");
+                  }else{
+                    console.log("error with adding recipe")
+                    console.log("err", err)
+                  }
+                });
             });
         }
       );
@@ -427,7 +458,14 @@ class RecipeModal extends React.Component {
     axios
       .put(deleteRecipeURL, data)
       .then((response) => this.props.deleteLocalCard(data))
-      .catch((err) => console.log("err", err));
+      .catch((err) => {
+        if(err.response.status == 429){
+          alert("Error 429: Could not delete recipe right now, please try again later");
+        }else{
+          console.log("error with adding recipe")
+          console.log("err", err)
+        }
+      });
   }
 
   refreshPage() {
@@ -734,7 +772,7 @@ class RecipeModal extends React.Component {
                   <div className="visibilityToggleDiv">
                     <div className={this.state.public ? "publicDiv" : "privateDiv"}>{this.state.public ? "Public" : "Private"}</div>
                     <label class="switch">
-                      <input type="checkbox" onChange={(event)=>{this.setState({public: !event.target.checked})}}/>
+                      <input checked={!this.state.public} type="checkbox" onChange={(event)=>{this.setState({public: !event.target.checked})}}/>
                       <span class="slider round"></span>
                     </label>
                     </div>
