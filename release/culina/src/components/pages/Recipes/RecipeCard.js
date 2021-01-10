@@ -51,6 +51,7 @@ class RecipeCard extends React.Component {
                     ingredients: ingredients,
                 };
                 this.setState({ isDisabled: true });
+                alert("Added to Grocery List");
                 axios
                     .put(updateGroceryListURL, savedList)
                     .catch((err) => console.log("err", err));
@@ -77,7 +78,6 @@ class RecipeCard extends React.Component {
   render() {
     const ingredientElements = [];
     this.props.recipe.ingredients.forEach((ing, index) => {
-      console.log(ing);
       ingredientElements.push(
         <li className="listElement" key={index}>
           {ing.text}

@@ -665,7 +665,6 @@ class RecipeModal extends React.Component {
         />
       </div>
     ) : null;
-      console.log(this.state.imageSRC);
     return (
       <div className="grayedBackground">
         <div className="modal recipeModal">

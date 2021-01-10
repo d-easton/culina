@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import ImageButton from "./Modal/ImageButton.js"
 import "./Recipes/css/RecipeModal.css";
 import removeButton from './Modal/images/close_icon.png';
+import bufferImage from './Modal/images/buffer.gif';
 const axios = require("axios");
 const loadRecipeURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
@@ -62,6 +63,7 @@ class RecipeContainer extends React.Component {
         ingredients: [],
         steps: [],
         copy: false,
+        public: true
       },
       //recipes: testData,
       recipes: [],
@@ -69,7 +71,8 @@ class RecipeContainer extends React.Component {
       email: props.user.email,
       isFilterDropdownVisible: false,
       searchQuery: "",
-      categoryFilter: null
+      categoryFilter: null,
+      fetching: false
     };
 
     this.closeModal = this.closeModal.bind(this);
@@ -96,7 +99,7 @@ class RecipeContainer extends React.Component {
   }
 
   fetchData() {
-    console.log("fetching data");
+    this.setState({fetching: true});
     axios
       .post(loadRecipeURL, {
         //headers: {
@@ -137,7 +140,7 @@ class RecipeContainer extends React.Component {
           });
         }
       });
-      this.setState({ recipes: data, ocrOutput: ocr });
+      this.setState({ recipes: data, ocrOutput: ocr, fetching: false });
     }
   }
   closeModal() {
@@ -240,8 +243,6 @@ class RecipeContainer extends React.Component {
     let recipes = [];
     this.state.recipes.forEach((recipe, index) => {
       let addToRecipes = true;
-      console.log(this.state.categoryFilter);
-      console.log(recipe.category)
       if(this.state.categoryFilter !== null && this.state.categoryFilter !== recipe.category){
         console.log("removing from render");
         addToRecipes = false;
@@ -328,21 +329,25 @@ class RecipeContainer extends React.Component {
 
     document.body.style.overflow = modal == null ? "scroll" : "hidden";
 
+    /*
+    <ImageButton childClass={"clearButton"} alt={"clear text"} imagePath={removeButton} onPress={()=>{
+      this.searchBox.current.value = "";
+      this.setState({searchQuery: ""})
+      }} />
+      */
     return (
       <div className="around-page">
         <div className="recipeContainer">
+          <img className="bufferImage" src={bufferImage} hidden={!this.state.fetching}/>
           <div className="containerTools" hidden={this.state.showModalRC}>
             <div className="filterDiv">
               <button className="filterRecipeButton" onClick={()=>{this.setState({isFilterDropdownVisible: !this.state.isFilterDropdownVisible});}}> Filter </button>
               <div className={this.state.isFilterDropdownVisible ? "filterDropdown show" : "filterDropdown"}>
                 <div className="searchOption">
                   Search
-                  <input type="text" placeholder="Search Titles" onChange={(event)=>{this.setState({searchQuery: event.target.value})}} ref={this.searchBox}/>
-                  <ImageButton childClass={"clearButton"} alt={"clear text"} imagePath={removeButton} onPress={()=>{
-                    console.log("pressed");
-                    this.searchBox.current.value = "";
-                    this.setState({searchQuery: ""})
-                    }} />
+                  <div className="searchBox">
+                    <input type="text" placeholder="Search Titles" onChange={(event)=>{this.setState({searchQuery: event.target.value})}} ref={this.searchBox}/>
+                    </div>
                 </div>
                 <div className="filterOptions">
                   Filter by:
