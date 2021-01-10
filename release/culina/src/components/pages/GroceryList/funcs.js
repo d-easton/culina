@@ -13,6 +13,19 @@ const getRecordIndex = (record, data) => {
     return output;
 }
 
+const parseRecipeID = (rawInput) => {
+    return rawInput.replace(' ','_').toUpperCase();
+}
+const parseRecipeID = (rawInput) => {
+    return rawInput.replace(' ','_').toUpperCase();
+}
+const parseIngredientAndUnit = (rawInput) => {
+    return rawInput.replace(' ','_').toUpperCase();
+}
+const parseQuantity = (rawInput) => {
+    return rawInput.replace(' ','_').toUpperCase();
+}
+
 const funcs = {
     "getRecordIndex": getRecordIndex
 }
