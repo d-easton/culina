@@ -180,7 +180,7 @@ class CalendarContainer extends React.Component {
             }
         } else if (mode == RECIPE) {
             if (res == null) {
-                this.setState({ recipeData: staticTestData }); //[]
+                this.setState({ recipeData: staticTestData }); 
             } else {
                 let recipeDict = {};
                 let titles = [];
@@ -189,7 +189,6 @@ class CalendarContainer extends React.Component {
                     titles.push(element.id);
                 });
 
-                // console.log(this.state);
                 const updateRecipeBoxData = this.state.recipeBoxData;
                 updateRecipeBoxData.recipeIDs = titles;
 
@@ -200,7 +199,6 @@ class CalendarContainer extends React.Component {
             const err = "Invalid data mode";
             console.log("err", err);
         }
-        // console.log(this.state.recipeData);
     }
 
     exportData() {
@@ -210,7 +208,9 @@ class CalendarContainer extends React.Component {
         //gets all the ingredients from calendar and pushes onto payload array
         this.state.calendarOrder.map((frameID) => {
             this.state.frameData[frameID].recipeIDs.map((recipeID) => {
-                payload.push(this.state.recipes[recipeID]);
+                if(this.state.recipes[recipeID] != undefined) {
+                    payload.push(this.state.recipes[recipeID]);
+                }
             });
         });
 
@@ -300,10 +300,7 @@ class CalendarContainer extends React.Component {
     }
 
     onRecipeClick(recipeJSON) {
-        //If wasClicked == false: set wasClicked to true & selectedRecipe to recipeJSON and showRecipeModal = false
-        //If selectedRecipe != recipeJSON: update selectedRecipe, leave wasClicked and showRecipeModal = false
-        //If wasClicked == true && selectedRecipe == recipeJSON: showRecipeModal = true
-
+    
         let wasClicked = this.state.wasRecipeClicked;
         let selectedRecipe = this.state.selectedRecipe;
         let showRecipeModal = this.state.showRecipeModal;
@@ -325,6 +322,10 @@ class CalendarContainer extends React.Component {
     onPlanOpen(plan) {
         if (!(funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(plan.name))) {
             alert("We had trouble opening that calendar right now. Please try again later.")
+            this.setState({
+                calendarTitle: "Enter title"
+            });
+            document.getElementById("calendar-id").innerHTML = "Enter title";
         }
 
         let updateFrameData = this.state.frameData;
@@ -351,6 +352,13 @@ class CalendarContainer extends React.Component {
     }
 
     handleSave = () => {
+
+        if (this.state.calendarTitle == "" || this.state.calendarTitle == undefined || this.state.calendarTitle == "Enter title"){
+            alert("Please give your calendar a title and try again.");
+
+            return;
+        } 
+
         const payload = {
             name: this.state.calendarTitle,
             id: funcs.getCalendarIDFromTitle(this.state.fetchedMealPlans, this.state.calendarTitle),
@@ -371,7 +379,8 @@ class CalendarContainer extends React.Component {
             axios
                 .put(updateMealPlanURL, payload)
                 .then((response) => {
-                    //TODO: Confirmation of successful write
+                    alert("Your calendar, "+this.state.calendarTitle+", was successfully updated.");
+                    this.fetchMealPlans();
                 })
                 .catch((err) => console.log("err", err));
         }
@@ -380,11 +389,11 @@ class CalendarContainer extends React.Component {
             axios
                 .post(addMealPlanURL, payload)
                 .then((response) => {
-                    //TODO: Confirmation of successful write
+                    alert("Your calendar, "+this.state.calendarTitle+", was successfully saved.");
+                    this.fetchMealPlans();
                 })
                 .catch((err) => console.log("err", err));
         }
-        this.fetchMealPlans();
     };
 
     handleLoad = () => {
@@ -411,67 +420,6 @@ class CalendarContainer extends React.Component {
             email: this.state.email,
         };
         
-        // // add
-        // axios
-        //     .post(addMealPlanURL, data)
-        //     .then((response) => {
-        //         //whatever you want to do
-        //         //nothing too important is returned
-        //     })
-        //     .catch((err) => console.log("err", err));
-
-        // //update
-        // axios
-        //     .put(updateMealPlanURL, data)
-        //     .then((response) => {
-        //         //whatever you want to do
-        //         //nothing too important is returned
-        //     })
-        //     .catch((err) => console.log("err", err));
-
-        // //delete
-        // axios
-        //     .put(deleteMealPlanURL, data)
-        //     .then((response) => {
-        //         //whatever you want to do
-        //         //nothing too important is returned
-        //     })
-        //     .catch((err) => console.log("err", err));
-
-        //get
-        // axios
-        //     .post(getMealPlanURL, userData)
-        //     .then((response) => {
-        //         /*whatever you want to do
-        //         will be a list of mealplans stored similary to how the data above is
-        //         [
-        //             {
-        //                 "id": 1253,
-        //                 "email": "hi@gmail.com",
-        //                 "name": "we",
-        //                 "sunday":["id1","id2","id3"],
-        //                 "monday":["id1","id2","id3"],
-        //                 "tuesday":["id1","id2","id3"],
-        //                 "wednesday":["id1","id2","id3"],
-        //                 "thursday":["id1","id2","id3"],
-        //                 "friday":["id1","id2","id3"],
-        //                 "saturday":["id1","id2","id3"],
-        //             },
-        //             ...... more mealplans
-        //         ]
-        //         put loop through the meal plan they click for open
-        //        then put into a dict of ids and what day of week
-        //         */
-
-        //         axios
-        //             .post(getRecipeURL, userData)
-        //             .then((response) => {
-        //                 //   This will get all the recipies then you can filter by dict of ids you created
-        //                 // then store list of filter recipes in correct spot of week and put all the recipes in bottom section if they wanted to change it
-        //             })
-        //             .catch((err) => console.log("err", err));
-        //     })
-        //     .catch((err) => console.log("err", err));
     }
 
     /** DND FUNCTIONS */

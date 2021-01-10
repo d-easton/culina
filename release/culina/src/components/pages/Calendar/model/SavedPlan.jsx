@@ -23,12 +23,10 @@ export default class SavedPlan extends React.Component {
     }
 
     handleOpen() {
-        alert("open meal plan clicked");
         this.props.openPlanCallback(this.props.plan);
     }
 
     handleDelete() {
-        alert("delete meal plan clicked");
         this.props.deletePlanCallback(this.props.plan);
     }
 
