@@ -42,6 +42,14 @@ const RowCard = (props) => {
       setDislike(props.recipe.dislikes);
     }
 
+    if (props.recipe.unaddLike == 1) {
+      setLike(props.recipe.likes);
+    }
+
+    if (props.recipe.unaddDislike == 1) {
+      setDislike(props.recipe.dislikes);
+    }
+
     return (
       <bs.Modal
         {...props}
@@ -85,6 +93,10 @@ const RowCard = (props) => {
               addLike(props.recipe, props.user);
             }}
           >
+            {/* {props.user.email == props.recipe.email ||
+            props.recipe.liked.includes(props.user.email)
+              ? "Unlike"
+              : "Like"} */}
             Like
           </bs.Button>
           <bs.Button
@@ -94,6 +106,10 @@ const RowCard = (props) => {
               addDislike(props.recipe, props.user);
             }}
           >
+            {/* {props.user.email == props.recipe.email ||
+            props.recipe.disliked.includes(props.user.email)
+              ? "Un-Dislike"
+              : "Dislike"} */}
             Dislike
           </bs.Button>
 
@@ -167,6 +183,20 @@ const RowCard = (props) => {
     ) {
       setLikedModalShow(true);
       setModalShow(false);
+
+      // props.recipe.unaddLike = 1;
+      // setLike(props.recipe.likes - 1);
+      // const data = getData(recipe);
+      // data.likes = data.likes - 1;
+      // if (data.likes < 0) data.likes = 0;
+      // data.liked = data.liked.filter((person) => person !== currentUser.email);
+      // props.recipe.liked = data.liked;
+      // axios
+      //   .put(updateRecipeURL, data)
+      //   .then((response) => {
+      //     // setModalShow(false);
+      //   })
+      //   .catch((err) => console.log("err", err));
     } else {
       props.recipe.addLike = 1;
       setLike(props.recipe.likes + 1);
@@ -177,7 +207,7 @@ const RowCard = (props) => {
       axios
         .put(updateRecipeURL, data)
         .then((response) => {
-          setModalShow(false);
+          // setModalShow(false);
         })
         .catch((err) => console.log("err", err));
     }
@@ -190,6 +220,22 @@ const RowCard = (props) => {
     ) {
       setDislikedModal(true);
       setModalShow(false);
+
+      // props.recipe.unaddDislike = 1;
+      // setDislike(props.recipe.dislikes - 1);
+      // const data = getData(recipe);
+      // data.dislikes = data.dislikes - 1;
+      // if (data.dislikes < 0) data.dislikes = 0;
+      // data.disliked = data.disliked.filter(
+      //   (person) => person !== currentUser.email
+      // );
+      // props.recipe.disliked = data.disliked;
+      // axios
+      //   .put(updateRecipeURL, data)
+      //   .then((response) => {
+      //     // setModalShow(false);
+      //   })
+      //   .catch((err) => console.log("err", err));
     } else {
       props.recipe.addDislike = 1;
       setDislike(props.recipe.dislikes + 1);
@@ -200,7 +246,7 @@ const RowCard = (props) => {
       axios
         .put(updateRecipeURL, data)
         .then((response) => {
-          setModalShow(false);
+          // setModalShow(false);
         })
         .catch((err) => console.log("err", err));
     }
@@ -281,6 +327,10 @@ const RowCard = (props) => {
     );
   }
 
+  function truncate(str, n) {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  }
+
   return (
     <>
       <li className="boxs__item" onClick={() => setModalShow(true)}>
@@ -289,7 +339,7 @@ const RowCard = (props) => {
             <img className="boxs__item__img" alt="Food Image" src={props.src} />
           </figure>
           <div className="boxs__item__info">
-            <h5 className="boxs__item__text">{props.text}</h5>
+            <h5 className="boxs__item__text">{truncate(props.text, 33)}</h5>
           </div>
         </a>
       </li>
