@@ -92,7 +92,7 @@ body {
   display: block;
 }
 
- .true {
+ .listTitle .true {
   text-decoration: line-through;
 
 }
