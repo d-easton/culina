@@ -12,7 +12,7 @@ const Footer = (props) => {
     <div className='footer-container'>
       <section className='footer-subscription'>
         <p className='footer-subscription-heading'>
-          Join Culina to receive the best cooking companion anyone can have
+          Upgrade your cookbook with Culina. Get started today.
         </p>
         <div className='input-areas'>
           {email ? (<> 

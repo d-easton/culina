@@ -8,13 +8,11 @@ import EditableField from "./Modal/EditableField";
 import Dashboard from "./Calendar/model/Dashboard.jsx";
 
 import CalendarTrack from "./Calendar/model/CalendarTrack.jsx"
-import Frame from "./Calendar/model/Frame.jsx";
 import RecipeBox from "./Calendar/model/RecipeBox.jsx";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const axios = require("axios");
-// this is an incorrect url, just there to test ^
 const updateGroceryListURL =
     "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
 const getGroceryListURL =
@@ -32,39 +30,6 @@ const updateMealPlanURL =
 const getRecipeURL =
     "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getRecipeForUser";
 
-    const testPlanData = [
-        {
-            "name": "meal plan 1",
-            "monday": [48014],
-            "tuesday": [35640, 42276],
-            "wednesday": [],
-            "thursday": [],
-            "friday": [],
-            "saturday": [],
-            "sunday": [],
-        },
-        {
-            "name":"meal plan 2",
-            "monday": [],
-            "tuesday": [],
-            "wednesday": [],
-            "thursday": [],
-            "friday": [93407, 94608],
-            "saturday": [],
-            "sunday": [],
-        },
-        {
-            "name": "meal plan 3",
-            "monday": [],
-            "tuesday": [],
-            "wednesday": [],
-            "thursday": [],
-            "friday": [],
-            "saturday": [],
-            "sunday": [],
-        }
-    ];
-
 function Modal(props) {
     let ingridients = [];
     for (let i = 0; i < props.recipe.ingredients.length; i++) {
@@ -76,19 +41,6 @@ function Modal(props) {
         steps.push(props.recipe.steps[i].text);
         steps.push(<br></br>);
     }
-
-    /*
-      if (props.recipe.addLike == 1) {
-          setLike(props.recipe.likes + 1);
-      } else {
-          setLike(props.recipe.likes);
-      }
-      if (props.recipe.addDislike == 1) {
-          setDislike(props.recipe.dislikes + 1);
-      } else {
-          setDislike(props.recipe.dislikes);
-      }
-      */
 
     return (
         <bs.Modal
@@ -138,15 +90,8 @@ class CalendarContainer extends React.Component {
     constructor(props) {
         super(props);
 
-        // console.log("recipes = ")
-        // console.log(constants.data.recipes);
         this.state = {
-            // calenderID: 0,
-            // calendar: "",
-            // data: {},
             email: props.user.email,
-            // draggableFields: draggableInitial,
-            // isDisabled: false,
             wasRecipeClicked: false,
             selectedRecipe: null,
             showRecipeModal: false,
@@ -155,10 +100,8 @@ class CalendarContainer extends React.Component {
             recipeBoxData: constants.data.recipeBox,
             frameData: constants.data.calendarFrames,
 
-            fetchedMealPlans:  testPlanData
+            fetchedMealPlans:  []
         };
-
-        // this.config = this.config.bind(this);
 
         this.setData = this.setData.bind(this);
         this.exportData = this.exportData.bind(this);
@@ -184,8 +127,6 @@ class CalendarContainer extends React.Component {
 
     componentDidMount() {
         this._mounted = true;
-        // this.getData(constants.calendarCode);
-        // this.getData(constants.recipeCode);
         this.fetchData();
     }
 
@@ -206,7 +147,6 @@ class CalendarContainer extends React.Component {
             });
             
         this.fetchMealPlans();
-        console.log(this.state.fetchedMealPlans);
     }
 
     fetchMealPlans() {
@@ -216,14 +156,10 @@ class CalendarContainer extends React.Component {
 
         //get all mealplans
         let mealPlans = [];
-        console.log("CALL1");
         axios
             .post(getMealPlanURL, userData)
             .then((response) => {
-                console.log(response.data);
                 mealPlans = response.data;
-                // console.log("check response");
-                // console.log(mealPlans);
                 if (mealPlans == undefined || mealPlans == null) {
                    mealPlans = [];
                 }
@@ -231,62 +167,6 @@ class CalendarContainer extends React.Component {
             })
             .catch((err) => console.log("err", err));
     }
-
-    // getData(mode) {
-    //     let header = {
-    //         email: this.state.email,
-    //     };
-    //     let url;
-    //     const CALENDAR = constants.calendarCode;
-    //     const RECIPE = constants.recipeCode;
-
-    //     if (mode == CALENDAR) {
-    //         // any necessary header modifications
-    //         url = constants.getCalendarURL;
-    //     } else if (mode == RECIPE) {
-    //         // any necessary header modifications
-    //         url = constants.getRecipeURL;
-    //     } else {
-    //         const err = "Invalid data mode";
-    //         console.log("err", err);
-    //         return;
-    //     }
-
-    //     axios
-    //         .post(url, header)
-    //         .then((response) => {
-    //             if (this._mounted) {
-    //                 if (mode == CALENDAR) {
-    //                     this.setData(response.data[0].ingredients, CALENDAR);
-    //                 } else if (mode == RECIPE) {
-    //                     this.setData(response.data[0].ingredients, RECIPE); // TODO: fix this format
-    //                 }
-    //             }
-    //         })
-    //         .catch((err) =>
-    //             axios
-    //                 .put(url, header)
-    //                 .then((response) => {
-    //                     if (this._mounted) {
-    //                         if (mode == CALENDAR) {
-    //                             this.setData(response.data[0].ingredients, CALENDAR);
-    //                         } else if (mode == RECIPE) {
-    //                             this.setData(response.data[0].ingredients, RECIPE); // TODO: fix this format
-    //                         }
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     // if(this.__mounted) {
-    //                     if (mode == CALENDAR) {
-    //                         this.setData(null, CALENDAR);
-    //                     } else if (mode == RECIPE) {
-    //                         this.setData(null, RECIPE);
-    //                     }
-    //                     // }
-    //                     console.log("err", err);
-    //                 })
-    //         );
-    // }
 
     setData(res, mode) {
         const CALENDAR = constants.calendarCode;
@@ -400,7 +280,6 @@ class CalendarContainer extends React.Component {
         this.setState({
             calendarTitle: document.getElementById("calendar-id").innerHTML,
         });
-        console.log(this.state.calendarTitle);
     }
 
     buildCalendarObj() {
@@ -461,24 +340,7 @@ class CalendarContainer extends React.Component {
         });
     }
     onPlanDelete(plan) {
-        console.log("delete callback received well -- "+plan.name);
-        console.log(plan);
-        console.log(this.state.fetchedMealPlans);
-        // const payload = {
-        //     title: plan.name,
-        //     id: plan.id,
-        //     email: this.state.email,
-        //     monday: this.state.frameData["calMon"].recipeIDs,
-        //     tuesday: this.state.frameData["calTue"].recipeIDs,
-        //     wednesday: this.state.frameData["calWed"].recipeIDs,
-        //     thursday: this.state.frameData["calThu"].recipeIDs,
-        //     friday: this.state.frameData["calFri"].recipeIDs,
-        //     saturday: this.state.frameData["calSat"].recipeIDs,
-        //     sunday: this.state.frameData["calSun"].recipeIDs,
-        // };
-
         //delete
-        console.log("CALL3");
         axios
             .put(deleteMealPlanURL, plan)
             .then((response) => {
@@ -502,23 +364,10 @@ class CalendarContainer extends React.Component {
             sunday: this.state.frameData["calSun"].recipeIDs,
         };
         
-        // const currentTitle = this.state.calendarTitle;
-        // const record = {};
-        // record[currentTitle] = payload;
-
         // ready for store
-        console.log("ready for store");
         if (funcs.getMealPlanTitles(this.state.fetchedMealPlans).includes(this.state.calendarTitle)) {
-            console.log("update");
-
-            // update id in payload
-            console.log(payload);
-            console.log(funcs.getCalendarIDFromTitle(this.state.fetchedMealPlans, this.state.calendarTitle));
-            // payload.id = funcs.getCalendarIDFromTitle(this.state.fetchedMealPlans, this.state.calendarTitle);
-            console.log(payload);
-            //update
             
-            console.log("CALL4");
+            //update
             axios
                 .put(updateMealPlanURL, payload)
                 .then((response) => {
@@ -527,10 +376,7 @@ class CalendarContainer extends React.Component {
                 .catch((err) => console.log("err", err));
         }
         else {
-            console.log("add");
             // add
-            
-        console.log("CALL5");
             axios
                 .post(addMealPlanURL, payload)
                 .then((response) => {
@@ -814,7 +660,7 @@ class CalendarContainer extends React.Component {
                             key="recipeBox"
                             recipes={this.state.recipeBoxData.recipeIDs.map(
                                 (recipeID) => this.state.recipes[recipeID]
-                            )} //{Object.values(this.state.recipes)}
+                            )}
                             isDisabled={this.isDisbaled}
                             recipeClickCallback={this.onRecipeClick}
                         ></RecipeBox>

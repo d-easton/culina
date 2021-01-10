@@ -6,8 +6,9 @@ import Card from './Card.jsx';
 const RecipeBoxList = styled.div`
     width: 85%;
     margin-left: 10%;
-    height: 43vh;
+    height: 50vh;
     margin-top: 2vh;
+    margin-bottom: 5vh;
     padding: 15px;
 
     background-color: white;
@@ -20,8 +21,6 @@ const RecipeBoxList = styled.div`
     flex-flow: column wrap;
     justify-content: space-between;
 `;
-
-//#F4E3D7
 
 export default class RecipeBox extends React.Component {
     render() {

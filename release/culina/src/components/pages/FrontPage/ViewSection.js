@@ -14,13 +14,13 @@ const ViewSection = (props) => {
         <>
           <video src='/videos/video-2.mp4' autoPlay loop muted />
           <h1>COOKING AWAITS</h1>
-          <p>What are you waiting for?</p>
+          <p>Let's get started</p>
         </>
       ) : (
         <>
           <video src='/videos/video-2.mp4' autoPlay loop muted />
           <h1>COOKING AWAITS</h1>
-          <p>What are you waiting for?</p>
+          <p>Let's get started</p>
           <div className='hero-btns'>
             <button className='btn btn--outline btn--large' href='/sign-in' onClick={() => {history.push('/sign-in')}}>SIGN IN</button>
 

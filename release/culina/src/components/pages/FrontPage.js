@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../App.css';
 import Cards from './FrontPage/Cards';
+import Welcome from './FrontPage/Welcome';
 import ViewSection from './FrontPage/ViewSection';
 import Footer from './FrontPage/Footer';
 
@@ -16,6 +17,7 @@ const FrontPage = (props) => {
   return (
     <>
       <ViewSection email={email} />
+      <Welcome />
       <Cards />
       <Footer email={email} />
     </>

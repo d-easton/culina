@@ -3,11 +3,12 @@ import {Draggable} from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 const CardDiv = styled.div`    
-    width: 150px;
+    width: 125px;
     min-height: 50px;
     border-radius: 15px; 
     text-align: center;
     padding-top: 12.5px;
+    padding-bottom: 12.5px;
     margin-top: 5px;
     margin-bottom: 5px;
 
