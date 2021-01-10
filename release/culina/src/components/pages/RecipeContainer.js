@@ -104,6 +104,7 @@ class RecipeContainer extends React.Component {
   }
 
   fetchData() {
+    console.log("fetching");
     this.setState({fetching: true});
     axios
       .post(loadRecipeURL, {
@@ -142,6 +143,7 @@ class RecipeContainer extends React.Component {
   }
 
   setData(data) {
+    this.setState({fetching: false});
     if (data == null) {
       this.setState({ recipes: [] });
     } else {
@@ -156,7 +158,7 @@ class RecipeContainer extends React.Component {
           });
         }
       });
-      this.setState({ recipes: data, ocrOutput: ocr, fetching: false });
+      this.setState({ recipes: data, ocrOutput: ocr });
     }
   }
   closeModal() {
