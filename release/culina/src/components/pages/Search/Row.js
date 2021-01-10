@@ -37,6 +37,7 @@ const Row = (props) => {
         {recipes
           .filter((recipe) => recipe.image.length > 5)
           .filter((recipe) => !recipe.copy)
+          .filter((recipe) => recipe.public)
           .filter((recipe) => recipe.title.search(search) >= 0)
           .sort((recipe1, recipe2) => recipe2.likes - recipe1.likes)
           .map((recipe) => (
