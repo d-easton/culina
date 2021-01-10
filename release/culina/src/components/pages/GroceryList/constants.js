@@ -1202,4 +1202,9 @@ const ingredientDatabase = {
         "translations": [
         ]
     },
+};
+
+const constants = {
+    'ingredients': ingredientDatabase,
 }
+export default constants;

@@ -1,14 +1,21 @@
 import React from "react";
 import EditableList from "../Modal/EditableList";
+
+import constants from "./constants.js";
 import "../css/GroceryList.css";
+import testDataRec from "./test.js";
+
 const axios = require("axios");
+///*
 const addGroceryListURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/addItemToList";
 const updateGroceryListURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/updateGroceryList";
 const getGroceryListURL =
   "https://cors-anywhere.herokuapp.com/http://35.193.28.175:8085/getGroceryList";
-
+//*/
+const records = { testDataRec };
+console.log(testDataRec);
 class GroceryList extends React.Component {
   _mounted = false;
   constructor(props) {
@@ -26,6 +33,9 @@ class GroceryList extends React.Component {
     this.beginEdit = this.beginEdit.bind(this);
     this.getList = this.getList.bind(this);
     this.setData = this.setData.bind(this);
+
+    // this.checkIngredientDatabase = this.checkIngredientDatabase(this);
+    // this.combineLikeIngredients = this.combineLikeIngredients(this);
 
     if (this.state.items == undefined) {
       this.setState({ items: ["Loading"] });
@@ -56,19 +66,23 @@ class GroceryList extends React.Component {
       ingredients: this.state.items,
     };
     this.setState({ isDisabled: true });
-
+    console.log("saved changes");
+    //*
     axios
       .put(updateGroceryListURL, savedList)
       .then((response) => {
         this.setData(response.data.ingredients);
       })
-      .catch((err) => console.log("err", err));
+      .catch((err) => console.log("err", err)); 
+      //*/
   }
-
+  
   getList() {
     const getL = {
       email: this.state.email,
     };
+    console.log("get list");
+    //*
     axios
       .post(getGroceryListURL, getL)
       .then((response) => {
@@ -83,7 +97,8 @@ class GroceryList extends React.Component {
           }
         })
       );
-    // .catch(err => console.log('err', err)) )
+    // .catch(err => console.log('err', err)) ) 
+    //*/
   }
 
   setData(res) {
@@ -94,6 +109,28 @@ class GroceryList extends React.Component {
       this.forceUpdate();
     }
   }
+
+  // combineLikeIngredients() {
+  //   // present confirmation
+
+  //   // prepare for comparison
+  //   let results = [];
+  //   let resultIDs = [];
+  //   let existing = [];
+
+  //   existing.forEach( (element) => {
+  //     // check if current ingredient already in results
+  //     if ( resultIDs.includes(element.id) ) {
+  //       // get record
+  //       let record = getIngredientRecord(element.id, results);
+
+  //       // check if units match
+  //       if ( element.unit == record.unit) {
+
+  //       }
+  //     }
+  //   });
+  // }
 
   render() {
     const list = (

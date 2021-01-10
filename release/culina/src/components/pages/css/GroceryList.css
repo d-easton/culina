@@ -91,3 +91,8 @@ body {
   padding: 5px;
   display: block;
 }
+
+ .true {
+  text-decoration: line-through;
+
+}

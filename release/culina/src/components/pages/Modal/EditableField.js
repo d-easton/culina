@@ -13,13 +13,14 @@ class EditableField extends React.Component {
         this.handleFocus = this.handleFocus.bind(this);
         this.endEditing = this.endEditing.bind(this);
         this.stripHtml = this.stripHtml.bind(this);
-
+        this.handleClick = this.handleClick.bind(this);
         this.contentEditable = React.createRef();
 
         this.state = { 
             html: this.props.html === "" ? this.props.placeholderText : this.props.html,
             text: this.props.html,
-            isEmpty: this.props.html === ""  
+            isEmpty: this.props.html === "",
+            crossedOff : false  
         }; 
 }
 
@@ -59,10 +60,21 @@ class EditableField extends React.Component {
     endEditing() {
         this.props.onChange(this.props.id, this.state.html);
     }
+    
+    handleClick() {
+        console.log("clicked");
+        console.log(this.state.crossedOff);
+        this.setState({
+            crossedOff : !this.state.crossedOff
+        }, () =>
+        console.log(this.state.crossedOff));
+    }
 
     //Renders an editable field
     render() {
-        let classes = this.props.childClass + (this.state.isEmpty ? " placeholder" : "");
+        //let classes = this.props.childClass + (this.state.isEmpty ? " placeholder" : "");
+        let classes = ((this.state.crossedOff) ? "true" : "false");
+        //let style = { }
         return (<ContentEditable
             innerRef={this.contentEditable}
             html={this.state.html}
@@ -73,7 +85,7 @@ class EditableField extends React.Component {
             tagName={this.props.tagName}
             key={this.props.childKey}
             className={classes}
-
+            onClick={this.handleClick}
             id={this.props.id}
         />);
     }
