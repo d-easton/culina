@@ -996,7 +996,7 @@ const ingredientDatabase = {
         "display_name": "sausage",
         "translations": [
         ]
-    }
+    },
     "SIRLOIN_STEAK": {
         "display_name": "sirloin steak",
         "translations": [
