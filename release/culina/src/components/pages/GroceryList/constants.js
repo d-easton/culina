@@ -221,6 +221,12 @@ const ingredientDatabase = {
 
         ]
     },
+    "CLOVE": {
+        "display_name": "clove",
+        "translations": [
+
+        ]
+    },
     "CORIANDER": {
         "display_name": "coriander",
         "translations": [
@@ -257,7 +263,7 @@ const ingredientDatabase = {
             
         ]
     },
-    "GREEN_ONIONS": {
+    "GREEN_ONION": {
         "display_name": "green onions",
         "translations": [
             
@@ -385,7 +391,7 @@ const ingredientDatabase = {
             
         ]
     },
-    "BRUSSELS_SPROUTS" : {
+    "BRUSSELS_SPROUT" : {
         "display_name": "Brussels sprouts",
         "translations": [
             
@@ -416,7 +422,7 @@ const ingredientDatabase = {
             "hothouse cucumber"
         ]
     },
-    "GINGER ROOT" : {
+    "GINGER_ROOT" : {
         "display_name": "ginger root",
         "translations": [
             "ginger",
@@ -429,7 +435,7 @@ const ingredientDatabase = {
             "eggplant"
         ]
     },
-    "GREEN_BEANS" : {
+    "GREEN_BEAN" : {
         "display_name": "green beans",
         "translations": [
             
@@ -441,10 +447,16 @@ const ingredientDatabase = {
             
         ]
     },
-    "MUSHROOMS": {
+    "MUSHROOM": {
         "display_name": "mushrooms",
         "translations": [
 
+        ]
+    },
+    "POTATO": {
+        "display_name": "potato",
+        "translations": [
+            
         ]
     },
     "RED_ONION": {
@@ -453,7 +465,7 @@ const ingredientDatabase = {
             
         ]
     },
-    "SHALLOTS": {
+    "SHALLOT": {
         "display_name": "shallots",
         "translations": [
             
@@ -467,12 +479,6 @@ const ingredientDatabase = {
     },
     "SQUASH": {
         "display_name": "squash",
-        "translations": [
-            
-        ]
-    },
-    "SHALLOTS": {
-        "display_name": "shallots",
         "translations": [
             
         ]
@@ -514,19 +520,19 @@ const ingredientDatabase = {
 
         ]
     },
-    "RED_DELICIOUS_APPLES" : {
+    "RED_DELICIOUS_APPLE" : {
         "display_name": "red delicious apples",
         "translation": [
             
         ]
     },
-    "GALA_APPLES" : {
+    "GALA_APPLE" : {
         "display_name": "gala apples",
         "translation": [
             
         ]
     },
-    "GREEN_APPLES" : {
+    "GREEN_APPLE" : {
         "display_name": "green apples",
         "translation": [
             "granny smith apples"
@@ -544,7 +550,7 @@ const ingredientDatabase = {
             
         ]
     },
-    "CLEMENTINES" : {
+    "CLEMENTINE" : {
         "display_name": "clementines",
         "translations": [
             "tangor"
@@ -580,7 +586,7 @@ const ingredientDatabase = {
             
         ]
     },
-    "MIXED_BERRIES" : {
+    "MIXED_BERRY" : {
         "display_name": "mixed berries",
         "translations": [
             "mixed berries"
@@ -761,7 +767,7 @@ const ingredientDatabase = {
         "translations": [
         ]
     },
-    "DRIED_CHICKPEAS": {
+    "DRIED_CHICKPEA": {
         "display_name": "dried chickpeas",
         "translations": [
         ]
@@ -831,7 +837,7 @@ const ingredientDatabase = {
             "tenderloin beef"
         ]
     },
-    "BEEF_MEDALLIONS": {
+    "BEEF_MEDALLION": {
         "display_name": "beef tenderloin",
         "translations": [
             "tender medallions",
@@ -841,26 +847,26 @@ const ingredientDatabase = {
             "beef shoulder tender medallions",
         ]
     },
-    "BONE_IN_CHICKEN_BREASTS": {
-        "display_name": "bone-in chicken breasts",
+    "BONE_IN_CHICKEN_BREAST": {
+        "display_name": "bone-in chicken breast",
         "translations": [
             "bone-in chicken breasts"
         ]
     },
-    "BONELESS_CHICKEN_BREASTS": {
-        "display_name": "chicken breasts",
+    "BONELESS_CHICKEN_BREAST": {
+        "display_name": "chicken breast",
         "translations": [
             "chicken breasts"
         ]
     },
-    "BONE_IN_CHICKEN_thighs": {
-        "display_name": "bone-in chicken thighs",
+    "BONE_IN_CHICKEN_THIGH": {
+        "display_name": "bone-in chicken thigh",
         "translations": [
             "bone-in chicken thighs"
         ]
     },
-    "BONELESS_CHICKEN_THIGHS": {
-        "display_name": "chicken thighs",
+    "BONELESS_CHICKEN_THIGH": {
+        "display_name": "chicken thigh",
         "translations": [
             "chicken thighs"
         ]
@@ -1085,6 +1091,41 @@ const ingredientDatabase = {
         ]
     },
     // MARK: DRIED GOODS
+    "ARBORIO_RICE": {
+        "display_name":  "arborio rice",
+        "translations": [
+        ]
+    },
+    "BASMAT_RICE": {
+        "display_name":  "basmati rice",
+        "translations": [
+        ]
+    },
+    "BRIOCHE_BREAD": {
+        "display_name":  "brioche bread",
+        "translations": [
+        ]
+    },
+    "BREAD_CRUMB": {
+        "display_name":  "bread crumbs",
+        "translations": [
+            "panko",
+            "panko bread crumbs",
+            "panko breading"
+        ]
+    },
+    "GRANOLA" : {
+        "display_name": "granola",
+        "translations": [
+        ]
+    },
+    "JAPANESE_SUSHI_RICE": {
+        "display_name": "Japanese sushi rice",
+        "translations": [
+            "japanese rice",
+            "sushi rice"
+        ]
+    },
     "JASMINE_RICE": {
         "display_name": "jasmine rice",
         "translations": [
@@ -1095,16 +1136,75 @@ const ingredientDatabase = {
         "translations": [
         ]
     },
+    "QUINOA": {
+        "display_name":  "quinoa",
+        "translations": [
+        ]
+    },
+    "SALAD_CROUTONS": {
+        "display_name":  "salad croutons",
+        "translations": [
+            "croutons"
+        ]
+    },
+    "SOURDOUGH_BREAD": {
+        "display_name":  "sourdough bread",
+        "translations": [
+            "sour dough bread",
+        ]
+    },
+    "WHOLE_WHEAT_BREAD": {
+        "display_name":  "whole wheat bread",
+        "translations": [
+            "wholewheat bread",
+            "whole-wheat bread",
+            "whole grain bread"
+        ]
+    },
+    "WHITE_BREAD": {
+        "display_name":  "whole wheat bread",
+        "translations": [
+            "wholewheat bread",
+            "whole-wheat bread",
+        ]
+    },
+    "WHOLE_WHEAT_TORTILLA": {
+        "display_name":  "whole wheat tortilla",
+        "translations": [
+            "wholewheat tortilla",
+            "whole-wheat tortilla",
+            "whole grain tortilla",
+            "whole grain flour tortilla"
+        ]
+    },
+    "WHITE_FLOUR_TORTILLA": {
+        "display_name":  "white flour tortilla",
+        "translations": [
+            "flour tortilla",
+            "white tortilla",
+            "whole-flour tortilla"
+        ]
+    },
 
     // MARK: MISCELLANIOUS
-    "BLACK_OLIVES": {
+    "CAPER": {
+        "display_name": "capers",
+        "translations": [
+        ]
+    },
+    "BLACK_OLIVE": {
         "display_name": "green olives",
         "translations": [
         ]
     },
-    "GREEN_OLIVES": {
+    "GREEN_OLIVE": {
         "display_name": "green olives",
         "translations": [
         ]
     },
+};
+
+const constants = {
+    'ingredients': ingredientDatabase,
 }
+export default constants;
