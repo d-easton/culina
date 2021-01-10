@@ -10,9 +10,10 @@ export default class CalendarTrack extends React.Component {
             <div id="calendar-track">
                 {this.props.calendarOrder.map((frameID) => {
                     const frame = this.props.frameData[frameID];
-                    const recipes = frame.recipeIDs.map(
+                    let recipes = frame.recipeIDs.map(
                         (recipeID) => this.props.recipes[recipeID]
                     );
+                    recipes = recipes.filter(recipe => recipe != undefined);
                     return (
                         <Frame
                             key={frame.id}

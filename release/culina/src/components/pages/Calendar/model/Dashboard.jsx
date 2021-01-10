@@ -21,15 +21,11 @@ const DashboardList = styled.div`
 
 export default class Dashboard extends React.Component {
     render() {
-        // console.log("PLANS");
-        // console.log(this.props.mealPlans);
-        // const dropAreaID = "recipeBox";
         return (
             
             <DashboardList>
                 { this.props.mealPlans.map( (plan, index) => (
                     <SavedPlan 
-                        // key={plan.title} 
                         plan={plan} 
                         index={index} 
                         openPlanCallback={this.props.openPlanCallback} 
