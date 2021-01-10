@@ -4,6 +4,7 @@ import EditableRecipeField from "../Modal/EditableRecipeField";
 import DroppableField from "../Modal/DroppableField.js";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { storage } from "../../../fire";
+import blankImage from "./css/images/question_mark.png"
 //import './css/RecipeModal.css';
 
 const axios = require("axios");
@@ -71,6 +72,8 @@ class RecipeModal extends React.Component {
         //ingredients: this.props.recipe.ingredients,
         description: this.props.recipe.description,
         category: this.props.recipe.category,
+        imageSRC: this.props.recipe.image,
+        public: this.props.recipe.public,
         //steps: this.props.recipe.steps,
         email: props.email,
         isDisabled: !this.props.isNewCard,
@@ -117,6 +120,7 @@ class RecipeModal extends React.Component {
     this.handleCommentsChange = this.handleCommentsChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleTitleChange=this.handleTitleChange.bind(this);
 
     // this.titleDivRef = React.createRef();
     // this.ingListRef = React.createRef();
@@ -182,7 +186,9 @@ class RecipeModal extends React.Component {
     tempDraggableFields[fieldID] = fieldInfo;
     this.setState({ draggableFields: tempDraggableFields });
   }
-
+  handleTitleChange(value){
+    this.setState({title: value});
+  }
   handleAuthorChange(value) {
     this.setState({ author: value });
   }
@@ -285,9 +291,9 @@ class RecipeModal extends React.Component {
       email: this.state.email,
       author: this.state.author,
       image: this.props.recipe.image,
-      title: title,
+      title: this.state.title,
       // should be false and button fro turning off and on
-      public: true,
+      public: this.state.public,
       likes: 1,
       dislikes: 0,
       description: this.state.description,
@@ -296,7 +302,7 @@ class RecipeModal extends React.Component {
       disliked: [],
       ingredients: ingredients,
       steps: steps,
-      copy: false,
+      copy: this.props.recipe.copy,
     };
 
     let error_log = "";
@@ -431,6 +437,18 @@ class RecipeModal extends React.Component {
   handleImageChange = (e) => {
     if (e.target.files[0]) {
       //   setImage(e.target.files[0]);
+      let newImageSRC = null;
+      if(FileReader){
+        console.log("getting image");
+        var fr = new FileReader();
+        fr.onload = function(){
+          console.log("getting image results");
+          this.setState({imageSRC: fr.result})
+        }.bind(this)
+        fr.readAsDataURL(e.target.files[0]);
+
+      }
+      console.log(newImageSRC);
       this.setState({ pictureFile: e.target.files[0] });
     }
   };
@@ -558,35 +576,56 @@ class RecipeModal extends React.Component {
     buttons = (
       <div className="actions">
         <button
+          className="blueButton"
           onClick={this.props.isNewCard ? this.addRecipe : this.updateRecipe}
           hidden={this.props.isNewCard ? false : this.state.isDisabled}
         >
           Save
         </button>
-        <button onClick={this.beginEdit} hidden={!this.state.isDisabled}>
+        <button 
+          className="blueButton"
+          onClick={this.beginEdit}
+          hidden={!this.state.isDisabled}
+        >
           Edit
         </button>
         <button
+          className="redButton"
           onClick={this.deleteRecipe}
           hidden={this.props.isNewCard ? true : false}
         >
           Delete
         </button>
-        <button className="toggle-button" onClick={this.onClose}>
+        <button 
+          className="grayButton"
+          onClick={this.onClose}>
           {" "}
           {this.props.isNewCard ? "Discard" : "Close"}{" "}
         </button>
       </div>
     );
+    //Title Field
+    const titleField = (
+      <div className={this.state.isDisabled ? "titleDiv" : "titleDiv activated"}>
+        <EditableRecipeField
+          id={getKeyByValue(this.state, this.state.author)}
+          onChange={this.handleTitleChange}
+          html={this.state.title}
+          tagName={"h4"}
+          disabled={this.state.isDisabled}
+          placeholderText = "Title"
+          childClass="contentEditable"
+        />
+      </div>
+    );
     //Author Field
     const authorField = (
-      <div className="authorDiv">
-        <h2>By: </h2>
+      <div className={this.state.isDisabled ? "authorDiv" : "authorDiv activated"}>
         <EditableRecipeField
           id={getKeyByValue(this.state, this.state.author)}
           onChange={this.handleAuthorChange}
           html={this.state.author}
-          tagName={"h2"}
+          tagName={"h4"}
           disabled={this.state.isDisabled}
           placeholderText = "Author"
           childClass="contentEditable"
@@ -595,8 +634,7 @@ class RecipeModal extends React.Component {
     );
 
     const descriptionField = (
-      <div className="descriptionDiv">
-        <h4>Description: </h4>
+      <div className={this.state.isDisabled ? "descriptionDiv" : "descriptionDiv activated"}>
         <EditableRecipeField
           id={getKeyByValue(this.state, this.state.description)}
           onChange={this.handleDescriptionChange}
@@ -627,7 +665,6 @@ class RecipeModal extends React.Component {
         />
       </div>
     ) : null;
-
     return (
       <div className="grayedBackground">
         <div className="modal recipeModal">
@@ -640,23 +677,76 @@ class RecipeModal extends React.Component {
           >
             <div className="recipeCard">
               <div className="recipeHeader">
-                <DragDropContext onDragEnd={this.handleDragEnd}>
-                  <DroppableField
-                    droppableId="titleField"
-                    elements={this.state.draggableFields.titleField.elements}
-                    isDisabled={this.state.isDisabled}
-                    updateGlobalListState={this.handleFieldChange}
-                    removeElement={this.handleRemoveElement}
-                    addElement={this.handleAddElement}
-                    tagType={"h1"}
-                    isDragDisabled={true}
-                    placeholderText="Title"
-                  />
-                </DragDropContext>
+                {titleField}
                 {authorField}
-                <hr />
+              </div>
+              <div className="recipeBodyImage">
+                <img src={this.state.imageSRC ? this.state.imageSRC : blankImage}/>
               </div>
               <div className="recipeBody">
+              <div
+                className={
+                  this.state.isDisabled
+                    ? "recipeBodyFooter disabled"
+                    : "recipeBodyFooter"
+                }
+              >
+                <div
+                  className="recipeBodyFooterElement"
+                  hidden={this.state.isDisabled}
+                >
+                  <label for="fileInput" className="fileInputLabel"> 
+                  Change Picture
+                  <input
+                    className="fileInput"
+                    type="file"
+                    id="fileInput"
+                    accept=".jpg, .png, .jpeg"
+                    ref={this.imageFieldRef}
+                    onChange={this.handleImageChange}
+                  />
+                  </label>
+                </div>
+                <div
+                  className="recipeBodyFooterElement"
+                  hidden={this.state.isDisabled}
+                >
+                  <select
+                    type="select"
+                    id="categories"
+                    ref={this.categoryFieldRef}
+                    value={this.state.category}
+                  >
+                    <option value="Breakfast" onClick={()=>{this.setState({category:"Breakfast"})} }>Breakfast</option>
+                    <option value="Lunch" onClick={()=>{this.setState({category:"Lunch"})}}>Lunch</option>
+                    <option value="Dinner" onClick={()=>{this.setState({category:"Dinner"})}}>Dinner</option>
+                    <option value="Dessert" onClick={()=>{this.setState({category:"Dessert"})}}>Dessert</option>
+                  </select>
+                </div>
+                <div 
+                  className="recipeBodyFooterElement"
+                  hidden={!this.state.isDisabled}
+                >
+                  <div className={this.state.public ? "publicDiv" : "privateDiv"}>{this.state.public ? "Public" : "Private"}</div>
+                </div>
+                <div className="recipeBodyFooterElement"
+                hidden={this.state.isDisabled}>
+                  <div className="visibilityToggleDiv">
+                    <div className={this.state.public ? "publicDiv" : "privateDiv"}>{this.state.public ? "Public" : "Private"}</div>
+                    <label class="switch">
+                      <input type="checkbox" onChange={(event)=>{this.setState({public: !event.target.checked})}}/>
+                      <span class="slider round"></span>
+                    </label>
+                    </div>
+                </div>
+                
+                <div
+                  className="recipeBodyFooterElement"
+                  hidden={!this.state.isDisabled}
+                >
+                  <div className="recipeCardFooterCategory">{this.state.category}</div>
+                </div>
+              </div>
                 <div className="recipeInnerBody">
                   {descriptionField}
                   <h3>Ingredients:</h3>
@@ -690,48 +780,7 @@ class RecipeModal extends React.Component {
                   </DragDropContext>
                 </div>
               </div>
-              <div
-                className={
-                  this.state.isDisabled
-                    ? "recipeBodyFooter disabled"
-                    : "recipeBodyFooter"
-                }
-              >
-                <div
-                  className="recipeBodyFooterElement"
-                  hidden={this.state.isDisabled}
-                >
-                  <label>Image: </label>
-                  <input
-                    type="file"
-                    accept=".jpg, .png, .jpeg"
-                    ref={this.imageFieldRef}
-                    onChange={this.handleImageChange}
-                  />
-                </div>
-                <div
-                  className="recipeBodyFooterElement"
-                  hidden={this.state.isDisabled}
-                >
-                  <label>Category:</label>
-                  <select
-                    type="select"
-                    id="categories"
-                    ref={this.categoryFieldRef}
-                  >
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
-                    <option value="Dessert">Dessert</option>
-                  </select>
-                </div>
-                <div
-                  className="recipeBodyFooterElement"
-                  hidden={!this.state.isDisabled}
-                >
-                  <p>Category: {this.state.category}</p>
-                </div>
-              </div>
+              
             </div>
             {buttons}
           </div>

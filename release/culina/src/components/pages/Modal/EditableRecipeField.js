@@ -28,8 +28,10 @@ class EditableRecipeField extends React.Component {
     //Updates the local state and updateds global copy
     handleChange(event) {
         //New HTML
-        const html = event.target.value;
+        const html = this.stripHtml(event.target.value);
         const text = this.contentEditable.current.textContent;
+        console.log(html);
+        console.log(text);
 
         let displayPlaceholder = (text === ""); 
         //Updates local state
@@ -70,7 +72,6 @@ class EditableRecipeField extends React.Component {
         let stripped_text = html.replace(/<br\/*>/g, ' ');
         //console.log("mid-stripped = ")
         //console.log(stripped_text)
-        stripped_text = stripped_text.replace(/&nbsp;/g, ' ');
         //console.log("mid-stripped = ")
         //console.log(stripped_text)
         return (stripped_text)

@@ -122,7 +122,7 @@ class DraggableField extends React.Component {
                     >
                             <img className="dragIcon" src={dragIcon} alt="Move" hidden={this.props.isDisabled || this.props.isDragDisabled} {...provided.dragHandleProps}/>
                             <EditableRecipeField
-                                childClass="contentEditable"
+                                childClass={this.props.isDisabled ? "contentEditable" : "contentEditable enabled"}
                                 tagName={this.props.tagType}
                                 key={"editableField"+this.props.id}
                                 childKey={"contentEditable" + this.props.id}
