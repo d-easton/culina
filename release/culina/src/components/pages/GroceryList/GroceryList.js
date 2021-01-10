@@ -4,7 +4,6 @@ import EditableList from "../Modal/EditableList";
 import constants from "./constants.js";
 import "../css/GroceryList.css";
 import testDataRec from "./test.js";
-
 const axios = require("axios");
 ///*
 const addGroceryListURL =
