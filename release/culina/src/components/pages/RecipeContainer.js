@@ -72,7 +72,12 @@ class RecipeContainer extends React.Component {
       isFilterDropdownVisible: false,
       searchQuery: "",
       categoryFilter: null,
-      fetching: false
+      fetching: false,
+      errorLog:{
+        error: false,
+        status: null,
+        message: null
+      } 
     };
 
     this.closeModal = this.closeModal.bind(this);
@@ -122,6 +127,17 @@ class RecipeContainer extends React.Component {
                     */
 
         this.setData(res.data);
+
+      }).catch((errorLog)=>{
+        
+        this.setState({errorLog: {
+          error: true,
+          status: errorLog.response.status,
+          message: errorLog.response.statusText
+        }});
+        
+       //console.log(errorLog.response.status);
+       //console.log(errorLog.response.statusText);
       });
   }
 
@@ -338,7 +354,12 @@ class RecipeContainer extends React.Component {
     return (
       <div className="around-page">
         <div className="recipeContainer">
-          <img className="bufferImage" src={bufferImage} hidden={!this.state.fetching}/>
+          <img className="bufferImage" src={bufferImage} hidden={!this.state.fetching || this.state.errorLog.error}/>
+          <div className="errorDiv" hidden={!this.state.errorLog.error}>
+            <h4>Error {this.state.errorLog.status}</h4>
+            <p>{this.state.errorLog.message}</p>
+            <p>{this.state.errorLog.status == 429 ? "Please try again later" : null}</p>
+          </div>
           <div className="containerTools" hidden={this.state.showModalRC}>
             <div className="filterDiv">
               <button className="filterRecipeButton" onClick={()=>{this.setState({isFilterDropdownVisible: !this.state.isFilterDropdownVisible});}}> Filter </button>
