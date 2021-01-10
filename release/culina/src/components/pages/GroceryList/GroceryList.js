@@ -2,6 +2,8 @@ import React from "react";
 import EditableList from "../Modal/EditableList";
 
 import constants from "./constants.js";
+import funcs from "./funcs.js";
+
 import "../css/GroceryList.css";
 
 const axios = require("axios");
@@ -31,7 +33,7 @@ class GroceryList extends React.Component {
     this.setData = this.setData.bind(this);
 
     // this.checkIngredientDatabase = this.checkIngredientDatabase(this);
-    // this.combineLikeIngredients = this.combineLikeIngredients(this);
+    this.combineLikeIngredients = this.combineLikeIngredients(this);
 
     if (this.state.items == undefined) {
       this.setState({ items: ["Loading"] });
@@ -56,72 +58,107 @@ class GroceryList extends React.Component {
   }
 
   saveChanges() {
-    const savedList = {
-      id: 0,
-      email: this.state.email,
-      ingredients: this.state.items,
-    };
-    this.setState({ isDisabled: true });
+    console.log("save");
+    // const savedList = {
+    //   id: 0,
+    //   email: this.state.email,
+    //   ingredients: this.state.items,
+    // };
+    // this.setState({ isDisabled: true });
 
-    axios
-      .put(updateGroceryListURL, savedList)
-      .then((response) => {
-        this.setData(response.data.ingredients);
-      })
-      .catch((err) => console.log("err", err));
+    // axios
+    //   .put(updateGroceryListURL, savedList)
+    //   .then((response) => {
+    //     this.setData(response.data.ingredients);
+    //   })
+    //   .catch((err) => console.log("err", err));
   }
 
   getList() {
-    const getL = {
-      email: this.state.email,
-    };
-    axios
-      .post(getGroceryListURL, getL)
-      .then((response) => {
-        if (this._mounted) {
-          this.setData(response.data[0].ingredients);
-        }
-      })
-      .catch((err) =>
-        axios.put(updateGroceryListURL, getL).then((response) => {
-          if (this._mounted) {
-            this.setData(response.data.ingredients);
-          }
-        })
-      );
+    // const getL = {
+    //   email: this.state.email,
+    // };
+    // axios
+    //   .post(getGroceryListURL, getL)
+    //   .then((response) => {
+    //     if (this._mounted) {
+    //       this.setData(response.data[0].ingredients);
+    //     }
+    //   })
+    //   .catch((err) =>
+    //     axios.put(updateGroceryListURL, getL).then((response) => {
+    //       if (this._mounted) {
+    //         this.setData(response.data.ingredients);
+    //       }
+    //     })
+    //   );
     // .catch(err => console.log('err', err)) )
+
+    // Test data
+    const testData = [
+      ["EGG", "egg", "", 3],
+      ["WHOLE_WHEAT_BREAD", "whole wheat bread", "loaf", 1],
+      ["GARLIC", "garlic", "head of", 1],
+      ["WHOLE_WHEAT_BREAD", "whole wheat bread", "loaf", 1],
+      ["EGG", "egg", "", 13],
+      ["SALMON", "salmon", "filet", 3],
+      ["WHOLE_WHEAT_BREAD", "whole wheat bread", "slice", 1],
+      ["RIBEYE_STEAK", "ribeye steak", "", 2]
+    ]
+    this.setData(testData);
+    console.log(this.state.items);
   }
 
   setData(res) {
     if (res == null) {
+      console.log("null");
       this.setState({ items: [] });
     } else {
-      this.setState({ items: res });
-      this.forceUpdate();
+      
+      console.log(res);
+      this.setState({ items: res }, () =>{
+        console.log(this.state.items);
+        this.forceUpdate();
+      });
     }
   }
 
-  // combineLikeIngredients() {
-  //   // present confirmation
+  combineLikeIngredients() {
+    // present confirmation
+    console.log("COMBINE START");
 
-  //   // prepare for comparison
-  //   let results = [];
-  //   let resultIDs = [];
-  //   let existing = [];
+    // prepare for comparison
+    let results = [];
+    let resultIDs = [];
+    let existing = this.state.items;
 
-  //   existing.forEach( (element) => {
-  //     // check if current ingredient already in results
-  //     if ( resultIDs.includes(element.id) ) {
-  //       // get record
-  //       let record = getIngredientRecord(element.id, results);
+    existing.forEach( (element) => {
+      // check if current ingredient already in results
+      if ( resultIDs.includes(element.id) ) {
+        // get record
+        let recordIndex = funcs.getRecordIndex(element.id, results);
+        console.log(recordIndex);
 
-  //       // check if units match
-  //       if ( element.unit == record.unit) {
+        // check if units match
+        if ( element.unit == results[recordIndex].unit) {
+          console.log("COMBINE");
+          results[recordIndex].quantity = results[recordIndex].quantity + element.quantity;
+        }
+      }
+      // failed previous conditions, add as new record
+      console.log("ADD")
+      results.push(element);
+      resultIDs.push(element.id);
+    });
 
-  //       }
-  //     }
-  //   });
-  // }
+    // update state
+    this.setState({ 
+      items: results,
+      // itemIDS: resultIDS
+    }, () => {
+      console.log(this.state.items);
+    });
+  }
 
   render() {
     const list = (
@@ -139,21 +176,33 @@ class GroceryList extends React.Component {
     );
 
     return (
-      <div className="groceryModal">
-        <div className="groceryList">
-          {list}
-          <input
-            type="submit"
-            onClick={this.saveChanges}
-            value="Save"
-            hidden={this.state.isDisabled}
-          />
-          <input
-            type="submit"
-            onClick={this.beginEdit}
-            value="Edit"
-            hidden={!this.state.isDisabled}
-          />
+      
+      <div className="groceryContainer">
+        <div>
+          <button
+            className="btn btn-light btn-header"
+            onClick={this.combineLikeIngredients}
+          >
+            Combine
+          </button>
+        </div>
+      
+        <div className="groceryModal">
+          <div className="groceryList">
+            {list}
+            <input
+              type="submit"
+              onClick={this.saveChanges}
+              value="Save"
+              hidden={this.state.isDisabled}
+            />
+            <input
+              type="submit"
+              onClick={this.beginEdit}
+              value="Edit"
+              hidden={!this.state.isDisabled}
+            />
+          </div>
         </div>
       </div>
     );
