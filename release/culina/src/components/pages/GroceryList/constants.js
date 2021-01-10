@@ -1,4 +1,9 @@
 
+const ID = 0;
+const DISPLAY_NAME = 1;
+const UNIT = 2;
+const QUANTITY = 3;
+
 const ingredientDatabase = {
     // MARK: BAKING
     "BAKING_POWDER": {
@@ -1206,5 +1211,9 @@ const ingredientDatabase = {
 
 const constants = {
     'ingredients': ingredientDatabase,
+    'id': ID,
+    'display_name': DISPLAY_NAME,
+    'unit': UNIT,
+    'quantity': QUANTITY
 }
 export default constants;

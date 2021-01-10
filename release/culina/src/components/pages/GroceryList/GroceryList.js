@@ -33,7 +33,8 @@ class GroceryList extends React.Component {
     this.setData = this.setData.bind(this);
 
     // this.checkIngredientDatabase = this.checkIngredientDatabase(this);
-    this.combineLikeIngredients = this.combineLikeIngredients(this);
+    // this.handleCombineClicked = this.handleCombineClicked.bind(this);
+    this.combineLikeIngredients = this.combineLikeIngredients.bind(this);
 
     if (this.state.items == undefined) {
       this.setState({ items: ["Loading"] });
@@ -125,30 +126,31 @@ class GroceryList extends React.Component {
 
   combineLikeIngredients() {
     // present confirmation
-    console.log("COMBINE START");
 
     // prepare for comparison
     let results = [];
-    let resultIDs = [];
     let existing = this.state.items;
 
     existing.forEach( (element) => {
-      // check if current ingredient already in results
-      if ( resultIDs.includes(element.id) ) {
-        // get record
-        let recordIndex = funcs.getRecordIndex(element.id, results);
-        console.log(recordIndex);
 
-        // check if units match
-        if ( element.unit == results[recordIndex].unit) {
-          console.log("COMBINE");
-          results[recordIndex].quantity = results[recordIndex].quantity + element.quantity;
+      let newElement = true;
+
+      // get record
+      let recordIndex = funcs.getRecordIndex(element, results);
+
+      // check if this ingredient with this unit already exists
+      if (recordIndex != -1) {
+        // confirm units match
+        if ( element[constants.unit] == results[recordIndex][constants.unit]) {
+          newElement = false;
+          results[recordIndex][constants.quantity] = results[recordIndex][constants.quantity] + element[constants.quantity];
         }
       }
+
       // failed previous conditions, add as new record
-      console.log("ADD")
-      results.push(element);
-      resultIDs.push(element.id);
+      if (newElement) {
+        results.push(element);
+      }
     });
 
     // update state
